@@ -134,3 +134,81 @@ body {
         box-sizing: border-box;
     }
 }
+
+/* Estilos del registro */
+
+/* Mensaje de error debajo de cada campo */
+.error-text {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: #8b0000;
+}
+
+/* Campo con error */
+.input-group input.input-invalid {
+    border: 1px solid #8b0000;
+}
+
+/* Mensaje cuando el registro sale bien */
+#estado.estado-ok {
+    color: #0b5d1e;
+}
+
+/* Contenedor del registro */
+.registro-container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 380px;
+    margin: 24px 16px;
+}
+
+/* Adaptacion del registro para celulares */
+@media screen and (max-width: 480px) {
+
+    .registro-container {
+        width: 100%;
+        padding: 22px 20px;
+        margin: 16px;
+    }
+
+    .registro-container h1 {
+        font-size: 24px;
+        margin: 4px 0 18px;
+    }
+
+    .registro-container .input-group {
+        margin-bottom: 14px;
+    }
+
+    .registro-container .input-group label {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .registro-container .input-group input {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .registro-container button[type="submit"] {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .registro-container .register-link {
+        margin-top: 16px;
+    }
+}
+
+/* Celulares pequeños */
+@media screen and (max-width: 340px) {
+
+    .registro-container {
+        padding: 18px 14px;
+        margin: 10px;
+    }
+
+    .registro-container h1 {
+        font-size: 22px;
+    }
+}
