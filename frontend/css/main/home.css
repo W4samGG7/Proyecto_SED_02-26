@@ -33,7 +33,7 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 
 .categories li a {
     text-decoration: none;
-    color: #222222;
+    color: #141414;
     font-size: 15px;
     font-weight: 400;
     font-family: inherit;
@@ -42,7 +42,8 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 
 .categories li a:hover,
 .categories li a.highlight {
-    color: #8b0000; 
+    color: #4d1f15; 
+    font-weight: 600;
 }
 
 
@@ -90,19 +91,19 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 .hero-title-buy{
     font-size: 28px;
     font-weight: bold;
-    color: #111111;
+    color: #4d1f15;
 }
 
 .hero-subtitle-buy{
     font-size: 18px;
-    font-weight: normal;
-    color: #111111;
+    font-weight: 600;
+    color: #a29d78;
 }
 
 .btn-hero-buy {
     display: inline-block;
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #514a31;
+    color: #ded6c6;
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -120,19 +121,18 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 .section-header h2 {
     font-size: 19px;
     font-weight: 500;
-    color: #111111;
+    color: #4d1f15;
     margin: 0;
 }
 
 .see-all {
     font-size: 16px;
     font-weight: 600;
-    color: #111111;
+    color: #514a31;
     text-decoration: none;      
     letter-spacing: 1.5px;         
-    border-bottom: 1px solid #111;  
+    border-bottom: 2px solid #514a31;  
     padding-bottom: 2px;
-    transition: opacity 0.2s ease;
 }
 
 .add-to-cart {
@@ -142,7 +142,7 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: #faf8ee;
     border: none;
     display: flex;
     align-items: center;
@@ -160,7 +160,7 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 }
 
 .add-to-cart:hover {
-    background-color: #f0f0f0;
+    background-color: #ded6c6;
     transform: scale(1.08);
 }
 
@@ -248,19 +248,19 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 .hero-title-sell{
     font-size: 30px;
     font-weight: bold;
-    color: #111111;
+    color: #faf8ee;
 }
 
 .hero-subtitle-sell{
     font-size: 18px;
     font-weight: normal;
-    color: #111111;
+    color: #ded6c6;
 }
 
 .btn-hero-sell {
     display: inline-block;
-    background-color: #111111;
-    color: #ffffff;
+    background-color: #4d1f15;
+    color: #ded6c6;
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -271,15 +271,18 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
 .product-brand{
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
+    color: #141414;
 }
 
 .product-size{
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
+    color: #141414;
 }
 
 .product-pricing{
     font-family: 'DM Sans', sans-serif;
     font-size: 16px;
     font-weight: bold;
+    color: #a29d78;
 }

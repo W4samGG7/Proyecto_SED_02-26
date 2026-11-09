@@ -1,6 +1,6 @@
 .main-header{
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: #a29d7b;
     box-sizing: border-box;
     
 }
@@ -10,14 +10,13 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 3.5%;
-    border-bottom: 1px solid #eee;
     width: 100%;
     box-sizing: border-box;
 }
 
 .toggle-mode {
     display: flex;
-    background: #e4e4e4;
+    background: #ded6c6;
     border-radius: 20px;
     padding: 2px;
 }
@@ -29,39 +28,33 @@
     font-size: 14px;
     cursor: pointer;
     border-radius: 20px;
-    color: #555;
+    color: #514a31;
     font-family: 'DM Sans', sans-serif;
 }
 
 .toggle-mode button.active {
-    background: #ffffff;
-    color: #171717;
+    background: #514a31;
+    color: #ded6c6;
     font-weight: bold;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .banner-promo {
     text-align: center;
-    font-size: 14px;
-    color: #333;
+    font-size: 16px;
+    color: #4d1f15;
     font-weight: bold;
 }
 
 .logo a {
     font-size: 16px;
     font-weight: bold;
-    color: #171717;
+    color: #4d1f15;
     text-decoration: none;
-    border: 1px solid #333;
+    border: 3px solid #514a31;
     padding: 5px 12px;
 }
 
-.nav-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 3.5%;
-}
 .promo-text {
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
