@@ -1,0 +1,174 @@
+
+.sell-page {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    color: #171717;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.sell-title h1,
+.sell-userInfo-question h2,
+.sell-banner-content h2 {
+    font-family: 'DM Serif Display',serif;
+    font-weight: 400;
+}
+
+.sell-title p,
+.sell-userInfo-answer,
+.sell-banner-content p,
+.sell-button{
+    font-family: 'DM Sans', sans-serif;
+}
+
+.sell-title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 0 16px;
+}
+
+.sell-title-text {
+    text-align: center;
+}
+
+.sell-title h1 {
+    font-size: 22px;
+    margin: 0 0 5px;
+}
+
+.sell-title p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.profile {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    color: #222;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon{
+    width: 24px;
+    height: 24px;
+}
+
+.sell-userInfo {
+    margin: 40px 3% 45px;
+}
+
+.sell-userInfo-question {
+    margin-bottom: 30px;
+}
+
+.sell-userInfo-question h2 {
+    font-size: 20px;
+    margin: 0 0 10px;
+}
+
+.sell-userInfo-answer {
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/*Carousel-sell*/
+.sell-banner {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    min-height: 280px;
+    width: 100%;
+    background-color: #d9d9d9;
+    box-sizing: border-box;
+}
+
+.sell-carousel {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+}
+
+.carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: #aaa;
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background-color: white;
+}
+
+.sell-banner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.sell-banner-content h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+.sell-banner-content p {
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.sell-button{
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #333;
+    color: #171717;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.sell-button:hover {
+    background-color: white;
+}
