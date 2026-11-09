@@ -1,5 +1,5 @@
 function loadComponent(id, archivo) {
-  fetch(archivo)
+   return fetch(archivo)
     .then((response) => {
       if (!response.ok) throw new Error(`No se pudo cargar ${archivo}`);
       return response.text();
@@ -12,7 +12,6 @@ function loadComponent(id, archivo) {
 
 const promoMessages = [
   "¡Envío gratis en compras mayores a $15!",
-  "50% de descuento en tu primera compra",
   "Tu ropa merece otra oportunidad, vendela con nosotros.",
 ];
 
@@ -29,13 +28,13 @@ function initPromoTicker() {
       promoTextElement.textContent = promoMessages[currentIndex];
       promoTextElement.classList.add("fade-in");
     }, 300);
-  }, 4000);
+  }, 6000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   Promise.all([
-    loadComponent("header-container", "modules/header.html"),
-    loadComponent("footer-container", "modules/footer.html"),
+    loadComponent("header-container", "modules/general/header.html"),
+    loadComponent("footer-container", "modules/general/footer.html"),
   ]).then(() => {
     initPromoTicker();
   });
