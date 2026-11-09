@@ -114,3 +114,114 @@
     text-align: center;
     font-size: 16px;
 }
+
+/*Carousel-sell*/
+.sell-banner {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    min-height: 280px;
+    width: 100%;
+    background-color: #d9d9d9;
+    box-sizing: border-box;
+}
+
+.sell-carousel {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+}
+
+.carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.carousel-button.prev{
+    left: 10px;
+}
+
+.carousel-button.next{
+    right: 10px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: #aaa;
+    cursor: pointer;
+}
+
+.carousel-dot.active {
+    background-color: white;
+}
+
+.sell-banner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.sell-banner-content h2 {
+    font-size: 19px;
+}
+
+.sell-banner-content p {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.sell-button{
+    display: inline-block;
+    padding: 10px 14px;
+    border: 1px solid #333;
+    color: #171717;
+    text-decoration: none;
+    font-size: 13px;
+    text-align: center;
+}
+
+.sell-button:hover {
+    background-color: white;
+}
