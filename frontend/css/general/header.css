@@ -1,8 +1,6 @@
 .main-header{
     width: 100%;
     background-color: #f8f8f8;
-    border-bottom: 1px solid #e0e0e0;
-    font-family: Arial, sans-serif;
     box-sizing: border-box;
     
 }
@@ -28,16 +26,17 @@
     background: transparent;
     border: none;
     padding: 6px 14px;
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
     border-radius: 20px;
     color: #555;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .toggle-mode button.active {
     background: #ffffff;
     color: #171717;
-    font-weight: 600;
+    font-weight: bold;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
@@ -45,6 +44,7 @@
     text-align: center;
     font-size: 14px;
     color: #333;
+    font-weight: bold;
 }
 
 .logo a {
