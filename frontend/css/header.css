@@ -1,0 +1,44 @@
+.main-header{
+    width: 100%;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 3.5%;
+    border-bottom: 1px solid #eee;
+}
+
+.toggle-mode {
+    display: flex;
+    background: #e4e4e4;
+    border-radius: 20px;
+    padding: 2px;
+}
+
+.toggle-mode button.active  {
+    background: #ffffff;
+    color: #171717;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0, 0, 0.1);
+}
+
+.banner-promo {
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+}
+
+.logo a {
+    font: size 16px;
+    font-weight: bold;
+    color: #171717;
+    text-decoration: none;
+    border: 1px solid #333;
+    padding: 5px 12px;
+}

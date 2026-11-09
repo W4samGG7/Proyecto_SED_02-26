@@ -1,7 +1,7 @@
 function loadComponent(id, archivo) {
   fetch(archivo)
     .then((response) => {
-      if (!response.ok) throw new Error("No se pudo cargar ${archivo}");
+      if (!response.ok) throw new Error(`No se pudo cargar ${archivo}`);
       return response.text();
     })
     .then((data) => {
@@ -34,8 +34,8 @@ function initPromoTicker() {
 
 document.addEventListener("DOMContentLoaded", () => {
   Promise.all([
-    loadComponent("header-container", "../modules/header.html"),
-    loadComponent("footer-container", "../modules/footer.html"),
+    loadComponent("header-container", "modules/header.html"),
+    loadComponent("footer-container", "modules/footer.html"),
   ]).then(() => {
     initPromoTicker();
   });
