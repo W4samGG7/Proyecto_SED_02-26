@@ -1,0 +1,116 @@
+
+.sell-page {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #171717;
+}
+
+.sell-title {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 0 16px;
+}
+
+.sell-title-text {
+    text-align: center;
+}
+
+.sell-title h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 5px;
+}
+
+.sell-title p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.profile {
+    position: absolute;
+    right: 0;
+    top: 10%;
+    color: #222;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon{
+    width: 24px;
+    height: 24px;
+}
+
+.sell-banner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 120px;
+    background-color: #d9d9d9;
+    padding: 25px;
+    box-sizing: border-box;
+}
+
+.sell-banner-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+.sell-banner-text {
+    position: relative;
+    width: 65%;
+    text-align: center;
+}
+
+.sell-banner-text p {
+    font-size: 17px;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.sell-button {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    padding: 7px 10px;
+    border: 1px solid #333;
+    color: #171717;
+    text-decoration: none;
+    font-size: 13px;
+    background-color: transparent;
+}
+
+.sell-button:hover {
+    background-color: #fff;
+}
+
+.sell-userInfo {
+    margin: 40px 3% 45px;
+}
+
+.sell-userInfo-question {
+    margin-bottom: 20px;
+}
+
+.sell-userInfo-question h2 {
+    font-size: 17px;
+    font-weight: 400;
+    margin: 0 0 17px;
+}
+
+.sell-userInfo-answer {
+    width: 100%;
+    border: 1px solid #333;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+}
