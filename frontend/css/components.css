@@ -1,0 +1,330 @@
+
+/* =====================================
+   VARIABLES DE DISEÑO
+===================================== */
+
+:root {
+    --primary: #0D8CFF;
+    --secondary: #ADD8E6;
+    --background: #f2f6f9;
+    --dark: #172b4d;
+    --text: #263238;
+    --text-light: #687782;
+    --white: #ffffff;
+}
+
+/* =====================================
+   NAVBAR
+===================================== */
+
+.main-header {
+        width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+    width: 100%;
+    min-height: 75px;
+    padding: 12px 3%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--white);
+}
+
+/* Opciones de navegación */
+
+/* =====================================
+   SWITCH COMPRAR / VENDER
+===================================== */
+
+.nav-options {
+    display: flex;
+    align-items: center;
+}
+
+.nav-switch {
+    display: flex;
+    align-items: center;
+    background-color: #e8f1f7;
+    padding: 4px;
+    border-radius: 30px;
+    border: 1px solid #dce8f0;
+}
+
+.switch-option {
+    text-decoration: none;
+    color: #263238;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 9px 20px;
+    border-radius: 25px;
+    transition: all 0.25s ease;
+}
+
+.switch-option:hover {
+    color: #0D8CFF;
+}
+
+.switch-option.active {
+    background-color: #0D8CFF;
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(13, 140, 255, 0.2);
+}
+
+.nav-link:hover {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+
+/* =====================================
+   BANNER DE ANUNCIOS ANIMADOS
+===================================== */
+
+.nav-announcements {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+
+    background-color: #f7f7f788;
+    border: 1px solid #e6ebec00;
+    border-radius: 10px;
+
+    padding: 12px 0;
+}
+
+/* Contenedor animado */
+
+.announcement-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+
+    animation: desplazarAnuncios 25s linear infinite;
+}
+
+/* Cada anuncio */
+
+.announcement-item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+
+    padding: 0 35px;
+
+    color: #172b4d;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Animación */
+
+@keyframes desplazarAnuncios {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+
+}
+
+/* Pausar al pasar el cursor */
+
+.nav-announcements:hover .announcement-track {
+    animation-play-state: paused;
+}
+
+/* Accesibilidad: respetar preferencias de movimiento */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .announcement-track {
+        animation: none;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .announcement-item:nth-child(n + 4) {
+        display: none;
+    }
+
+}
+
+
+
+
+/* Logo */
+
+.nav-logo {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-logo a {
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.footer {
+    width: 100%;
+    background-color: #dfe2e4;
+    padding: 35px 5% 15px;
+}
+
+.footer-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+}
+
+/* Secciones */
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.footer-section h3 {
+    color: var(--dark);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.footer-section a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: var(--primary);
+}
+
+/* Redes sociales */
+
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 10px;
+}
+
+.social-links a {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    color: var(--dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    transform: translateY(-3px);
+}
+
+/* Copyright */
+
+.footer-bottom {
+    max-width: 1400px;
+    margin: 25px auto 0;
+    padding-top: 15px;
+    border-top: 1px solid #d2e1e9;
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--text-light);
+    font-size: 0.8rem;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        grid-template-columns: 1fr auto;
+        gap: 12px;
+    }
+
+    .nav-options {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .nav-logo {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .nav-announcements {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .navbar {
+        padding: 15px 4%;
+    }
+
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .nav-logo a {
+        font-size: 1.3rem;
+    }
+
+    .nav-announcements p {
+        font-size: 0.75rem;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .footer {
+        padding: 30px 6% 15px;
+    }
+}
