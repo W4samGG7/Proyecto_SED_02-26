@@ -1,4 +1,16 @@
 
+body{
+    padding-top: 70px;
+}
+
+body {
+    padding-top: 70px;
+}
+
+body:not(.header-loaded) main {
+    opacity: 0;
+}
+
 .sell-page {
     position: relative;
     width: 100%;

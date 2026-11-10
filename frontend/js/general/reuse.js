@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (headerContainer) {
     promises.push(loadComponent("header-container", new URL("header.html", GENERAL_URL).href));
+    document.body.classList.add('header-loaded');
   }
   
   if (footerContainer) {

@@ -7,6 +7,18 @@ body,h3, p, a, .categories li a, .hero-subtitle-buy, .see-all {
     font-family: 'DM Sans', sans-serif;
 }
 
+main {
+    transition: opacity 0.2s ease-in;
+}
+
+body {
+    padding-top: 70px;
+}
+
+body:not(.header-loaded) main {
+    opacity: 0;
+}
+
 .nav-bar {
     display: flex;
     justify-content: space-between;
