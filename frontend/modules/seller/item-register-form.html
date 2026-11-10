@@ -91,6 +91,21 @@
                                 required
                             >
                         </div>
+                         <!-- Marca-->
+                        <div class="form-group">
+                            <label for="item-brand">
+                                 Marca <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="item-brand"
+                                name="item_brand"
+                                placeholder="Ej. Levi's"
+                                maxlength="50"
+                                required
+                            >
+                        </div>
 
                         <!-- Tipo -->
                         <div class="form-group">
@@ -149,6 +164,22 @@
                             >
                         </div>
 
+                        <!-- Talla -->
+                        <div class="form-group">
+                            <label for="item-size">
+                                Talla <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="item-size"
+                                name="item_size"
+                                placeholder="Ej. M, 32, 12"
+                                maxlength="10"
+                                required
+                            >
+                        </div>
+
                         <!-- Precio -->
                         <div class="form-group full-width">
                             <label for="item-price">
@@ -184,34 +215,21 @@
 
                     </div>
 
-                    <button type="submit" class="btn-publish-item">
-                        <i class="fa-solid fa-tag"></i>
-                        Publicar artículo
-                    </button>
-
                 </form>
 
             </div>
 
 
-            <!-- COLUMNA 3: PROMOCIÓN -->
-            <aside class="item-promotion-section">
+            <!-- COLUMNA 3 y 4 Preview -->
+            <aside class="item-preview-section">
+                <h2>Así se verá tu tarjeta</h2>
 
-                <div class="promotion-content">
+                 <div id="preview-card-container"></div>
 
-                    <i class="fa-solid fa-bag-shopping promotion-icon"></i>
-
-                    <h2>¡Es momento de vender!</h2>
-
-                    <p>
-                        Publica tus artículos y llega a nuevos compradores.
-                        Dale una segunda oportunidad a lo que ya no utilizas
-                        o impulsa tu negocio.
-                    </p>
-
-                    <span>Publica. Promociona. Vende.</span>
-
-                </div>
+                <button type="submit" form="item-register-form" class="btn-publish-item">
+                    <i class="fa-solid fa-tag"></i>
+                    Publicar artículo
+                </button>
 
             </aside>
 
