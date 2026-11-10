@@ -29,8 +29,7 @@ body:not(.header-loaded) main {
     justify-content: flex-end;
     align-items: center;
     width: 100%;
-    padding: 10px 0;
-    margin-bottom: 10px;
+    padding: 0 40px 0 40px;
 }
 
 .sell-title {
@@ -38,16 +37,19 @@ body:not(.header-loaded) main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px 0 16px;
+    padding: 20px 0 40px;
 }
 
 .sell-title-text {
     text-align: center;
+    line-height: 1.5;
 }
 
 .sell-title h1 {
-    font-size: 22px;
+    font-size: 25px;
     margin: 0 0 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
 }
 
 .sell-title p {
@@ -169,9 +171,9 @@ body:not(.header-loaded) main {
 .sell-button{
     display: inline-block;
     padding: 10px 14px;
-    border: 1px solid #333;
     color: #171717;
     text-decoration: none;
+    background-color: #444;
     font-size: 14px;
     text-align: center;
     transition: background-color 0.3s ease;
@@ -179,4 +181,93 @@ body:not(.header-loaded) main {
 
 .sell-button:hover {
     background-color: white;
+}
+
+.sell-timeline-section {
+    text-align:left;
+    margin-bottom: 50px;
+    padding: 0 40px 0 40px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.timeline-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    position: relative;
+    border: 1px solid #d3cebe;
+    border-radius: 12px;
+    padding: 30px 20px;
+    background-color: #faf9f5;
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.step-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #514a31;
+    color: #ded6c6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.timeline-step h3 {
+    font-size: 18px;
+    margin: 0 0 6px;
+}
+
+.timeline-step p {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* =====================================
+   4. GRID DE TARJETAS (3 Columnas)
+===================================== */
+.sell-grid-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 0 40px 0 40px;
+}
+
+.info-card {
+    border: 1px solid #d3cebe;
+    border-radius: 8px;
+    padding: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+}
+
+.info-card h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    color: #171717;
+}
+
+.info-card p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #555;
+    margin: 0;
 }
