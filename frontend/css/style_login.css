@@ -119,6 +119,7 @@ body {
     padding: 0 !important;
 
     cursor: pointer;
+    text-decoration: none;
 }
 
 /* Efecto al pasar el mouse */

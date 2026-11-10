@@ -55,6 +55,28 @@ function initPromoTicker() {
   }, 6000);
 }
 
+function initHeaderButtons(){
+  const btnShop = document.getElementById("btn-shop");
+  const btnSell = document.getElementById("btn-sell");
+
+  if (!btnSell || !btnShop) return;
+
+  const basePath = getBasePath();
+
+  btnShop.href = `${basePath}index.html`;
+  btnSell.href = `${basePath}modules/sell/sell.html`;
+
+  const path = window.location.pathname;
+
+  if(path.includes("/sell/")){
+    btnSell.classList.add("active");
+  } else {
+    btnShop.classList.add("active")
+  }
+
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const headerContainer = document.getElementById("header-container");
   const footerContainer = document.getElementById("footer-container");
@@ -71,5 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   Promise.all(promises).then(() => {
     initPromoTicker();
+    initHeaderButtons();
   });
 });
