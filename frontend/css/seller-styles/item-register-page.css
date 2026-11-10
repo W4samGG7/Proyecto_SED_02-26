@@ -2,6 +2,11 @@
    ITEM REGISTER PAGE
 ========================================= */
 
+body {
+    padding-top: 100px;
+}
+
+
 .item-register-page {
     width: 100%;
     margin: 0 auto;

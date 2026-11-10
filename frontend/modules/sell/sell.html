@@ -18,18 +18,11 @@
 </head>
 
 <body>
+    <div id="header-container"></div>
 
-<div id="header-container"></div>
-
-<main class="sell-page">
-
-    <section class="sell-title">
-        <div class="sell-title-text">
-             <h1>¿Tienes ropa que no necesitas y no sabes que hacer con ella?</h1>
-            <p>Aqui en [NOMBRE] puedes ganar un poco por ella o regalarla a quien lo necesite</p>
-        </div>
-       
-         <a
+    <main class="sell-page">
+      <nav class="sell-navbar">
+        <a
           href="../login/index_login.html"
           rel="noopener noreferrer"
           class="profile"
@@ -40,69 +33,116 @@
             class="profile-icon"
           />
         </a>
-
-  </section>
-
-  <section class="sell-banner">
-     <div class="sell-carousel">
-        <div class="carousel-track">
-            
+      </nav>
+      <section class="sell-banner">
+        <div class="sell-carousel">
+          <div class="carousel-track">
             <div class="carousel-slide">
-                <img src="../../assets/images/banner/banner1.jpg" alt="usedClothExample1">
+              <img
+                src="../../assets/images/banner/banner1.jpg"
+                alt="usedClothExample1"
+              />
             </div>
             <div class="carousel-slide">
-                <img src="../../assets/images/banner/banner2.jpg" alt="usedClothExample2">
+              <img
+                src="../../assets/images/banner/banner2.jpg"
+                alt="usedClothExample2"
+              />
             </div>
             <div class="carousel-slide">
-                <img src="../../assets/images/banner/banner3.jpg" alt="usedClothExample3">
+              <img
+                src="../../assets/images/banner/banner3.jpg"
+                alt="usedClothExample3"
+              />
             </div>
+          </div>
 
+          <div class="carousel-dots"></div>
         </div>
 
-        <div class="carousel-dots"></div>
+        <div class="sell-banner-content">
+          <h2>¡No tires la ropa a la basura, cuida el planeta!</h2>
 
-    </div>
+          <p>
+            Vende o regala la ropa que ya no necesitas, evita contaminar el
+            planeta y todos ganamos.
+          </p>
 
-    <div class="sell-banner-content">
-        
-        <h2>No tires la ropa a la basura cuida el planeta!</h2>
-
-        <p>Vende o regala la ropa que ya no necesitas, evita contaminar el planeta y todos ganamos</p>
-
-        <a href="../seller/panel.html" class="sell-button">
+          <a href="../seller/panel.html" class="sell-button">
             Ingresar como vendedor
-        </a>
-    </div>
-
-  </section>
-
-<section class="sell-userInfo" >
-    <div class="sell-userInfo-question">
-        <h2>¿Que puedes vender?</h2>
-        <div class="sell-userInfo-answer">
-            Puedes vender ropa, calzado y accesorios en buen estado que ya no uses. Aceptamos prendas limpias, sin roturas graves y que conserven su forma. Si prefieres, también puedes regalar aquellas prendas que estén en condiciones óptimas para darles una segunda vida.
+          </a>
         </div>
-    </div>
+      </section>
 
-    <div class="sell-userInfo-question">
-        <h2>¿Cual es el proceso de venta?</h2>
-        <div class="sell-userInfo-answer">
-            1. Regístrate o ingresa a tu cuenta. <br>
-            2. Sube fotos claras de la prenda y añade una descripción. <br>
-            3. Fija un precio (o márcala como regalo). <br>
-            4. Espera a que un comprador se interese, coordina la entrega y ¡listo! Recibirás tu pago de forma segura.
+      <section class="sell-title">
+        <div class="sell-title-text">
+          <h1>¿Tienes ropa que no necesitas y no sabes que hacer con ella?</h1>
+          <p>
+            Aqui en [NOMBRE] puedes ganar un poco por ella o regalarla a quien
+            lo necesite.
+          </p>
         </div>
-    </div>
+      </section>
 
-</section>
+      <section class="sell-timeline-section">
+        <h2 class="section-title">¿Cuál es el proceso de venta?</h2>
+        <div class="timeline-container">
+          <div class="timeline-step">
+            <div class="step-badge">1</div>
+            <h3>Regístrate</h3>
+            <p>Crea tu cuenta o ingresa a la plataforma.</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-badge">2</div>
+            <h3>Publica</h3>
+            <p>Completa todos los campos solicitados en el formulario colocado en el panel de vendedores. Puedes acceder en el botón superior de "Ingresar como vendedor"</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-badge">3</div>
+            <h3>Fija el precio</h3>
+            <p>Elige un precio justo o márcala como regalo.</p>
+          </div>
+          <div class="timeline-step">
+            <div class="step-badge">4</div>
+            <h3>Entrega y recibe</h3>
+            <p>Coordinamos la entrega por ti y recibe tu pago de forma segura.</p>
+          </div>
+        </div>
+      </section>
 
-</main>
+      <!-- 4. Grid de Preguntas / Información (3 Columnas) -->
+      <section class="sell-grid-section">
+        <div class="info-card">
+          <h2>¿Qué puedes vender?</h2>
+          <p>
+            Puedes vender ropa, calzado y accesorios en buen estado que ya no
+            uses. Aceptamos prendas limpias, sin roturas graves y que conserven
+            su forma.
+          </p>
+        </div>
 
-<div id="footer-container"></div>
+        <div class="info-card">
+          <h2>Condiciones de donación</h2>
+          <p>
+            Si prefieres regalar tus prendas, asegúrate de que estén en
+            condiciones óptimas para darles una segunda vida digna a quien lo
+            necesite.
+          </p>
+        </div>
 
+        <div class="info-card">
+          <h2>Pagos y comisiones</h2>
+          <p>
+            Recibe tus pagos de manera rápida y segura directamente a tu cuenta.
+            Mantendremos el proceso claro sin cargos ocultos.
+          </p>
+        </div>
+      </section>
+    </main>
 
-<script type="module" src="../../js/general/reuse.js"></script>
-<script src="../../js/sell/carousel.js"></script>
-</body>
+    <div id="footer-container"></div>
 
+    <script type="module" src="../../js/general/reuse.js"></script>
+    <script src="../../js/sell/carousel.js"></script>
+  </body>
 </html>

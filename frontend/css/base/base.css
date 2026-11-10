@@ -9,16 +9,21 @@
 :root {
 
     /* ---------- Paleta de marca ---------- */
-    --primary: #4D1F15;
-    --secondary: #DED6C6;
+    --primary: #832d51;
+    --secondary: #cf899d;
     --background: #FAF8EE;
 
-    --dark: #514A31;
+    --darkred: #832d51;
+    --darkgreen: #447a5f;
+    --lightred: #f8cae4;
+    --lightgreen: #cfdd9d;
+    --mediumred: #ea6993;
+
     --text: #141414;
     --text-light: #514A31;
 
     --white: #fffefb;
-    --accent: #A29D7B;
+    --accent: #f8cae4;
 
     /* ---------- Variantes de la paleta ---------- */
     --primary-hover: #64291B;      /* hover de botones primarios */
@@ -72,6 +77,4 @@ body {
     background-color: var(--white);
     color: var(--text);
 
-    /* Espacio para el navbar fijo */
-    padding-top: 75px;
 }

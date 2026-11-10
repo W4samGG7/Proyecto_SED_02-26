@@ -1,11 +1,4 @@
 
-body{
-    padding-top: 70px;
-}
-
-body {
-    padding-top: 70px;
-}
 
 body:not(.header-loaded) main {
     opacity: 0;
@@ -27,12 +20,26 @@ body:not(.header-loaded) main {
     font-weight: 400;
 }
 
+.sell-banner-content h2 {
+    color: var(--darkgreen);
+    font-size: 35px;
+}
+
 .sell-title p,
 .sell-userInfo-answer,
 .sell-banner-content p,
 .sell-button{
     font-family: 'DM Sans', sans-serif;
 }
+
+.sell-navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 0 40px 0 40px;
+}
+
 
 .sell-title {
     position: relative;
@@ -47,22 +54,23 @@ body:not(.header-loaded) main {
 }
 
 .sell-title h1 {
-    font-size: 22px;
+font-size: 25px;
     margin: 0 0 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
+    color: var(--darkred);
 }
 
 .sell-title p {
     font-size: 16px;
     margin: 0;
+    color: var(--text);
 }
 
 .profile {
-    position: absolute;
-    right: 0;
-    top: 10%;
-    color: var(--text);
     display: flex;
     align-items: center;
+    padding: 8px;
 }
 
 .profile-icon{
@@ -81,6 +89,7 @@ body:not(.header-loaded) main {
 .sell-userInfo-question h2 {
     font-size: 20px;
     margin: 0 0 10px;
+
 }
 
 .sell-userInfo-answer {
@@ -97,7 +106,7 @@ body:not(.header-loaded) main {
     grid-template-columns: 3fr 1fr;
     min-height: 280px;
     width: 100%;
-    background-color: var(--gray-200);
+    background-color: var(--lightgreen);
     box-sizing: border-box;
 }
 
@@ -140,12 +149,12 @@ body:not(.header-loaded) main {
     height: 10px;
     border: none;
     border-radius: 50%;
-    background-color: var(--gray-400);
+    background-color: var(--lightred);
     cursor: pointer;
 }
 
 .carousel-dot.active {
-    background-color: var(--white);
+    background-color: var(--darkgreen);
 }
 
 .sell-banner-content {
@@ -159,28 +168,118 @@ body:not(.header-loaded) main {
     box-sizing: border-box;
 }
 
-.sell-banner-content h2 {
-    font-size: 20px;
-    margin: 0;
-}
 
 .sell-banner-content p {
     font-size: 15px;
     line-height: 1.5;
     margin: 0;
+    color: var(--darkred);
+    font-weight: 500;
 }
 
 .sell-button{
     display: inline-block;
     padding: 10px 14px;
-    border: 1px solid var(--border-strong);
-    color: var(--text);
+    color: var(--lightgreen);
     text-decoration: none;
     font-size: 14px;
     text-align: center;
     transition: background-color 0.3s ease;
+    background-color: var(--darkgreen);
 }
 
 .sell-button:hover {
-    background-color: var(--white);
+    background-color: var(--darkred);
+}
+
+
+.sell-timeline-section {
+    text-align:left;
+    margin-bottom: 70px;
+    padding: 0 40px 0 40px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--darkred);
+}
+
+.timeline-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    position: relative;
+    border: 1px solid var(--mediumred);
+    border-radius: 12px;
+    padding: 30px 20px;
+    background-color: #faf9f5;
+}
+
+.timeline-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.step-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--darkgreen);
+    color: var(--lightgreen);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.timeline-step h3 {
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--darkred);
+}
+
+.timeline-step p {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* =====================================
+   4. GRID DE TARJETAS (3 Columnas)
+===================================== */
+.sell-grid-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 0 40px 0 40px;
+}
+
+.info-card {
+    border: 1px solid var(--mediumred);
+    border-radius: 8px;
+    padding: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+}
+
+.info-card h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    color: var(--darkred);
+}
+
+.info-card p {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+    margin: 0;
 }

@@ -4,6 +4,10 @@
 
 /* Contenedor general del contenido */
 
+body {
+    padding-top: 60px;
+}
+
 .page-container {
     width: calc(100% - 80px);
     max-width: 1400px;

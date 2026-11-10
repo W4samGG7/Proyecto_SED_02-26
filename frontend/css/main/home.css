@@ -11,9 +11,6 @@ main {
     transition: opacity 0.2s ease-in;
 }
 
-body {
-    padding-top: 70px;
-}
 
 body:not(.header-loaded) main {
     opacity: 0;
@@ -54,7 +51,7 @@ body:not(.header-loaded) main {
 
 .categories li a:hover,
 .categories li a.highlight {
-    color: var(--primary); 
+    color: var(--darkgreen); 
     font-weight: 600;
 }
 
@@ -103,19 +100,19 @@ body:not(.header-loaded) main {
 .hero-title-buy{
     font-size: 28px;
     font-weight: bold;
-    color: var(--primary);
+    color: var(--darkgreen);
 }
 
 .hero-subtitle-buy{
     font-size: 18px;
     font-weight: 600;
-    color: var(--accent);
+    color: var(--darkred);
 }
 
 .btn-hero-buy {
     display: inline-block;
-    background-color: var(--dark);
-    color: var(--secondary);
+    background-color: var(--darkred);
+    color: var(--lightred);
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -133,17 +130,17 @@ body:not(.header-loaded) main {
 .section-header h2 {
     font-size: 19px;
     font-weight: 500;
-    color: var(--primary);
+    color: var(--darkred);
     margin: 0;
 }
 
 .see-all {
     font-size: 16px;
     font-weight: 600;
-    color: var(--dark);
+    color: var(--darkgreen);
     text-decoration: none;      
     letter-spacing: 1.5px;         
-    border-bottom: 2px solid var(--dark);  
+    border-bottom: 2px solid var(--darkgeen);  
     padding-bottom: 2px;
 }
 
@@ -154,7 +151,7 @@ body:not(.header-loaded) main {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background-color: var(--background);
+    background-color: var(--lightred);
     border: none;
     display: flex;
     align-items: center;
@@ -172,7 +169,7 @@ body:not(.header-loaded) main {
 }
 
 .add-to-cart:hover {
-    background-color: var(--secondary);
+    background-color: var(--lightgreen);
     transform: scale(1.08);
 }
 
@@ -260,19 +257,19 @@ body:not(.header-loaded) main {
 .hero-title-sell{
     font-size: 30px;
     font-weight: bold;
-    color: var(--background);
+    color: var(--lightgreen);
 }
 
 .hero-subtitle-sell{
     font-size: 18px;
     font-weight: normal;
-    color: var(--secondary);
+    color: var(--lightred);
 }
 
 .btn-hero-sell {
     display: inline-block;
-    background-color: var(--primary);
-    color: var(--secondary);
+    background-color: var(--lightgreen);
+    color: var(--darkred);
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -296,7 +293,7 @@ body:not(.header-loaded) main {
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
     font-weight: bold;
-    color: var(--accent);
+    color: var(--darkgreen);
 }
 
 .product-name{
