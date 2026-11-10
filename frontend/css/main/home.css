@@ -21,7 +21,7 @@ body:not(.header-loaded) main {
     justify-content: space-between;
     align-items: center;
     padding: 10px 4%;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-bottom: 1px;
 }
 
@@ -42,7 +42,7 @@ body:not(.header-loaded) main {
 
 .categories li a {
     text-decoration: none;
-    color: #141414;
+    color: var(--text);
     font-size: 15px;
     font-weight: 400;
     font-family: inherit;
@@ -51,7 +51,7 @@ body:not(.header-loaded) main {
 
 .categories li a:hover,
 .categories li a.highlight {
-    color: #4d1f15; 
+    color: var(--primary); 
     font-weight: 600;
 }
 
@@ -73,7 +73,7 @@ body:not(.header-loaded) main {
 .icon-btn .icon {
     width: 20px;
     height: 20px;
-    stroke: #222;
+    stroke: var(--text);
 }
 
 .hero-section-buy{
@@ -100,19 +100,19 @@ body:not(.header-loaded) main {
 .hero-title-buy{
     font-size: 28px;
     font-weight: bold;
-    color: #4d1f15;
+    color: var(--primary);
 }
 
 .hero-subtitle-buy{
     font-size: 18px;
     font-weight: 600;
-    color: #a29d78;
+    color: var(--accent);
 }
 
 .btn-hero-buy {
     display: inline-block;
-    background-color: #514a31;
-    color: #ded6c6;
+    background-color: var(--dark);
+    color: var(--secondary);
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -130,17 +130,17 @@ body:not(.header-loaded) main {
 .section-header h2 {
     font-size: 19px;
     font-weight: 500;
-    color: #4d1f15;
+    color: var(--primary);
     margin: 0;
 }
 
 .see-all {
     font-size: 16px;
     font-weight: 600;
-    color: #514a31;
+    color: var(--dark);
     text-decoration: none;      
     letter-spacing: 1.5px;         
-    border-bottom: 2px solid #514a31;  
+    border-bottom: 2px solid var(--dark);  
     padding-bottom: 2px;
 }
 
@@ -151,7 +151,7 @@ body:not(.header-loaded) main {
     width: 34px;
     height: 34px;
     border-radius: 50%;
-    background-color: #faf8ee;
+    background-color: var(--background);
     border: none;
     display: flex;
     align-items: center;
@@ -169,7 +169,7 @@ body:not(.header-loaded) main {
 }
 
 .add-to-cart:hover {
-    background-color: #ded6c6;
+    background-color: var(--secondary);
     transform: scale(1.08);
 }
 
@@ -190,7 +190,7 @@ body:not(.header-loaded) main {
 }
 
 .product-grid::-webkit-scrollbar-thumb {
-    background-color: #d1d1d1;
+    background-color: var(--gray-200);
     border-radius: 10px;
 }
 
@@ -203,7 +203,7 @@ body:not(.header-loaded) main {
     position: relative;
     width: 100%;
     height: 230px;                 
-    background-color: #f4f4f4;
+    background-color: var(--gray-50);
     overflow: hidden;             
     margin-bottom: 8px;         
 }
@@ -257,19 +257,19 @@ body:not(.header-loaded) main {
 .hero-title-sell{
     font-size: 30px;
     font-weight: bold;
-    color: #faf8ee;
+    color: var(--background);
 }
 
 .hero-subtitle-sell{
     font-size: 18px;
     font-weight: normal;
-    color: #ded6c6;
+    color: var(--secondary);
 }
 
 .btn-hero-sell {
     display: inline-block;
-    background-color: #4d1f15;
-    color: #ded6c6;
+    background-color: var(--primary);
+    color: var(--secondary);
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
@@ -280,26 +280,26 @@ body:not(.header-loaded) main {
 .product-brand{
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
-    color: #141414;
+    color: var(--text);
 }
 
 .product-size{
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
-    color: #141414;
+    color: var(--text);
 }
 
 .product-pricing{
     font-family: 'DM Sans', sans-serif;
     font-size: 18px;
     font-weight: bold;
-    color: #a29d78;
+    color: var(--accent);
 }
 
 .product-name{
     font-family: 'DM Sans', sans-serif;
     font-size: 14px;
-    color: #141414;
+    color: var(--text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
