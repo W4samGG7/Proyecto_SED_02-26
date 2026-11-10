@@ -71,7 +71,4 @@ body {
     font-family: 'Segoe UI', Arial, sans-serif;
     background-color: var(--white);
     color: var(--text);
-
-    /* Espacio para el navbar fijo */
-    padding-top: 75px;
 }
