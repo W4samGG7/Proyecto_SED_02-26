@@ -33,27 +33,27 @@ function getBasePath(){
 
 const GENERAL_URL = new URL("../../modules/general/", import.meta.url);
 
+function initAnnouncements() {
+  const track = document.getElementById("announcement-track");
+  if (!track) return;
 
-const promoMessages = [
-  "¡Envío gratis en compras mayores a $15!",
-  "Tu ropa merece otra oportunidad, vendela con nosotros.",
-];
+   const anuncios = [
+ "Aprovecha nuestras promociones y renueva tu estilo",
+    "50% de descuento en tu primera compra",
+         "Tu ropa merece otra oportunidad, vendela con nosotros.",
+         "¡Envío gratis en compras mayores a $15!"
+  ];
 
-function initPromoTicker() {
-  const promoTextElement = document.getElementById("promo-text");
-  if (!promoTextElement) return;
-  let currentIndex = 0;
+  const anunciosCompletos = [...anuncios, ...anuncios];
 
-  setInterval(() => {
-    promoTextElement.classList.remove("fade-in");
-
-    setTimeout(() => {
-      currentIndex = (currentIndex + 1) % promoMessages.length;
-      promoTextElement.textContent = promoMessages[currentIndex];
-      promoTextElement.classList.add("fade-in");
-    }, 300);
-  }, 6000);
+  anunciosCompletos.forEach((mensaje) => {
+    const span = document.createElement("span");
+    span.classList.add("announcement-item");
+    span.textContent = mensaje;
+    track.appendChild(span);
+  });
 }
+
 
 function initHeaderButtons(){
   const btnShop = document.getElementById("btn-shop");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   Promise.all(promises).then(() => {
-    initPromoTicker();
     initHeaderButtons();
+    initAnnouncements();
   });
 });

@@ -2,6 +2,17 @@
    NAVBAR Y COMPONENTES COMPARTIDOS
 ===================================== */
 
+/*Tipografias generales*/
+h1, h2 {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400; 
+}
+
+body, h3, p, a, span, .toggle-btn, .announcement-item, .nav-logo a {
+    font-family: 'DM Sans', sans-serif;
+}
+
+
 .main-header {
     width: 100%;
     position: fixed;
@@ -32,38 +43,36 @@
 
 /* Switch comprar / vender */
 
-.nav-switch {
+.toggle-mode {
     display: flex;
-    align-items: center;
-    background-color: #c5c0a3;
-    padding: 4px;
-    border-radius: 30px;
-    border: 1px solid #c5c0a3;
+    background: #ded6c6;
+    border-radius: 20px;
+    padding: 2px;
 }
 
-.switch-option {
+.toggle-mode .toggle-btn {
+    background: transparent;
+    border: none;
+    padding: 6px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #514a31;
+    font-family: 'DM Sans', sans-serif;
     text-decoration: none;
-    color: var(--text);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 9px 20px;
-    border-radius: 25px;
-    transition: all 0.25s ease;
+    display: inline-block;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.switch-option:hover {
-    color: var(--primary);
+.toggle-mode .toggle-btn:hover {
+    background: rgba(81,74,49,0.1);
 }
 
-.switch-option.active {
-    background-color: var(--primary);
-    color: var(--white);
-    box-shadow: 0 2px 5px rgba(13, 140, 255, 0.2);
-}
-
-.nav-link:hover {
-    background-color: var(--primary);
-    color: var(--white);
+.toggle-mode .toggle-btn.active {
+    background: #514a31;
+    color: #ded6c6;
+    font-weight: bold;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 /* =====================================
