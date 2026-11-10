@@ -1,0 +1,92 @@
+h1, h2 {
+    font-family: 'DM Serif Display', serif;
+    font-weight: 400; 
+}
+
+body,h3, p, a {
+    font-family: 'DM Sans', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; 
+}
+
+.main-footer,
+.main-header {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.main-footer{
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    justify-content: space-between;
+    background-color: #faf8ee;
+    padding: 32px 3.5% 15px;
+    box-sizing: border-box;
+    min-height: 215px;
+    color: #4d1f15;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.main-footer-infoColumn,
+.main-footer-brands,
+.main-footer-guides {
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding: 0px 24px 0px 25px;
+    gap: 9px;
+}
+
+.main-footer h3 {
+    font-size: 18px;
+    font-weight: normal;
+    font-family: 'DM Serif Display', serif;
+}
+
+.main-footer a {
+    color: #141414;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.main-footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.social-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: #ded6c6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.social-btn:hover {
+    background-color: #a29d78;
+}
+
+.icon-socials {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
