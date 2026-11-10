@@ -16,7 +16,7 @@ body:not(.header-loaded) main {
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
-    color: #171717;
+    color: var(--text);
     font-family: 'DM Sans', sans-serif;
 }
 
@@ -60,7 +60,7 @@ body:not(.header-loaded) main {
     position: absolute;
     right: 0;
     top: 10%;
-    color: #222;
+    color: var(--text);
     display: flex;
     align-items: center;
 }
@@ -88,7 +88,7 @@ body:not(.header-loaded) main {
     text-align: left;
     font-size: 16px;
     line-height: 1.6;
-    color: #444;
+    color: var(--text-muted);
 }
 
 /*Carousel-sell*/
@@ -97,7 +97,7 @@ body:not(.header-loaded) main {
     grid-template-columns: 3fr 1fr;
     min-height: 280px;
     width: 100%;
-    background-color: #d9d9d9;
+    background-color: var(--gray-200);
     box-sizing: border-box;
 }
 
@@ -140,12 +140,12 @@ body:not(.header-loaded) main {
     height: 10px;
     border: none;
     border-radius: 50%;
-    background-color: #aaa;
+    background-color: var(--gray-400);
     cursor: pointer;
 }
 
 .carousel-dot.active {
-    background-color: white;
+    background-color: var(--white);
 }
 
 .sell-banner-content {
@@ -173,8 +173,8 @@ body:not(.header-loaded) main {
 .sell-button{
     display: inline-block;
     padding: 10px 14px;
-    border: 1px solid #333;
-    color: #171717;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
     text-decoration: none;
     font-size: 14px;
     text-align: center;
@@ -182,5 +182,5 @@ body:not(.header-loaded) main {
 }
 
 .sell-button:hover {
-    background-color: white;
+    background-color: var(--white);
 }

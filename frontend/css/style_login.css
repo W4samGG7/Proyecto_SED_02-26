@@ -1,7 +1,7 @@
 /* Estilos generales de la pagina */
 body {
     font-family: Arial, sans-serif;
-    background-color: #e8e8e8;
+    background-color: var(--gray-100);
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,7 +12,7 @@ body {
 
 /* Contenedor principal del login */
 .login-container {
-    background-color: #8e8e8e;
+    background-color: var(--gray-500);
     width: 320px;
     padding: 30px;
     border-radius: 8px;
@@ -22,7 +22,7 @@ body {
 
 /* Titulo */
 .login-container h1 {
-    color: #111;
+    color: var(--text);
     margin-bottom: 25px;
     font-size: 30px;
 }
@@ -38,7 +38,7 @@ body {
     display: block;
     margin-bottom: 7px;
     font-size: 17px;
-    color: #111;
+    color: var(--text);
 }
 
 /* Campos de texto */
@@ -46,7 +46,7 @@ body {
     width: 100%;
     padding: 11px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid var(--gray-300);
     border-radius: 5px;
     font-size: 17px;
 }
@@ -54,15 +54,15 @@ body {
 /* Cuando se selecciona un campo */
 .input-group input:focus {
     outline: none;
-    border: 1px solid #333;
+    border: 1px solid var(--border-strong);
 }
 
 /* Boton de iniciar sesion */
 .login-container button {
     width: 100%;
     padding: 11px;
-    background-color: #222;
-    color: white;
+    background-color: var(--text);
+    color: var(--white);
     border: none;
     border-radius: 5px;
     font-size: 17px;
@@ -71,7 +71,7 @@ body {
 
 /* Efecto del boton */
 .login-container button:hover {
-    background-color: #444;
+    background-color: var(--text-muted);
 }
 
 /* Mensaje de respuesta */
@@ -84,12 +84,12 @@ body {
 .register-link {
     margin-top: 20px;
     font-size: 15px;
-    color: #222;
+    color: var(--text);
 }
 
 /* Enlace de registro */
 .register-link a {
-    color: #0066cc;
+    color: var(--link);
     font-weight: bold;
     text-decoration: none;
 }
@@ -112,7 +112,7 @@ body {
     background: none !important;
     border: none !important;
 
-    color: #222 !important;
+    color: var(--text) !important;
     font-size: 25px !important;
 
     width: auto !important;
@@ -124,7 +124,7 @@ body {
 
 /* Efecto al pasar el mouse */
 .close-login:hover {
-    color: white !important;
+    color: var(--white) !important;
 }
 
 /* Adaptacion para celulares */
@@ -142,17 +142,17 @@ body {
 .error-text {
     margin: 5px 0 0;
     font-size: 13px;
-    color: #8b0000;
+    color: var(--danger-dark);
 }
 
 /* Campo con error */
 .input-group input.input-invalid {
-    border: 1px solid #8b0000;
+    border: 1px solid var(--danger-dark);
 }
 
 /* Mensaje cuando el registro sale bien */
 #estado.estado-ok {
-    color: #0b5d1e;
+    color: var(--success);
 }
 
 /* Contenedor del registro */
