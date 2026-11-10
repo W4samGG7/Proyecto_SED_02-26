@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta site - Registro de productos</title>
+    <link rel="stylesheet" href="../../css/base/base.css">
+    <link rel="stylesheet" href="../../css/shared/components.css">
+    <link rel="stylesheet" href="../../css/seller-styles/item-register-page.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+    <main class="item-register-page">
+
+        <header class="item-page-header">
+            <h1>Formulario de registro de árticulos</h1>
+            <a href="#" class="faq-link">Preguntas frecuentes</a>
+        </header>
+
+        <section class="item-register-layout">
+
+            <!-- COLUMNA 1: IMAGEN -->
+            <div class="item-image-section">
+
+                <label class="section-label" for="item-image">
+                    Foto del producto
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="file"
+                    id="item-image"
+                    name="item_image"
+                    accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                    required
+                >
+
+                <label for="item-image" class="image-upload-box">
+
+                    <div class="image-upload-placeholder">
+                        <i class="fa-solid fa-image"></i>
+                        <span>Imagen del producto</span>
+                    </div>
+
+                    <div class="image-preview-container" id="image-preview-container">
+                        <img id="image-preview" src="" alt="Vista previa del producto">
+                    </div>
+
+                </label>
+
+                <label for="item-image" class="image-upload-button">
+                    <i class="fa-solid fa-upload"></i>
+                    Importar foto
+                </label>
+
+                <small class="image-hint">PNG o JPG · Máximo 2 MB</small>
+
+            </div>
+
+
+            <!-- COLUMNA 2: FORMULARIO -->
+            <div class="item-details-section">
+
+                <form id="item-register-form"
+                    action="#"
+                    method="POST"
+                    enctype="multipart/form-data">
+
+                    <div class="item-fields-grid">
+
+                        <!-- Nombre -->
+                        <div class="form-group">
+                            <label for="item-name">
+                                Nombre del artículo <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="item-name"
+                                name="item_name"
+                                placeholder="Ej. Jeans clásico"
+                                maxlength="100"
+                                required
+                            >
+                        </div>
+
+                        <!-- Tipo -->
+                        <div class="form-group">
+                            <label for="item-type">
+                                Tipo de artículo <span class="required">*</span>
+                            </label>
+
+                            <select id="item-type" name="item_type" required>
+                                <option value="" disabled selected>Seleccionar</option>
+                                <option value="jeans">Jeans</option>
+                                <option value="pantalones">Pantalones</option>
+                                <option value="camisas">Camisas</option>
+                                <option value="camisetas">Camisetas</option>
+                                <option value="blusas">Blusas</option>
+                                <option value="vestidos">Vestidos</option>
+                                <option value="faldas">Faldas</option>
+                                <option value="shorts">Shorts</option>
+                                <option value="chaquetas">Chaquetas</option>
+                                <option value="sueteres">Suéteres</option>
+                                <option value="sudaderas">Sudaderas</option>
+                                <option value="ropa-deportiva">Ropa deportiva</option>
+                                <option value="ropa-interior">Ropa interior</option>
+                                <option value="trajes-conjuntos">Trajes y conjuntos</option>
+                                <option value="otros">Otros</option>
+                            </select>
+                        </div>
+
+                        <!-- Condición -->
+                        <div class="form-group">
+                            <label for="item-condition">
+                                Condición del artículo <span class="required">*</span>
+                            </label>
+
+                            <select id="item-condition" name="item_condition" required>
+                                <option value="" disabled selected>Seleccionar</option>
+                                <option value="nuevo">Nuevo</option>
+                                <option value="usado-como-nuevo">Usado - Como nuevo</option>
+                                <option value="usado-buen-estado">Usado - Buen estado</option>
+                            </select>
+                        </div>
+
+                        <!-- Cantidad -->
+                        <div class="form-group">
+                            <label for="item-quantity">
+                                Cantidad inicial <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="item-quantity"
+                                name="quantity"
+                                placeholder="Ej. 5"
+                                min="1"
+                                step="1"
+                                required
+                            >
+                        </div>
+
+                        <!-- Precio -->
+                        <div class="form-group full-width">
+                            <label for="item-price">
+                                Precio unitario ($) <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="number"
+                                id="item-price"
+                                name="price"
+                                placeholder="0.00"
+                                min="0.01"
+                                step="0.01"
+                                required
+                            >
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="form-group full-width">
+                            <label for="item-description">
+                                Descripción del artículo <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="item-description"
+                                name="description"
+                                rows="4"
+                                maxlength="1000"
+                                placeholder="Describe las características del artículo..."
+                                required
+                            ></textarea>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn-publish-item">
+                        <i class="fa-solid fa-tag"></i>
+                        Publicar artículo
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- COLUMNA 3: PROMOCIÓN -->
+            <aside class="item-promotion-section">
+
+                <div class="promotion-content">
+
+                    <i class="fa-solid fa-bag-shopping promotion-icon"></i>
+
+                    <h2>¡Es momento de vender!</h2>
+
+                    <p>
+                        Publica tus artículos y llega a nuevos compradores.
+                        Dale una segunda oportunidad a lo que ya no utilizas
+                        o impulsa tu negocio.
+                    </p>
+
+                    <span>Publica. Promociona. Vende.</span>
+
+                </div>
+
+            </aside>
+
+        </section>
+
+    </main>
+
+    <div id="footer-container"></div>
+
+    <!--    SCRIPTS     -->
+    <script src="../../js/components.js"></script>
+    <script src="../../js/item-register-page.js"></script>
+</body>
+</html>

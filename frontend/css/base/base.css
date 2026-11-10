@@ -1,0 +1,39 @@
+/* =====================================
+   CONFIGURACIÓN GLOBAL Y VARIABLES
+===================================== */
+
+:root {
+    --primary: #4D1F15;
+    --secondary: #DED6C6;
+    --background: #FAF8EE;
+
+    --dark: #514A31;
+    --text: #141414;
+    --text-light: #514A31;
+
+    --white: #fffefb;
+    --accent: #A29D7B;
+}
+
+/* Reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--text);
+
+    /* Espacio para el navbar fijo */
+    padding-top: 75px;
+}
