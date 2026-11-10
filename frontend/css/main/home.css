@@ -11,9 +11,6 @@ main {
     transition: opacity 0.2s ease-in;
 }
 
-body {
-    padding-top: 70px;
-}
 
 body:not(.header-loaded) main {
     opacity: 0;

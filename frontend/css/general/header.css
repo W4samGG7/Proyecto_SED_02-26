@@ -13,10 +13,6 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
     width: 100%;
     background-color: #a29d7b;
     box-sizing: border-box;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
     
 }
 
