@@ -166,6 +166,12 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
 
 
 /*logo*/
+
+.nav-logo {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .nav-logo a {
     text-decoration: none;
     color: #4d1f15;
