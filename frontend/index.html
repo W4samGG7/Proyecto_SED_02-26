@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyecto-SED</title>
+    <link rel="stylesheet" href="css/general/footer.css" />
+    <link rel="stylesheet" href="css/general/header.css" />
+    <link rel="stylesheet" href="css/main/home.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-container"></div>
+    <nav class="nav-bar">
+      <ul class="categories" id="categories-container"></ul>
+
+      <div class="header-icons">
+        <button class="icon-btn">
+          <img
+            src="assets/icons/navigation/search.svg"
+            alt="Buscar"
+            class="icon"
+          />
+        </button>
+
+        <button class="icon-btn">
+          <img
+            src="assets/icons/navigation/cart.svg"
+            alt="Carrito"
+            class="icon"
+          />
+        </button>
+
+        <button class="icon-btn">
+          <img
+            src="assets/icons/navigation/user.svg"
+            alt="Cuenta"
+            class="icon"
+          />
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero-section-buy">
+        <div class="hero-content-buy">
+          <h1 class="hero-title-buy">
+            Dale una segunda oportunidad a las prendas.
+          </h1>
+          <h3 class="hero-subtitle-buy">
+            Viste con estilo y cuida el planeta.
+          </h3>
+          <a href="#" class="btn-hero-buy">Explorar destacados</a>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <div class="section-header">
+          <h2>Destacados en ropa de mujer</h2>
+          <a href="#" class="see-all">Ver todo</a>
+        </div>
+
+        <div class="product-grid" id="women-products"></div>
+      </section>
+
+      <section class="hero-section-sell">
+        <div class="hero-content-sell">
+          <h2 class="hero-title-sell">Tu ropa merece otra oportunidad.</h2>
+          <h3 class="hero-subtitle-sell">
+            Véndela y reduce el desperdicio textil.
+          </h3>
+          <a href="#" class="btn-hero-sell">Reciclar mi ropa</a>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <div class="section-header">
+          <h2>Destacados en ropa de hombre</h2>
+          <a href="#" class="see-all">Ver todo</a>
+        </div>
+
+        <div class="product-grid" id="men-products"></div>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script type="module" src="js/general/reuse.js"></script>
+    <script src="js/main/home.js"></script>
+  </body>
+</html>
