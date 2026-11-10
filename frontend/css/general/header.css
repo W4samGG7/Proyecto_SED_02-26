@@ -30,7 +30,7 @@ body,h3, p, a {
     padding: 2px;
 }
 
-.toggle-mode button {
+.toggle-mode .toggle-btn {
     background: transparent;
     border: none;
     padding: 6px 14px;
@@ -39,9 +39,16 @@ body,h3, p, a {
     border-radius: 20px;
     color: #514a31;
     font-family: 'DM Sans', sans-serif;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
-.toggle-mode button.active {
+.toggle-mode .toggle-btn:hover {
+    background: rgba(81,74,49,0.1);
+}
+
+.toggle-mode .toggle-btn.active {
     background: #514a31;
     color: #ded6c6;
     font-weight: bold;
