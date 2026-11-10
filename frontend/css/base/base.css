@@ -1,8 +1,14 @@
 /* =====================================
    CONFIGURACIÓN GLOBAL Y VARIABLES
+   -------------------------------------
+   Este es el ÚNICO lugar donde se definen
+   colores. Todos los demás CSS usan var(--...)
+   Cambia aquí un valor y cambia en todo el sitio.
 ===================================== */
 
 :root {
+
+    /* ---------- Paleta de marca ---------- */
     --primary: #4D1F15;
     --secondary: #DED6C6;
     --background: #FAF8EE;
@@ -13,6 +19,38 @@
 
     --white: #fffefb;
     --accent: #A29D7B;
+
+    /* ---------- Variantes de la paleta ---------- */
+    --primary-hover: #64291B;      /* hover de botones primarios */
+    --secondary-dark: #C4BDAE;     /* hover de fondos secondary */
+    --announcement-bg: #F7F7F788;  /* banner de anuncios del navbar */
+
+    /* ---------- Grises neutros ---------- */
+    --gray-50: #F4F4F4;            /* fondo de imagen de producto */
+    --gray-100: #E8E8E8;           /* fondo de la página de login */
+    --gray-200: #D9D9D9;           /* banner del carrusel */
+    --gray-300: #CCCCCC;           /* borde de campos del login */
+    --gray-400: #AAAAAA;           /* puntos inactivos del carrusel */
+    --gray-500: #8E8E8E;           /* caja del login */
+    --text-muted: #444444;         /* texto secundario / hover login */
+    --border-strong: #333333;      /* bordes oscuros */
+
+    /* ---------- Formularios ---------- */
+    --input-border: #CBD6DF;
+    --input-placeholder: #9AA7B1;
+
+    /* ---------- Estados ---------- */
+    --danger: #E53935;             /* asterisco de campo requerido */
+    --danger-dark: #8B0000;        /* mensajes de error del login */
+    --success: #0B5D1E;
+    --link: #0066CC;
+
+    /* ---------- Panel del vendedor y footer ---------- */
+    --card-border: #E3EDF5;
+    --footer-border: #D2E1E9;
+    --icon-bg: #E8F4FF;
+    --glow: rgba(13, 140, 255, 0.12);       /* foco de inputs / sombra hover */
+    --card-shadow: rgba(20, 70, 110, 0.06);
 }
 
 /* Reset */
