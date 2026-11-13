@@ -1,0 +1,14 @@
+#Mantiene el formato de los saltos de línea en los archivos de código fuente y 
+#evita que Git los modifique al hacer commits o al clonar el repositorio. 
+
+# Archivos de código: utilizar LF
+* text=auto eol=lf
+
+# Archivos binarios: no modificar
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
