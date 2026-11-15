@@ -6,10 +6,6 @@ let password;
 let mensajeError;
 let botonLogin;
 
-// Datos para probar el inicio de sesion
-const correoCorrecto = "test@test.com";
-const claveCorrecta = "123456";
-
 // Direccion de la pagina de registro
 const paginaRegistro = "registro.html";
 
@@ -116,7 +112,6 @@ function crearLogin() {
     form.addEventListener("submit", iniciarSesion);
 }
 
-
 // Abrir la ventana de login
 function abrirLogin() {
 
@@ -128,7 +123,6 @@ function abrirLogin() {
 
     email.focus();
 }
-
 
 // Cerrar la ventana de login
 function cerrarLogin() {
@@ -143,7 +137,6 @@ function cerrarLogin() {
         limpiarErrores();
     }
 }
-
 
 // Mostrar u ocultar la contraseña
 function mostrarClave() {
@@ -163,7 +156,6 @@ function mostrarClave() {
     }
 }
 
-
 // Ir a la pagina de registro
 function irRegistro(e) {
 
@@ -172,7 +164,6 @@ function irRegistro(e) {
     window.location.href = paginaRegistro;
 
 }
-
 
 // Limpiar los mensajes de error
 function limpiarErrores() {
@@ -192,7 +183,6 @@ function limpiarErrores() {
     mensajeError.textContent = "";
 }
 
-
 // Mostrar un error debajo de cada campo
 function mostrarError(campo, mensaje) {
 
@@ -209,7 +199,6 @@ function mostrarError(campo, mensaje) {
     input.classList.add("lm-invalid");
 
 }
-
 
 // Validar los datos ingresados
 function validarFormulario() {
@@ -248,9 +237,8 @@ function validarFormulario() {
     return correcto;
 }
 
-
 // Iniciar sesion
-function iniciarSesion(e) {
+async function iniciarSesion(e) {
 
     e.preventDefault();
 
@@ -258,43 +246,143 @@ function iniciarSesion(e) {
         return;
     }
 
-    const correo = email.value.trim();
-    const clave = password.value;
-
     botonLogin.disabled = true;
     botonLogin.textContent = "Verificando...";
 
-    // Comprobar los datos de prueba
-    if (correo === correoCorrecto && clave === claveCorrecta) {
+    try {
 
-        mensajeError.textContent = "";
-
-        alert("¡Bienvenido! Has iniciado sesion correctamente.");
-
-        // Avisar a la pagina principal que el usuario ingreso
-        document.dispatchEvent(
-            new CustomEvent("login:success", {
-                detail: {
-                    user: {
-                        email: correo
-                    }
-                }
+        const respuesta = await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({
+                email: email.value.trim(),
+                password: password.value
             })
-        );
+        });
 
-        cerrarLogin();
+        const datos = await respuesta.json().catch(function() {
+            return {};
+        });
+
+        if (!respuesta.ok) {
+            mensajeError.textContent =
+                datos.message || "El correo o la contraseña son incorrectos.";
+            return;
+        }
+
+        // Guardar información del usuario
+        sessionStorage.setItem("usuario", JSON.stringify(datos));
+
+        // Redirigir a la página principal
+        window.location.href = "index.html";
+
+    } catch (error) {
+
+        mensajeError.textContent = "No se pudo conectar con el servidor.";
+
+    } finally {
+
+        botonLogin.disabled = false;
+        botonLogin.textContent = "Iniciar sesion";
+
+    }
+}
+
+//Mostrar el inicio 
+document.addEventListener("DOMContentLoaded", function() {
+
+    const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+
+    const estadoSesion = document.getElementById("estadoSesion");
+
+    if (usuario) {
+
+        estadoSesion.textContent = "¡Bienvenido! Has iniciado sesión correctamente.";
 
     } else {
 
-        mensajeError.textContent =
-            "El correo o la contraseña son incorrectos.";
+        estadoSesion.textContent = "No has iniciado sesión.";
 
     }
 
-    botonLogin.disabled = false;
-    botonLogin.textContent = "Iniciar sesion";
+});
+
+//Mostrar nombre del usuario
+document.addEventListener("DOMContentLoaded", function() {
+
+    const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+
+    const estadoSesion = document.getElementById("estadoSesion");
+
+    if (usuario) {
+
+        estadoSesion.textContent =
+            "¡Bienvenido, " + usuario.nombre + "! Has iniciado sesión.";
+
+    } else {
+
+        estadoSesion.textContent = "Inicia sesión para continuar.";
+
+    }
+
+});
+
+function cerrarSesion() {
+
+    sessionStorage.removeItem("usuario");
+
+    window.location.href = "index.html";
 
 }
+
+
+const formulario = document.getElementById("loginForm");
+const estado = document.getElementById("estado");
+
+formulario.addEventListener("submit", async function(e) {
+
+    e.preventDefault();
+
+    const correo = document.getElementById("email").value.trim();
+    const clave = document.getElementById("password").value;
+
+    estado.textContent = "Verificando...";
+
+    try {
+
+        const respuesta = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({
+                email: correo,
+                password: clave
+            })
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            estado.textContent = datos.message || "Correo o contraseña incorrectos.";
+            return;
+        }
+
+        // Guardar información del usuario
+        sessionStorage.setItem("usuario", JSON.stringify(datos));
+
+        // Redirigir al index principal
+        window.location.href = "../../index.html";
+
+    } catch (error) {
+
+        estado.textContent = "Error al conectar con el servidor.";
+
+    }
+
+});
 
 
 // Detectar cuando se hace clic en un elemento para abrir el login
@@ -310,14 +398,14 @@ document.addEventListener("click", function(e) {
     }
 });
 
-document.getElementById("cerrarLogin").addEventListener("click", function() {
-
-    document.querySelector(".login-container").style.display = "none";
-
-});
-
 // Funcion para poder abrir el login desde otros archivos
 window.LoginModal = {
     open: abrirLogin,
     close: cerrarLogin
 };
+
+document.getElementById("cerrarRegistro").addEventListener("click", function() {
+
+    document.querySelector(".login-container").style.display = "none";
+
+});

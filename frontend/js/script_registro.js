@@ -1,5 +1,7 @@
 // Elementos principales del registro
+console.log("JavaScript de registro cargado");
 const formRegistro = document.getElementById("registroForm");
+console.log("Formulario encontrado:", formRegistro);
 const estadoRegistro = document.getElementById("estado");
 const botonRegistro = formRegistro.querySelector('button[type="submit"]');
 
@@ -116,10 +118,12 @@ function validarRegistro() {
 
 
 // Registrar al usuario
-function registrarUsuario(e) {
+async function registrarUsuario(e) {
 
     // Evitar que el formulario se envie solo
     e.preventDefault();
+
+    console.log("FORMULARIO INTERCEPTADO");
 
     if (!validarRegistro()) {
         return;
@@ -128,15 +132,56 @@ function registrarUsuario(e) {
     botonRegistro.disabled = true;
     botonRegistro.textContent = "Registrando...";
 
-    // Por ahora no hay backend, solo se muestra el mensaje
-    estadoRegistro.textContent = "¡Cuenta creada! Ahora puedes iniciar sesion.";
-    estadoRegistro.className = "estado-ok";
+    try {
 
-    formRegistro.reset();
+        console.log("Enviando datos al backend...");
+        console.log("URL:", "/api/register");
 
-    setTimeout(function() {
-        window.location.href = paginaLogin;
-    }, 1500);
+        const respuesta = await fetch("/api/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nombre: formRegistro.nombre.value.trim(),
+                apellido: formRegistro.apellido.value.trim(),
+                email: formRegistro.email.value.trim(),
+                password: formRegistro.password.value
+            })
+        });
+        console.log("Estado de respuesta:", respuesta.status);
+        console.log("URL de respuesta:", respuesta.url);
+
+        const datos = await respuesta.json().catch(function() { return {}; });
+
+        if (!respuesta.ok) {
+
+            // 409 = ese correo ya existe: se muestra debajo del campo
+            if (respuesta.status === 409) {
+                mostrarErrorRegistro("email", datos.message);
+            } else {
+                estadoRegistro.textContent = datos.message || "No se pudo crear la cuenta.";
+            }
+
+            botonRegistro.disabled = false;
+            botonRegistro.textContent = "Registrarse";
+            return;
+        }
+
+        estadoRegistro.textContent = "¡Cuenta creada! Ahora puedes iniciar sesion.";
+        estadoRegistro.className = "estado-ok";
+
+        formRegistro.reset();
+
+        setTimeout(function() {
+            window.location.href = paginaLogin;
+        }, 1500);
+
+    } catch (error) {
+
+        estadoRegistro.textContent = "No se pudo conectar con el servidor.";
+        botonRegistro.disabled = false;
+        botonRegistro.textContent = "Registrarse";
+
+    }
 }
 
 
