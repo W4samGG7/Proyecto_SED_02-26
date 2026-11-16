@@ -268,3 +268,17 @@ const mockProducts = [
     seller: { id: 5, name: "Carlos" },
   },
 ];
+
+function getProductById(id) {
+  return mockProducts.find((p) => p.id === Number(id));
+}
+
+function getProductsByCategory(category) {
+  return mockProducts.filter((p) => p.category === category);
+}
+
+function getProductsBySeller(sellerId, excludeId) {
+  return mockProducts.filter(
+    (p) => p.seller.id === sellerId && p.id !== Number(excludeId)
+  );
+}
