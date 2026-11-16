@@ -11,7 +11,7 @@ app.use(express.json());
 
 // CONFIGURACIÓN DE SESIONES
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'clave-temporal-desarrollo',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -218,6 +218,11 @@ app.post("/api/logout", (req, res) => {
 
     });
 
+});
+
+//VERIFICAR ESTADO API
+app.get('/api/estado', (req, res) => {
+    res.json({ mensaje: 'API funcionando correctamente' });
 });
 
 //RUTA PRINCIPAL
