@@ -173,6 +173,26 @@ body:not(.header-loaded) main {
     transform: scale(1.08);
 }
 
+.estado-sesion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.usuario-bienvenida {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-cerrar-sesion {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
+}
+
 .product-grid {
     margin: 0 40px 0 40px;
     display: flex;
