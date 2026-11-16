@@ -28,11 +28,11 @@ html, body {
     display: grid;
     grid-template-columns: repeat(3,auto);
     justify-content: space-between;
-    background-color: var(--lightgreen);
+    background-color: var(--lightred);
     padding: 32px 3.5% 15px;
     box-sizing: border-box;
     min-height: 215px;
-    color: var(--darkgreen);
+    color: var(--darkred);
     width: 100%;
     overflow-x: hidden;
 }
@@ -73,7 +73,7 @@ html, body {
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background-color: var(--lightred);
+    background-color: var(--lightgreen);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +82,7 @@ html, body {
 }
 
 .social-btn:hover {
-    background-color: var(--lightgreen);
+    background-color: var(--lightred);
     border: 2px solid var(--lightred);
 }
 

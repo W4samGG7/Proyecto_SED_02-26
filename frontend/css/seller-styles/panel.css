@@ -31,14 +31,14 @@ body {
 }
 
 .panel-header h1 {
-    color: var(--dark);
+    color: var(--darkgreen);
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 12px;
 }
 
 .panel-header p {
-    color: var(--text-light);
+    color: var(--text);
     font-size: 1rem;
     line-height: 1.6;
 }
@@ -48,9 +48,11 @@ body {
 ===================================== */
 
 .panel-modules h2 {
-    font-size: 1.5rem;
-    color: var(--dark);
+    font-size: 1.2rem;
+    color: var(--darkred);
     margin-bottom: 25px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
 }
 
 /* Contenedor de tarjetas */
@@ -75,7 +77,7 @@ body {
     flex: 1;
     min-width: 0;
     margin: 0;
-    color: var(--dark);
+    color: var(--darkgreen);
     font-size: 1.1rem;
     line-height: 1.3;
     font-weight: 700;
@@ -103,7 +105,7 @@ body {
 .module-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px var(--glow);
-    border-color: var(--secondary);
+    border-color: var(--darkred);
 }
 
 /* Iconos */
@@ -116,8 +118,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--icon-bg);
-    color: var(--primary);
+    background-color: var(--lightred);
+    color: var(--darkgreen);
     border-radius: 10px;
     font-size: 1.6rem;
     font-weight: 600;
@@ -128,7 +130,7 @@ body {
 
 .module-card h3 {
     font-size: 1.1rem;
-    color: var(--dark);
+    color: var(--darkgreen);
     margin-bottom: 8px;
 }
 
@@ -136,7 +138,7 @@ body {
 
 .module-card p {
     font-size: 0.9rem;
-    color: var(--text-light);
+    color: var(--text);
     line-height: 1.5;
     margin-bottom: 15px;
     max-width: 450px;
@@ -146,8 +148,8 @@ body {
 
 .module-button {
     display: inline-block;
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--darkgreen);
+    color: var(--lightgreen);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
@@ -159,7 +161,7 @@ body {
 }
 
 .module-button:hover {
-    background-color: var(--primary-hover);
+    background-color: var(--darkred);
 }
 
 /* =====================================
