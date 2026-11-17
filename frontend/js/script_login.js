@@ -271,11 +271,7 @@ async function iniciarSesion(e) {
             return;
         }
 
-        // Guardar información del usuario
-        sessionStorage.setItem("usuario", JSON.stringify(datos));
-
-        // Redirigir a la página principal
-        window.location.href = "index.html";
+        window.location.reload();
 
     } catch (error) {
 
@@ -289,53 +285,17 @@ async function iniciarSesion(e) {
     }
 }
 
-//Mostrar el inicio 
-document.addEventListener("DOMContentLoaded", function() {
+//para conseguir la url de redireccion
+function getRedirectTarget(){
+    const redirect = new URLSearchParams(window.location.search).get('redirect');
 
-    const usuario = JSON.parse(sessionStorage.getItem("usuario"));
+    const isSafe = redirect
+        && redirect.startsWith('/')
+        && !redirect.startsWith('//')
+        && !redirect.startsWith('/\\');
 
-    const estadoSesion = document.getElementById("estadoSesion");
-
-    if (usuario) {
-
-        estadoSesion.textContent = "¡Bienvenido! Has iniciado sesión correctamente.";
-
-    } else {
-
-        estadoSesion.textContent = "No has iniciado sesión.";
-
-    }
-
-});
-
-//Mostrar nombre del usuario
-document.addEventListener("DOMContentLoaded", function() {
-
-    const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-
-    const estadoSesion = document.getElementById("estadoSesion");
-
-    if (usuario) {
-
-        estadoSesion.textContent =
-            "¡Bienvenido, " + usuario.nombre + "! Has iniciado sesión.";
-
-    } else {
-
-        estadoSesion.textContent = "Inicia sesión para continuar.";
-
-    }
-
-});
-
-function cerrarSesion() {
-
-    sessionStorage.removeItem("usuario");
-
-    window.location.href = "index.html";
-
+    return isSafe ? redirect : '/';
 }
-
 
 const formulario = document.getElementById("loginForm");
 const estado = document.getElementById("estado");
@@ -370,11 +330,8 @@ formulario.addEventListener("submit", async function(e) {
             return;
         }
 
-        // Guardar información del usuario
-        sessionStorage.setItem("usuario", JSON.stringify(datos));
-
-        // Redirigir al index principal
-        window.location.href = "../../index.html";
+        // Redirigir a la pagina destino
+        window.location.href = getRedirectTarget();
 
     } catch (error) {
 

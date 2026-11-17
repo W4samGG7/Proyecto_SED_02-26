@@ -22,6 +22,11 @@ app.use(session({
     }
 }));
 
+const { requireLoginPage } = require('./middleware/auth');
+
+app.use('/modules/seller', requireLoginPage);
+
+
 //SERVIR ARCHIVOS DEL FRONTEND
 app.use(express.static(
     path.join(__dirname, '../frontend')
