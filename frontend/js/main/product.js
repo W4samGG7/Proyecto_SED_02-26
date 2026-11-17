@@ -23,8 +23,8 @@ function renderProductDetail(product) {
 
             <div class="product-summary">
                 <h1 class="detail-name">${product.name}</h1>
-                <span class="detail-brand">${product.brand}</span>
-                <p class="detail-meta">Talla ${product.size} · ${product.type}</p>
+                <span class="detail-brand">${product.brand} </span>
+                <p class="detail-meta">Talla ${product.size} · ${product.type} · ${product.category}</p>
                 <p class="detail-meta">Condición: ${product.condition}</p>
                 <p class="detail-price">$${product.price.toFixed(2)}</p>
                 <p class="detail-stock ${available ? "" : "out"}">
@@ -42,8 +42,9 @@ function renderProductDetail(product) {
                     <ul>
                         <li><strong>Marca:</strong> ${product.brand}</li>
                         <li><strong>Tipo:</strong> ${product.type}</li>
-                        <li><strong>Condición:</strong> ${product.condition}</li>
+                        <li><strong>Categoria:</strong> ${product.category}</li>
                         <li><strong>Talla:</strong> ${product.size}</li>
+                        <li><strong>Condición:</strong> ${product.condition}</li>
                     </ul>
                 </div>
             </details>

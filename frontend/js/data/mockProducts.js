@@ -11,7 +11,7 @@ const mockCategories = [
 const mockProducts = [
   {
     id: 101,
-    category: "mujer",
+    category: "Mujer",
     name: "Jeans clásico claro",
     brand: "Levi's",
     type: "Jeans",
@@ -28,7 +28,7 @@ const mockProducts = [
   },
   {
     id: 102,
-    category: "mujer",
+    category: "Mujer",
     name: "Vestido a cuadros de manga corta celeste",
     brand: "Zara",
     type: "Vestido",
@@ -45,7 +45,7 @@ const mockProducts = [
   },
   {
     id: 103,
-    category: "mujer",
+    category: "Mujer",
     name: "Blusa de botones formal marrón",
     brand: "Mango",
     type: "Blusa",
@@ -61,7 +61,7 @@ const mockProducts = [
   },
   {
     id: 104,
-    category: "mujer",
+    category: "Mujer",
     name: "Jeans negro recto",
     brand: "H&M",
     type: "Jeans",
@@ -77,7 +77,7 @@ const mockProducts = [
   },
   {
     id: 105,
-    category: "mujer",
+    category: "Mujer",
     name: "Jeans mom azul medio",
     brand: "Pull&Bear",
     type: "Jeans",
@@ -93,7 +93,7 @@ const mockProducts = [
   },
   {
     id: 106,
-    category: "mujer",
+    category: "Mujer",
     name: "Vestido a cuadros rosa",
     brand: "Shein",
     type: "Vestido",
@@ -109,7 +109,7 @@ const mockProducts = [
   },
   {
     id: 107,
-    category: "mujer",
+    category: "Mujer",
     name: "Blusa de botones café oscuro",
     brand: "Zara",
     type: "Blusa",
@@ -125,7 +125,7 @@ const mockProducts = [
   },
   {
     id: 108,
-    category: "mujer",
+    category: "Mujer",
     name: "Jeans negro skinny",
     brand: "Bershka",
     type: "Jeans",
@@ -141,7 +141,7 @@ const mockProducts = [
   },
   {
     id: 201,
-    category: "hombre",
+    category: "Hombre",
     name: "Sudadera oversize gris y azul",
     brand: "Tommy Hilfiger",
     type: "Sudadera",
@@ -157,7 +157,7 @@ const mockProducts = [
   },
   {
     id: 202,
-    category: "hombre",
+    category: "Hombre",
     name: "Sudadera oversize gris",
     brand: "Nike",
     type: "Sudadera",
@@ -173,7 +173,7 @@ const mockProducts = [
   },
   {
     id: 203,
-    category: "hombre",
+    category: "Hombre",
     name: "Pantalón chino beige",
     brand: "Dockers",
     type: "Pantalón",
@@ -189,7 +189,7 @@ const mockProducts = [
   },
   {
     id: 204,
-    category: "hombre",
+    category: "Hombre",
     name: "Pants oversize gris oscuro",
     brand: "Adidas",
     type: "Pants",
@@ -205,7 +205,7 @@ const mockProducts = [
   },
   {
     id: 205,
-    category: "hombre",
+    category: "Hombre",
     name: "Sudadera oversize azul",
     brand: "Levi's",
     type: "Sudadera",
@@ -221,7 +221,7 @@ const mockProducts = [
   },
   {
     id: 206,
-    category: "hombre",
+    category: "Hombre",
     name: "Sudadera gris clásica",
     brand: "Champion",
     type: "Sudadera",
@@ -237,7 +237,7 @@ const mockProducts = [
   },
   {
     id: 207,
-    category: "hombre",
+    category: "Hombre",
     name: "Pantalón chino caqui",
     brand: "Gap",
     type: "Pantalón",
@@ -253,7 +253,7 @@ const mockProducts = [
   },
   {
     id: 208,
-    category: "hombre",
+    category: "Hombre",
     name: "Pants jogger gris",
     brand: "Puma",
     type: "Pants",
