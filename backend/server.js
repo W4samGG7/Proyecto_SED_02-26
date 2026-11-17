@@ -1,9 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { pool, probarConexion } = require('./config/database'); 
-require('dotenv').config();
 
 const app = express();
 
@@ -24,7 +24,21 @@ app.use(session({
 
 const { requireLoginPage } = require('./middleware/auth');
 
-app.use('/modules/seller', requireLoginPage);
+app.use((req, res, next) => {
+    let requested;
+    try {
+        requested = path.posix.normalize(
+            decodeURIComponent(req.path).replace(/\\/g, '/')
+        ).toLowerCase();
+    } catch {
+        return res.status(400).end();
+    }
+
+    if (requested.startsWith('/modules/seller')) {
+        return requireLoginPage(req, res, next);
+    }
+    next();
+});
 
 
 //SERVIR ARCHIVOS DEL FRONTEND
@@ -44,11 +58,26 @@ app.post("/api/register", async (req, res) => {
 
         const { nombre, apellido, email, password } = req.body;
 
-        if (!nombre || !apellido || !email || !password) {
+        if([nombre,apellido,email,password].some(
+            (value) => typeof value !== 'string' || value.trim() === ''
+        )) {
             return res.status(400).json({
                 message: "Todos los campos son obligatorios."
             });
         }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+        if (!emailRegex.test(email.trim())) {
+            return res.status(400).json({message: 'Ingresa un correo válido.'});
+        }
+
+        if (password.length < 8 || password.length > 72) {
+            return res.status(400).json({
+                message: 'La contraseña debe tener 8 y 72 caracteres.'
+            });
+        }
+
 
         const correo = email.trim().toLowerCase();
 
