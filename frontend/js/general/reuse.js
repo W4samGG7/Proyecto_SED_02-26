@@ -1,4 +1,6 @@
 
+import {initSession} from './session.js'
+
 function loadComponent(id, archivo) {
    return fetch(archivo)
     .then((response) => {
@@ -78,6 +80,9 @@ function initHeaderButtons(){
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  
+  initSession();
+
   const headerContainer = document.getElementById("header-container");
   const footerContainer = document.getElementById("footer-container");
 

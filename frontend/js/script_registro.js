@@ -1,12 +1,17 @@
 // Elementos principales del registro
-console.log("JavaScript de registro cargado");
 const formRegistro = document.getElementById("registroForm");
-console.log("Formulario encontrado:", formRegistro);
 const estadoRegistro = document.getElementById("estado");
 const botonRegistro = formRegistro.querySelector('button[type="submit"]');
 
 // Direccion de la pagina de login
-const paginaLogin = "index_login.html";
+const redirectParam = new URLSearchParams(window.location.search).get("redirect");
+
+const paginaLogin = redirectParam
+    ? "index_login.html?redirect=" + encodeURIComponent(redirectParam)
+    : "index_login.html";
+
+const loginLink = document.querySelector(".register-link a");
+if (loginLink) loginLink.href = paginaLogin;
 
 // Reglas de validacion
 const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+(?:[ '-][A-Za-zÁÉÍÓÚÜÑáéíóúüñ]+)*$/;
@@ -123,8 +128,6 @@ async function registrarUsuario(e) {
     // Evitar que el formulario se envie solo
     e.preventDefault();
 
-    console.log("FORMULARIO INTERCEPTADO");
-
     if (!validarRegistro()) {
         return;
     }
@@ -133,9 +136,6 @@ async function registrarUsuario(e) {
     botonRegistro.textContent = "Registrando...";
 
     try {
-
-        console.log("Enviando datos al backend...");
-        console.log("URL:", "/api/register");
 
         const respuesta = await fetch("/api/register", {
             method: "POST",
@@ -147,8 +147,6 @@ async function registrarUsuario(e) {
                 password: formRegistro.password.value
             })
         });
-        console.log("Estado de respuesta:", respuesta.status);
-        console.log("URL de respuesta:", respuesta.url);
 
         const datos = await respuesta.json().catch(function() { return {}; });
 
@@ -199,10 +197,3 @@ formRegistro.addEventListener("input", function(e) {
 });
 
 formRegistro.addEventListener("submit", registrarUsuario);
-
-// Cerrar el registro
-document.getElementById("cerrarRegistro").addEventListener("click", function() {
-
-    document.querySelector(".login-container").style.display = "none";
-
-});
