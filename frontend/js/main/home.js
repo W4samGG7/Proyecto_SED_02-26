@@ -52,14 +52,14 @@ function renderProducts(containerId, products) {
       const card = e.target.closest(".product-card");
       if(!card) return;
 
-      window.location.href = `produ
-    })
+      window.location.href = `producto.html?id=${card.dataset.id}`;
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   renderCategories();
-  renderProducts("women-products", mockWomenProducts);
-  renderProducts("men-products", mockMenProducts);
+  renderProducts("women-products", getProductsByCategory("mujer"));
+  renderProducts("men-products", getProductsByCategory("hombre"));
 });
 
 //Mostrar sesion iniciada y cerrar sesion
