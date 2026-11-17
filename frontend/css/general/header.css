@@ -53,6 +53,7 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
     border-radius: 20px;
     color: var(--darkgreen);
     font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
     text-decoration: none;
     display: inline-block;
     transition: background 0.2s ease, color 0.2s ease;
