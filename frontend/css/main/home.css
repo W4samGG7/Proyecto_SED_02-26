@@ -191,6 +191,8 @@ body:not(.header-loaded) main {
     cursor: pointer;
     background-color: var(--lightgreen);
     color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
 }
 
 .product-grid {
