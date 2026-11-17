@@ -62,35 +62,3 @@ document.addEventListener("DOMContentLoaded", () => {
   renderProducts("men-products", getProductsByCategory("Hombre"));
 });
 
-//Mostrar sesion iniciada y cerrar sesion
-document.addEventListener("DOMContentLoaded", function() {
-
-    const usuario = JSON.parse(sessionStorage.getItem("usuario"));
-
-    const estadoSesion = document.getElementById("estadoSesion");
-
-    if (!estadoSesion) return;
-
-    if (usuario) {
-
-        estadoSesion.innerHTML = `
-            <span class="usuario-bienvenida">
-                ¡Hola, ${usuario.nombre || "Usuario"}!
-            </span>
-
-            <button id="cerrarSesion" class="btn-cerrar-sesion">
-                Cerrar sesión
-            </button>
-        `;
-
-        document.getElementById("cerrarSesion").addEventListener("click", function() {
-
-            sessionStorage.removeItem("usuario");
-
-            window.location.reload();
-
-        });
-
-    }
-
-});
