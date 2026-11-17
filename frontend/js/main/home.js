@@ -52,7 +52,7 @@ function renderProducts(containerId, products) {
       const card = e.target.closest(".product-card");
       if(!card) return;
 
-      window.location.href = `producto.html?id=${card.dataset.id}`;
+      window.location.href = `modules/productDetail/product.html?id=${card.dataset.id}`;
     });
 }
 

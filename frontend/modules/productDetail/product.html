@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detalle del producto</title>
+    <link rel="stylesheet" href="../../css/base/base.css" />
+    <link rel="stylesheet" href="../../css/general/footer.css" />
+    <link rel="stylesheet" href="../../css/general/header.css" />
+    <link rel="stylesheet" href="../../css/main/producto.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-container"></div>
+
+    <main class="product-detail-page">
+        <section id="product-detail" class="product-detail"></section>
+
+        <section id="seller-section" class="seller-section" hidden>
+            <div class="seller-header">
+                <h2>Más de este vendedor</h2>
+                <a href="#" class="see-all" id="seller-closet-link">Ver closet</a>
+            </div>
+            <div class="seller-items" id="seller-items"></div>
+        </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script type="module" src="../../js/general/reuse.js"></script>
+    <script src="../../js/data/mockProducts.js"></script>
+    <script src="../../js/main/product.js"></script>
+  </body>
+</html>
