@@ -84,7 +84,7 @@ h1, h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-height: 690px;
+  height: 690px;
   width: 570px;
   overflow: hidden;      
   cursor: zoom-in;
@@ -144,7 +144,7 @@ h1, h2 {
 }
 
 .btn-add-cart {
-  width: 100%;
+  flex: 1;
   padding: 14px;
   border: none;
   background-color: var(--lightgreen);
@@ -154,7 +154,6 @@ h1, h2 {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
-  margin-bottom: 40px;
   transition: opacity 0.2s ease;
 }
 
@@ -213,6 +212,42 @@ h1, h2 {
   line-height: 1.8;
 }
 
+
+.cart-actions {
+  display: flex;
+  align-items: stretch;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--gray-200);
+}
+
+.quantity-controls button {
+  width: 40px;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.quantity-controls button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+#qty-value {
+  min-width: 36px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 /* ---------- Más de este vendedor ---------- */
 .seller-section {
   margin-top: 40px;
@@ -223,7 +258,7 @@ h1, h2 {
   justify-content: right;
   align-items: center;
   margin-bottom: 14px;
-  gap: 100px;
+  gap: 20px;
 }
 
 .seller-header h2 {

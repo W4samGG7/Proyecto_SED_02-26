@@ -31,9 +31,19 @@ function renderProductDetail(product) {
                     ${available ? `Disponibles: ${product.stock}` : "Agotado"}
                 </p>
 
-            <button class="btn-add-cart" id="add-cart-btn" ${available ? "" : "disabled"}>
-                ${available ? "Agregar al carrito" : "No disponible"}
-            </button>
+            <div class="cart-actions">
+                ${available && product.stock > 1 ? `
+                    <div class="quantity-controls">
+                    <button type="button" id="qty-minus" aria-label="Disminuir cantidad">−</button>
+                    <span id="qty-value">1</span>
+                    <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
+                    </div>
+                ` : ""}
+
+                <button class="btn-add-cart" id="add-cart-btn" ${available ? "" : "disabled"}>
+                    ${available ? "Agregar al carrito" : "No disponible"}
+                </button>
+            </div>
 
             <details class="accordion" open>
                 <summary>Detalles del artículo</summary>
@@ -58,11 +68,36 @@ function renderProductDetail(product) {
         </div>
         `;
 
+        let quantity = 1;
+
+        const qtyValue = document.getElementById("qty-value");
+        const minusBtn = document.getElementById("qty-minus");
+        const plusBtn = document.getElementById("qty-plus");
+
+        function updateQuantity() {
+        if (!qtyValue) return;
+        qtyValue.textContent = quantity;
+        minusBtn.disabled = quantity <= 1;
+        plusBtn.disabled = quantity >= product.stock;
+        }
+
+        if (minusBtn && plusBtn) {
+        minusBtn.addEventListener("click", () => {
+            if (quantity > 1) quantity--;
+            updateQuantity();
+        });
+        plusBtn.addEventListener("click", () => {
+            if (quantity < product.stock) quantity++;
+            updateQuantity();
+        });
+        updateQuantity();
+        }
+
         const addBtn = document.getElementById("add-cart-btn");
-        if(addBtn) {
-            addBtn.addEventListener("click", () => {
-                alert(`"${product.name}" agregado al carrito`);
-            });
+        if (addBtn) {
+        addBtn.addEventListener("click", () => {
+            alert(`${quantity} × "${product.name}" agregado al carrito`);
+        });
         }
 
         const gallery = container.querySelector(".gallery-main");

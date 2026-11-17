@@ -58,8 +58,8 @@ function renderProducts(containerId, products) {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderCategories();
-  renderProducts("women-products", getProductsByCategory("mujer"));
-  renderProducts("men-products", getProductsByCategory("hombre"));
+  renderProducts("women-products", getProductsByCategory("Mujer"));
+  renderProducts("men-products", getProductsByCategory("Hombre"));
 });
 
 //Mostrar sesion iniciada y cerrar sesion
