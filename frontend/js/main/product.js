@@ -1,3 +1,12 @@
+function renderCategories() {
+  const container = document.getElementById("categories-container");
+  if (!container) return;
+
+  container.innerHTML = mockCategories
+    .map((category) => `<li><a href="#">${category.name}</a></li>`)
+    .join("");
+}
+
 function getProductIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get("id");
@@ -13,8 +22,8 @@ function renderProductDetail(product) {
             </div>
 
             <div class="product-summary">
-                <span class="detail-brand">${product.brand}</span>
                 <h1 class="detail-name">${product.name}</h1>
+                <span class="detail-brand">${product.brand}</span>
                 <p class="detail-meta">Talla ${product.size} · ${product.type}</p>
                 <p class="detail-meta">Condición: ${product.condition}</p>
                 <p class="detail-price">$${product.price.toFixed(2)}</p>
@@ -54,6 +63,20 @@ function renderProductDetail(product) {
                 alert(`"${product.name}" agregado al carrito`);
             });
         }
+
+        const gallery = container.querySelector(".gallery-main");
+        const img = gallery.querySelector("img");
+
+        gallery.addEventListener("mouseenter", () => gallery.classList.add("zoomed"));
+        gallery.addEventListener("mouseleave", () => gallery.classList.remove("zoomed"));
+        gallery.addEventListener("mousemove", (e) => {
+        const rect = gallery.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        img.style.transformOrigin = `${x}% ${y}%`;
+        });
+
+        gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
 }
 
 function renderSellerItems(product) {
@@ -85,6 +108,7 @@ function renderNotFound() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  renderCategories();
   const product = getProductById(getProductIdFromUrl());
 
   if (!product) {

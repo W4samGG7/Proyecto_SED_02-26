@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../css/base/base.css" />
     <link rel="stylesheet" href="../../css/general/footer.css" />
     <link rel="stylesheet" href="../../css/general/header.css" />
-    <link rel="stylesheet" href="../../css/main/producto.css" />
+    <link rel="stylesheet" href="../../css/main/product.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,6 +17,38 @@
   </head>
   <body>
     <div id="header-container"></div>
+
+    <nav class="nav-bar">
+      <ul class="categories" id="categories-container"></ul>
+
+      <div class="header-icons">
+        <button class="icon-btn">
+          <img
+            src="/frontend/assets/icons/navigation/search.svg"
+            alt="Buscar"
+            class="icon"
+          />
+        </button>
+
+        <button class="icon-btn">
+          <img
+            src="/frontend/assets/icons/navigation/cart.svg"
+            alt="Carrito"
+            class="icon"
+          />
+        </button>
+
+        <div id="estadoSesion" class="estado-sesion">
+          <a href="modules/login/index_login.html" class="icon-btn">
+              <img
+                src="/frontend/assets/icons/navigation/user.svg"
+                alt="Cuenta"
+                class="icon"
+              />
+          </a>
+        </div>
+      </div>
+    </nav>
 
     <main class="product-detail-page">
         <section id="product-detail" class="product-detail"></section>
