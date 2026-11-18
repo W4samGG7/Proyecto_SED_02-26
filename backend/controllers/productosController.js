@@ -14,6 +14,14 @@ const ALLOWED_CONDITIONS = ['nuevo', 'usado-como-nuevo', 'usado-buen-estado'];
 const ALLOWED_SECTIONS = ['mujer', 'hombre', 'infantil', 'zapatos', 'accesorios', 'bolsos'];
 
 
+const PRODUCT_SELECT = `
+    SELECT p.id, p.nombre, p.marca, p.tipo, p.condicion, p.talla, p.precio,
+           p.cantidad, p.descripcion, p.imagen_url, p.seccion, p.vendedor_id,
+           u.nombre AS vendedor_nombre
+    FROM productos p
+    LEFT JOIN usuarios u ON u.id = p.vendedor_id
+`;
+
 //Detectar si es png o jpg
 function detectImageType(buffer){
     const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -122,45 +130,103 @@ async function crearProducto(req, res) {
     }
 }
 
-// Obtener todos los productos activos
-const obtenerProductos = async (req, res) => {
-    try {
-        const [productos] = await pool.execute(`
-            SELECT
-                id_producto,
-                nombre,
-                marca,
-                tipo,
-                condicion,
-                talla,
-                precio,
-                cantidad,
-                descripcion,
-                imagen_url,
-                seccion,
-                vendedor_id,
-                creado_en
-            FROM productos
-            WHERE activo = 1
-            ORDER BY creado_en DESC
-        `);
+function toProduct(row){
+    return{
+        id: row.id,
+        name: row.nombre,
+        brand: row.marca,
+        type: row.tipo,
+        condition: row.condicion,
+        size: row.talla,
+        price: Number(row.precio),
+        stock: row.cantidad,
+        description: row.descripcion ?? '',
+        images: row.imagen_url ? [row.imagen_url] : [],
+        category: row.seccion,
+        seller: row.vendedor_id
+            ? { id: row.vendedor_id, name: row.vendedor_nombre }
+            : null
+    };
+}
 
-        res.status(200).json({
-            mensaje: 'Productos obtenidos correctamente',
-            total: productos.length,
-            productos: productos
-        });
+function isId(value){
+    return typeof value === 'string' && /^\d{1,10}$/.test(value);
+}
+
+// Obtener todos los productos 
+async function obtenerProductos(req, res) {
+    try {
+        const conditions = ['p.activo = 1'];
+        const params = [];
+        const { category, seller, exclude } = req.query;
+
+        if (category !== undefined) {
+            if (!ALLOWED_SECTIONS.includes(category)) {
+                return res.status(400).json({ message: 'Categoría no válida.' });
+            }
+            conditions.push('p.seccion = ?');
+            params.push(category);
+        }
+
+        if (seller !== undefined) {
+            if (!isId(seller)) {
+                return res.status(400).json({ message: 'Vendedor no válido.' });
+            }
+            conditions.push('p.vendedor_id = ?');
+            params.push(Number(seller));
+        }
+
+        if (exclude !== undefined) {
+            if (!isId(exclude)) {
+                return res.status(400).json({ message: 'Producto a excluir no válido.' });
+            }
+            conditions.push('p.id <> ?');
+            params.push(Number(exclude));
+        }
+
+        const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 24, 1), 50);
+
+        const [rows] = await pool.execute(
+            `${PRODUCT_SELECT}
+             WHERE ${conditions.join(' AND ')}
+             ORDER BY p.creado_en DESC, p.id DESC
+             LIMIT ${limit}`,
+            params
+        );
+
+        return res.json(rows.map(toProduct));
 
     } catch (error) {
         console.error('Error al obtener productos:', error);
-
-        res.status(500).json({
-            mensaje: 'Error al consultar los productos'
-        });
+        return res.status(500).json({ message: 'Error al obtener los productos.' });
     }
 };
 
+async function obtenerProductoPorId(req,res) {
+    try {
+        if(!isId(req.params.id)){
+            return res.status(400).json({message: 'Id de producto no valido.'});
+        }
+
+        const [rows] = await pool.execute(
+             `${PRODUCT_SELECT} WHERE p.id = ? AND p.activo = 1`,
+             [Number(req.params.id)]
+        );
+
+        if(rows.length === 0) {
+            return res.status(404).json({message: 'Producto no encontrado.'});
+        }
+
+        return res.json(toProduct(rows[0]));
+    } catch (error) {
+        console.error('Error al obtener el producto:', error);
+        return res.status(500).json({message: 'Error al obtener el producto.'});
+    }
+}
+
+
 module.exports = {
     obtenerProductos,
+    obtenerProductoPorId,
     crearProducto
 };
