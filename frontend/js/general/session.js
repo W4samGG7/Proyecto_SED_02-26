@@ -1,4 +1,5 @@
 const LOGIN_ROUTE = '/modules/login/index_login.html';
+const ADMIN_ROUTE = '/modules/admin/';
 
 function currentPath(){
     return window.location.pathname + window.location.search;
@@ -55,6 +56,13 @@ function rememberLinksAfterLogin() {
 
 export async function initSession() {
     const user = await getSession();
+
+    // El admin es solo administrativo: no compra ni vende, va directo a su panel
+    if (user && user.rol === 'admin' && !window.location.pathname.startsWith(ADMIN_ROUTE)) {
+        window.location.replace(`${ADMIN_ROUTE}panel.html`);
+        return;
+    }
+
     renderSessionState(user);
 
     if (user) return;
