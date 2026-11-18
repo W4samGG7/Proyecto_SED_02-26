@@ -14,7 +14,35 @@ function getProductIdFromUrl() {
 
 function renderProductDetail(product) {
     const container = document.getElementById("product-detail");
-    const available = product.stock > 0;
+    const inCart = getCartQuantity(product.id);
+    const available = getAvailableStock(product);
+    const soldOut = product.stock <= 0;
+    const allInCart = !soldOut && available === 0;
+
+    let stockText;
+    if (soldOut) {
+        stockText = "Agotado";
+    } else if (allInCart) {
+        stockText = `Tienes ${inCart === 1 ? "la única unidad" : `las ${inCart} unidades`} en tu carrito`;
+    } else {
+        stockText = `Disponibles: ${available}` + (inCart > 0 ? ` · ${inCart} en tu carrito` : "");
+    }
+
+    let actionsHTML;
+    if (soldOut) {
+        actionsHTML = `<button class="btn-add-cart" disabled>No disponible</button>`;
+    } else if (allInCart) {
+        actionsHTML = `<a href="../shoppingCart/cart.html" class="btn-add-cart">Ver carrito</a>`;
+    } else {
+        actionsHTML = `
+        ${available > 1 ? `
+            <div class="quantity-controls">
+            <button type="button" id="qty-minus" aria-label="Disminuir cantidad">−</button>
+            <span id="qty-value">1</span>
+            <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
+            </div>` : ""}
+        <button class="btn-add-cart" id="add-cart-btn">Agregar al carrito</button>`;
+    }
 
         container.innerHTML = `
             <div class="gallery-main">
@@ -27,23 +55,9 @@ function renderProductDetail(product) {
                 <p class="detail-meta">Talla ${product.size} · ${product.type} · ${product.category}</p>
                 <p class="detail-meta">Condición: ${product.condition}</p>
                 <p class="detail-price">$${product.price.toFixed(2)}</p>
-                <p class="detail-stock ${available ? "" : "out"}">
-                    ${available ? `Disponibles: ${product.stock}` : "Agotado"}
-                </p>
+                <p class="detail-stock ${soldOut ? "out" : ""}">${stockText}</p>
 
-            <div class="cart-actions">
-                ${available && product.stock > 1 ? `
-                    <div class="quantity-controls">
-                    <button type="button" id="qty-minus" aria-label="Disminuir cantidad">−</button>
-                    <span id="qty-value">1</span>
-                    <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
-                    </div>
-                ` : ""}
-
-                <button class="btn-add-cart" id="add-cart-btn" ${available ? "" : "disabled"}>
-                    ${available ? "Agregar al carrito" : "No disponible"}
-                </button>
-            </div>
+            <div class="cart-actions">${actionsHTML}</div>
 
             <details class="accordion" open>
                 <summary>Detalles del artículo</summary>
@@ -61,12 +75,12 @@ function renderProductDetail(product) {
 
             <details class="accordion">
                 <summary>Envíos y devoluciones</summary>
-                <div class="accordion-body">
-                    <p>Información de envíos y devoluciones próximamente.</p>
-                </div>
+                    <div class="accordion-body">
+                        <p>Información de envíos y devoluciones próximamente.</p>
+                    </div>
             </details>
-        </div>
-        `;
+            </div>
+    `;
 
         let quantity = 1;
 
@@ -75,10 +89,9 @@ function renderProductDetail(product) {
         const plusBtn = document.getElementById("qty-plus");
 
         function updateQuantity() {
-        if (!qtyValue) return;
         qtyValue.textContent = quantity;
         minusBtn.disabled = quantity <= 1;
-        plusBtn.disabled = quantity >= product.stock;
+        plusBtn.disabled = quantity >= available;
         }
 
         if (minusBtn && plusBtn) {
@@ -87,7 +100,7 @@ function renderProductDetail(product) {
             updateQuantity();
         });
         plusBtn.addEventListener("click", () => {
-            if (quantity < product.stock) quantity++;
+            if (quantity < availablek) quantity++;
             updateQuantity();
         });
         updateQuantity();
@@ -95,9 +108,17 @@ function renderProductDetail(product) {
 
         const addBtn = document.getElementById("add-cart-btn");
         if (addBtn) {
-        addBtn.addEventListener("click", () => {
-            alert(`${quantity} × "${product.name}" agregado al carrito`);
-        });
+            addBtn.addEventListener("click", () => {
+            const result = addToCart(product.id, quantity);
+
+            if (result.ok) {
+                showCartPopup(result.product, result.added);
+            } else {
+                showToast(result.message);
+            }
+
+            renderProductDetail(product); // se redibuja con la disponibilidad actualizada
+            });
         }
 
         const gallery = container.querySelector(".gallery-main");

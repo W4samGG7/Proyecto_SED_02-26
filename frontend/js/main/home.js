@@ -45,16 +45,25 @@ function renderProducts(containerId, products) {
     .join("");
 
     container.addEventListener("click", (e) => {
-      if(e.target.closest(".add-to-cart")) {
+      const addBtn = e.target.closest(".add-to-cart");
+      if (addBtn) {
+        const card = addBtn.closest(".product-card");
+        const result = addToCart(card.dataset.id, 1);
+
+        if (result.ok) {
+          showCartPopup(result.product, result.added);
+        } else {
+          showToast(result.message);
+        }
         return;
       }
 
       const card = e.target.closest(".product-card");
-      if(!card) return;
+      if (!card) return;
 
       window.location.href = `modules/productDetail/product.html?id=${card.dataset.id}`;
     });
-}
+  }
 
 document.addEventListener("DOMContentLoaded", () => {
   renderCategories();

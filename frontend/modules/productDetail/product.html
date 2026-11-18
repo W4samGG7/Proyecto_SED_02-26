@@ -30,12 +30,13 @@
           />
         </button>
 
-        <a href="../shoppingCart/cart.html" class="icon-btn">
+        <a href="../shoppingCart/cart.html" class="icon-btn cart-link">
           <img
             src="../../assets/icons/navigation/cart.svg"
             alt="Carrito"
             class="icon"
           />
+          <span class="cart-badge" id="cart-badge" hidden></span>
         </a>
 
         <div id="estadoSesion" class="estado-sesion">
@@ -65,6 +66,7 @@
     <div id="footer-container"></div>
     <script type="module" src="../../js/general/reuse.js"></script>
     <script src="../../js/data/mockProducts.js"></script>
+    <script src="../../js/shoppingCart/cartService.js"></script>
     <script src="../../js/main/product.js"></script>
   </body>
 </html>
