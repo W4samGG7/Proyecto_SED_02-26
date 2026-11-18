@@ -222,11 +222,11 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
   display: block;
   text-align: center;
   padding: 14px;
-  background: var(--darkred);
-  color: var(--lightred);
+  background: var(--lightgreen);
+  color: var(--darkgreen);
   font-family: "DM Sans", sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;

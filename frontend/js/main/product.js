@@ -100,7 +100,7 @@ function renderProductDetail(product) {
             updateQuantity();
         });
         plusBtn.addEventListener("click", () => {
-            if (quantity < availablek) quantity++;
+            if (quantity < available) quantity++;
             updateQuantity();
         });
         updateQuantity();

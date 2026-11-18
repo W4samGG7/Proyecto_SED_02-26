@@ -308,6 +308,28 @@ h1, h2 {
   padding: 60px 0;
 }
 
+.estado-sesion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.usuario-bienvenida {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-cerrar-sesion {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 800px) {
   .product-detail {

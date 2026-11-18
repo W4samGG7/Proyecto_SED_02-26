@@ -109,17 +109,6 @@ body:not(.header-loaded) main {
     color: var(--darkred);
 }
 
-.btn-hero-buy {
-    display: inline-block;
-    background-color: var(--darkgreen);
-    color: var(--lightgreen);
-    margin-top: 20px;
-    padding: 10px 22px;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-}
-
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -132,16 +121,6 @@ body:not(.header-loaded) main {
     font-weight: 500;
     color: var(--darkred);
     margin: 0;
-}
-
-.see-all {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--darkgreen);
-    text-decoration:none;      
-    letter-spacing: 1.5px;         
-    border-bottom: 2px solid var(--darkgreen);  
-    padding-bottom: 2px;
 }
 
 .add-to-cart {
