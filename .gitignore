@@ -9,6 +9,9 @@
 *.pem
 *.key
 
+#imagenes no se suben
+backend/uploads/*
+
 # User-specific files
 *.rsuser
 *.suo

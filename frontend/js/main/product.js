@@ -3,7 +3,7 @@ function renderCategories() {
   if (!container) return;
 
   container.innerHTML = mockCategories
-    .map((category) => `<li><a href="#">${category.name}</a></li>`)
+    .map((category) => `<li><a href="#">${escapeHTML(category.name)}</a></li>`)
     .join("");
 }
 
@@ -44,16 +44,26 @@ function renderProductDetail(product) {
         <button class="btn-add-cart" id="add-cart-btn">Agregar al carrito</button>`;
     }
 
+    const name = escapeHTML(product.name);
+    const brand = escapeHTML(product.brand);
+    const size = escapeHTML(product.size);
+    const type = escapeHTML(labelOf(TYPE_LABELS, product.type));
+    const category = escapeHTML(labelOf(CATEGORY_LABELS, product.category));
+    const condition = escapeHTML(labelOf(CONDITION_LABELS, product.condition));
+    const description = escapeHTML(product.description);
+    const mainImage = escapeHTML(product.images[0] || "");
+
+
         container.innerHTML = `
             <div class="gallery-main">
-                <img id="main-image" src="${product.images[0]}" alt="${product.name}" />
+                <img id="main-image" src="${mainImage}" alt="${name}" />
             </div>
 
             <div class="product-summary">
-                <h1 class="detail-name">${product.name}</h1>
-                <span class="detail-brand">${product.brand} </span>
-                <p class="detail-meta">Talla ${product.size} · ${product.type} · ${product.category}</p>
-                <p class="detail-meta">Condición: ${product.condition}</p>
+                <h1 class="detail-name">${name}</h1>
+                <span class="detail-brand">${brand} </span>
+                <p class="detail-meta">Talla ${size} · ${type} · ${category}</p>
+                <p class="detail-meta">Condición: ${condition}</p>
                 <p class="detail-price">$${product.price.toFixed(2)}</p>
                 <p class="detail-stock ${soldOut ? "out" : ""}">${stockText}</p>
 
@@ -62,13 +72,13 @@ function renderProductDetail(product) {
             <details class="accordion" open>
                 <summary>Detalles del artículo</summary>
                 <div class="accordion-body">
-                    <p>${product.description}</p>
+                    <p>${description}</p>
                     <ul>
-                        <li><strong>Marca:</strong> ${product.brand}</li>
-                        <li><strong>Tipo:</strong> ${product.type}</li>
-                        <li><strong>Categoria:</strong> ${product.category}</li>
-                        <li><strong>Talla:</strong> ${product.size}</li>
-                        <li><strong>Condición:</strong> ${product.condition}</li>
+                        <li><strong>Marca:</strong> ${brand}</li>
+                        <li><strong>Tipo:</strong> ${type}</li>
+                        <li><strong>Categoria:</strong> ${category}</li>
+                        <li><strong>Talla:</strong> ${size}</li>
+                        <li><strong>Condición:</strong> ${condition}</li>
                     </ul>
                 </div>
             </details>
@@ -136,23 +146,38 @@ function renderProductDetail(product) {
         gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
 }
 
-function renderSellerItems(product) {
-    const items = getProductsBySeller(product.seller.id, product.id);
+async function renderSellerItems(product) {
+
+    if (!product.seller) return;
+
     const section = document.getElementById("seller-section");
-    if(items.length === 0) return;
+    if (!section) return;
 
-    section.hidden = false;
-    document.querySelector("#seller-section h2").textContent =
-        `Más de ${product.seller.name}`;
+    try {
+    const items = await fetchProducts({
+      seller: product.seller.id,
+      exclude: product.id,
+      limit: 8,
+    });
 
-  document.getElementById("seller-items").innerHTML = items
-    .map(
-      (p) => `
-      <a class="seller-item" href="product.html?id=${p.id}" title="${p.name}">
-        <img src="${p.images[0]}" alt="${p.name}" loading="lazy" />
-      </a>`
-    )
+
+        if(items.length === 0) return;
+
+        section.hidden = false;
+        document.querySelector("h2").textContent =
+            `Más de ${product.seller.name}`;
+
+        document.getElementById("seller-items").innerHTML = items
+        .map(
+            (p) => `
+            <a class="seller-item" href="product.html?id=${p.id}" title="${escapeHTML(p.name)}">
+            <img src="${escapeHTML(p.images[0] || "")}" alt="${escapeHTML(p.name)}" loading="lazy" />
+            </a>`
+        )
     .join("");
+    } catch {
+
+    }
 }
 
 function renderNotFound() {
@@ -164,16 +189,36 @@ function renderNotFound() {
     </p>`;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function renderLoadError() {
+  document.getElementById("product-detail").innerHTML = `
+    <p class="not-found">
+      No se pudo cargar el producto. Inténtalo de nuevo en unos minutos.
+      <a href="../../index.html">Volver al inicio</a>
+    </p>`;
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
   renderCategories();
-  const product = getProductById(getProductIdFromUrl());
+
+  const id = getProductIdFromUrl();
+  if (!id) {
+    renderNotFound();
+    return;
+  }
+
+  try{
+
+  const product = await fetchProductById(id);
 
   if (!product) {
     renderNotFound();
     return;
   }
 
-  document.title = `${product.name}`;
+  document.title = product.name;
   renderProductDetail(product);
   renderSellerItems(product);
+    } catch{
+        renderLoadError();
+    }
 });

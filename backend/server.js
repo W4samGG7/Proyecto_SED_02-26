@@ -22,7 +22,7 @@ app.use(session({
     }
 }));
 
-const { requireLoginPage } = require('./middleware/auth');
+const { requireLoginPage, requireAdmin, requireAdminPage } = require('./middleware/auth');
 
 app.use((req, res, next) => {
     let requested;
@@ -37,6 +37,10 @@ app.use((req, res, next) => {
     if (requested.startsWith('/modules/seller')) {
         return requireLoginPage(req, res, next);
     }
+
+    if (requested.startsWith('/modules/admin')) {
+        return requireAdminPage(req, res, next);
+    }
     next();
 });
 
@@ -50,6 +54,10 @@ app.use(express.static(
 const productosRoutes = require('./routes/productos');
 
 app.use('/api/productos', productosRoutes);
+
+const adminRoutes = require('./routes/admin');
+
+app.use('/api/admin', requireAdmin, adminRoutes);
 
 //REGISTRO DE USUARIO
 app.post("/api/register", async (req, res) => {
@@ -167,7 +175,17 @@ app.post("/api/login", async (req, res) => {
             });
         }
 
-        // Crear sesión
+        if (!usuario.activo) {
+            return res.status(403).json({
+                message: "Tu cuenta está desactivada. Contacta al administrador."
+            });
+        }
+
+        // Crear una sesión nueva para evitar fijación de sesión
+        await new Promise((resolve, reject) => {
+            req.session.regenerate((error) => error ? reject(error) : resolve());
+        });
+
         req.session.userId = usuario.id;
 
         return res.status(200).json({
@@ -176,7 +194,8 @@ app.post("/api/login", async (req, res) => {
                 id: usuario.id,
                 nombre: usuario.nombre,
                 apellido: usuario.apellido,
-                email: usuario.correo
+                email: usuario.correo,
+                rol: usuario.rol
             }
         });
 
@@ -205,16 +224,19 @@ app.get("/api/session", async (req, res) => {
         }
 
         const [usuarios] = await pool.execute(
-        `SELECT id, nombre, apellido, correo
+        `SELECT id, nombre, apellido, correo, rol, activo
         FROM usuarios WHERE id = ?`,
         [req.session.userId]
 );
 
-        if (usuarios.length === 0) {
+        if (usuarios.length === 0 || !usuarios[0].activo) {
+            req.session.destroy(() => {});
             return res.status(401).json({
                 message: "Usuario no encontrado."
             });
         }
+
+        delete usuarios[0].activo;
 
         return res.json({
             autenticado: true,
@@ -253,6 +275,12 @@ app.post("/api/logout", (req, res) => {
     });
 
 });
+
+//imagenes
+app.use('/uploads',express.static(path.join(__dirname, 'uploads'),{
+    index: false,
+    setHeaders: (res) => res.setHeader('X-Content-Type-Options', 'nosniff')
+}));
 
 //VERIFICAR ESTADO API
 app.get('/api/estado', (req, res) => {

@@ -43,8 +43,13 @@ formulario.addEventListener("submit", async function(e) {
             return;
         }
 
-        // Redirigir a la pagina destino
-        window.location.href = getRedirectTarget();
+        // Redirigir a la pagina destino (el admin va a su panel si no venia de otra pagina)
+        const destino = getRedirectTarget();
+        const esAdmin = datos.usuario && datos.usuario.rol === "admin";
+
+        window.location.href = (destino === "/" && esAdmin)
+            ? "/modules/admin/panel.html"
+            : destino;
 
     } catch (error) {
 

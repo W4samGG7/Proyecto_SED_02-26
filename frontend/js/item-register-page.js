@@ -1,17 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+
     const imageInput = document.getElementById('item-image');
     const imagePreview = document.getElementById('image-preview');
     const previewContainer = document.getElementById('image-preview-container');
     const placeholder = document.querySelector('.image-upload-placeholder');
 
-     const form = document.getElementById('item-register-form');
-    const btnPreview = document.getElementById('btn-preview-item');
-    const dialog = document.getElementById('preview-dialog');
+    const form = document.getElementById('item-register-form');
     const cardContainer = document.getElementById('preview-card-container');
-    const btnClose = document.getElementById('preview-close');
-
-
+    const statusMessage = document.getElementById('form-status');
+    const publishButton = document.querySelector('.btn-publish-item');
 
     let currentImageURL = null;
 
@@ -54,19 +53,27 @@ document.addEventListener('DOMContentLoaded', () => {
         cardContainer.innerHTML = createPreviewCardHTML(product);
     }
 
+    function showStatus(message, isError) {
+        statusMessage.textContent = message;
+        statusMessage.className = isError ? 'form-status form-status-error' : 'form-status form-status-ok';
+    }
+
+
     imageInput.addEventListener('change', () => {
 
         const file = imageInput.files[0];
+
+        if (currentImageURL) {
+            URL.revokeObjectURL(currentImageURL);
+            currentImageURL = null;
+        }
 
         if (!file) {
             previewContainer.style.display = 'none';
             placeholder.style.display = 'flex';
             imagePreview.src = '';
+            renderPreview();
             return;
-        }
-
-        if (currentImageURL) {
-            URL.revokeObjectURL(currentImageURL);
         }
 
         currentImageURL = URL.createObjectURL(file);
@@ -81,8 +88,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('input', renderPreview);
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        showStatus('', false);
+
+        const file = imageInput.files[0];
+
+        if(!file) {
+            showStatus('Sube una foto del producto.', true);
+            return;
+        }
+
+        if(file.size > MAX_IMAGE_BYTES){
+            showStatus('La foto supera los 2MB.', true);
+            return;
+        }
+
+        publishButton.disabled = true;
+        showStatus('Publicando...',false)
+
+        try{
+            const response = await fetch('/api/productos', {
+                method: 'POST',
+                body: new FormData(form) 
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (response.status === 401) {
+                window.location.href =
+                    '/modules/login/index_login.html?redirect=' +
+                    encodeURIComponent(window.location.pathname);
+                return;
+            }
+
+             if (!response.ok) {
+                showStatus(data.message || 'No se pudo publicar el artículo.', true);
+                publishButton.disabled = false;
+                return;
+            }
+
+            showStatus('¡Artículo publicado!', false);
+
+            setTimeout(() => {
+                window.location.href = '/modules/seller/panel.html';
+            }, 1200);
+
+        }catch {
+            showStatus('No se pudo conectar con el servidor.', true);
+            publishButton.disabled = false;
+        }
     });
 
     renderPreview();

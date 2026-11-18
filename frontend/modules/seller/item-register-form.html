@@ -39,8 +39,8 @@
             type="file"
             id="item-image"
             name="item_image"
+            form="item-register-form"
             accept=".png,.jpg,.jpeg,image/png,image/jpeg"
-            required
           />
 
           <label for="item-image" class="image-upload-box">
@@ -128,6 +128,23 @@
                   <option value="ropa-interior">Ropa interior</option>
                   <option value="trajes-conjuntos">Trajes y conjuntos</option>
                   <option value="otros">Otros</option>
+                </select>
+              </div>
+              
+              <!-- Seccion -->
+              <div class="form-group">
+                <label for ="item-section">
+                  Sección <span class="required">*</span>
+                </label>
+
+                <select id="item-section" name="item_section" required>
+                  <option value="" disabled selected>Seleccionar</option>
+                  <option value="mujer">Mujer</option>
+                  <option value="hombre">Hombre</option>
+                  <option value="infantil">Infantil</option>
+                  <option value="zapatos">Zapatos</option>
+                  <option value="accesorios">Accesorios</option>
+                  <option value="bolsos">Bolsos</option>
                 </select>
               </div>
 
@@ -220,6 +237,9 @@
 
           <div id="preview-card-container"></div>
 
+
+          <p id="form-status" class="form-status" role="status"></p>
+          
           <button
             type="submit"
             form="item-register-form"
