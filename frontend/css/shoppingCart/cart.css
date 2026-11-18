@@ -1,0 +1,129 @@
+h1, h2 {
+  font-family: "DM Serif Display", serif;
+  font-weight: 400;
+}
+
+body, p, a, h3, button {
+  font-family: "DM Sans", sans-serif;
+}
+
+/* ---------- Barra de navegación (igual que en home) ---------- */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 4%;
+  background-color: var(--white);
+}
+
+.categories {
+  display: flex;
+  list-style: none;
+  flex: 1;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 0 40px 0 0;
+  padding: 0;
+  overflow-x: auto;
+}
+
+.categories::-webkit-scrollbar {
+  display: none;
+}
+
+.categories li a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.categories li a:hover {
+  color: var(--darkgreen);
+  font-weight: 600;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.icon-btn {
+  display: inline-flex;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.icon-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.estado-sesion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- Carrito vacío ---------- */
+.cart-page {
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 4%;
+}
+
+.cart-content {
+  width: 100%;
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.empty-cart-icon {
+  width: 90px;
+  height: 90px;
+}
+
+.empty-cart-title {
+  font-size: 36px;
+  margin: 10px 0 0;
+  color: var(--darkred);
+}
+
+.empty-cart-text {
+  margin: 0;
+  max-width: 420px;
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.btn-shop-now {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 14px 48px;
+  background-color: var(--lightgreen);
+  color: var(--darkgreen);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.btn-shop-now:hover {
+  background-color: var(--darkgreen);
+  color: var(--lightgreen);
+}

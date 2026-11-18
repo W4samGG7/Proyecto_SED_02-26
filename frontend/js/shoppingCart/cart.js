@@ -18,8 +18,9 @@ function getCart() {
 function renderEmptyCart() {
   document.getElementById("cart-content").innerHTML = `
     <div class="empty-cart">
-      
-
+    <img src="../../assets/icons/shoppingCart/cart.svg"
+           alt="Carrito vacío"
+           class="empty-cart-icon" />
       <h1 class="empty-cart-title">Tu carrito</h1>
       <p class="empty-cart-text">
         Tu carrito está vacío. ¡Llénalo con prendas que merecen una segunda oportunidad!
@@ -28,3 +29,18 @@ function renderEmptyCart() {
     </div>
   `;
 }
+
+function renderCart() {
+  const cart = getCart();
+
+  if (cart.length === 0) {
+    renderEmptyCart();
+    return;
+  }
+  renderEmptyCart();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderCategories();
+  renderCart();
+});
