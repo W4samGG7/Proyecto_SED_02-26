@@ -207,6 +207,17 @@ body {
     line-height: 1.8;
 }
 
+/*STATUS DE PUBLICAR*/
+.form-status {
+    min-height: 1.2em;
+    margin: 0;
+    font-size: 13px;
+    text-align: center;
+}
+
+.form-status-ok { color: var(--darkgreen); }
+.form-status-error { color: var(--danger); }
+
 /* =========================================
    BOTÓN PUBLICAR
 ========================================= */
