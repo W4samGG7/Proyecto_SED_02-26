@@ -138,6 +138,129 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
     }
 }
 
+.cart-popup {
+  position: fixed;
+  top: 70px;
+  right: 4%;
+  width: 380px;
+  max-width: calc(100% - 32px);
+  padding: 28px 28px 24px;
+  background: var(--white);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.cart-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cart-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.cart-popup-title {
+  font-family: "DM Serif Display", serif;
+  font-size: 26px;
+  color: var(--darkred);
+  margin-bottom: 18px;
+}
+
+.cart-popup-body {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.cart-popup-image {
+  width: 90px;
+  height: 115px;
+  object-fit: cover;
+  background: var(--gray-50);
+  flex-shrink: 0;
+}
+
+.cart-popup-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  min-width: 0;
+}
+
+.cart-popup-brand {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cart-popup-name {
+  font-weight: 600;
+}
+
+.cart-popup-price {
+  font-weight: 700;
+  color: var(--darkgreen);
+}
+
+.cart-popup-btn {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  background: var(--darkred);
+  color: var(--lightred);
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--lightgreen);
+  color: var(--darkgreen);
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-badge[hidden] {
+  display: none;
+}
+
 /*responsive*/
 
 @media (max-width: 768px) {
@@ -161,7 +284,6 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
         grid-row: 2;
     }
 }
-
 
 /*logo*/
 

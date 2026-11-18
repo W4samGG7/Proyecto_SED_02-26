@@ -155,6 +155,8 @@ h1, h2 {
   text-transform: uppercase;
   cursor: pointer;
   transition: opacity 0.2s ease;
+  text-decoration: none;
+  text-align: center;
 }
 
 .btn-add-cart:hover:not(:disabled) {
