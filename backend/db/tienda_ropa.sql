@@ -121,6 +121,8 @@ CREATE TABLE detalle_pedidos (
   producto_id     INT UNSIGNED NULL,
   vendedor_id     INT UNSIGNED NULL,
   nombre_producto VARCHAR(100) NOT NULL,
+  marca VARCHAR(50) NULL,
+  talla VARCHAR(10) NULL,
   cantidad        INT UNSIGNED NOT NULL,
   precio_unitario DECIMAL(8,2) NOT NULL,
   PRIMARY KEY (id),
@@ -160,5 +162,4 @@ INSERT INTO productos (nombre, marca, tipo, condicion, talla, precio, cantidad, 
    'https://i.pinimg.com/736x/ed/f4/50/edf45090b6f35ed1e1462cc6247b5dc2.jpg'),
   ('Pants oversize gris oscuro', 'Adidas', 'pantalones', 'usado-buen-estado', 'M', 10.00, 1, 'hombre',
    'https://i.pinimg.com/1200x/cb/43/c4/cb43c4548e33ef987c7e7a2699dd64a1.jpg');
-   
    

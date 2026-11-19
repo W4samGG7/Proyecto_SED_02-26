@@ -59,6 +59,11 @@ const adminRoutes = require('./routes/admin');
 
 app.use('/api/admin', requireAdmin, adminRoutes);
 
+const carritoRoutes = require('./routes/carrito');
+app.use('/api/carrito', carritoRoutes);
+
+app.use('/api/pedidos', require('./routes/pedidos'));
+
 //REGISTRO DE USUARIO
 app.post("/api/register", async (req, res) => {
 
