@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="product-image-container">
                     ${product.image ? `<img src="${product.image}" alt="${escapeHTML(product.brand)}" class="product-image">` : ''}
                     <button type="button" class="add-to-cart">
-                        <img src="../../assets/icons/home/add-cart.svg" alt="Carrito" class="cart-icon">
+                        <img src="../../assets/icons/shoppingCart/cart-plus.svg" alt="Carrito" class="cart-icon">
                     </button>
                 </div>
                 <div class="product-info">

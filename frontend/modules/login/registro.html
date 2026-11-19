@@ -1,110 +1,114 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro</title>
-      <link rel="icon" type="image/svg+xml" href="/assets/images/logo/logo-loop.svg" />
-      <link rel="stylesheet" href="../../css/base/base.css">
-  <link rel="stylesheet" href="../../css/login/style_login.css">
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/assets/images/logo/logo-loop.svg"
+    />
+    <link rel="stylesheet" href="../../css/base/base.css" />
+    <link rel="stylesheet" href="../../css/login/style_login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-
-  <div class="login-container registro-container">
-
-    <a href="../../index.html" class="close-login" id="cerrarRegistro">
+  <body>
+    <div class="login-container registro-container">
+      <a href="../../index.html" class="close-login" id="cerrarRegistro">
         &times;
-    </a>
+      </a>
 
-    <h1>Registrarse</h1>
+      <h1>Registrarse</h1>
 
-    <form id="registroForm" method="post" novalidate>
+      <form id="registroForm" method="post" novalidate>
+        <div class="input-group">
+          <label for="nombre">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ingresa tu nombre"
+            maxlength="50"
+            autocomplete="given-name"
+            required
+          />
+          <p class="error-text" data-for="nombre"></p>
+        </div>
 
-      <div class="input-group">
-        <label for="nombre">Nombre</label>
-        <input
-          type="text"
-          id="nombre"
-          name="nombre"
-          placeholder="Ingresa tu nombre"
-          maxlength="50"
-          autocomplete="given-name"
-          required
-        >
-        <p class="error-text" data-for="nombre"></p>
-      </div>
+        <div class="input-group">
+          <label for="apellido">Apellido</label>
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            placeholder="Ingresa tu apellido"
+            maxlength="50"
+            autocomplete="family-name"
+            required
+          />
+          <p class="error-text" data-for="apellido"></p>
+        </div>
 
-      <div class="input-group">
-        <label for="apellido">Apellido</label>
-        <input
-          type="text"
-          id="apellido"
-          name="apellido"
-          placeholder="Ingresa tu apellido"
-          maxlength="50"
-          autocomplete="family-name"
-          required
-        >
-        <p class="error-text" data-for="apellido"></p>
-      </div>
+        <div class="input-group">
+          <label for="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Ingresa tu correo"
+            maxlength="100"
+            autocomplete="email"
+            required
+          />
+          <p class="error-text" data-for="email"></p>
+        </div>
 
-      <div class="input-group">
-        <label for="email">Correo electrónico</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Ingresa tu correo"
-          maxlength="100"
-          autocomplete="email"
-          required
-        >
-        <p class="error-text" data-for="email"></p>
-      </div>
+        <div class="input-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Ingresa tu contraseña"
+            maxlength="64"
+            autocomplete="new-password"
+            required
+          />
+          <p class="error-text" data-for="password"></p>
+        </div>
 
-      <div class="input-group">
-        <label for="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Ingresa tu contraseña"
-          maxlength="64"
-          autocomplete="new-password"
-          required
-        >
-        <p class="error-text" data-for="password"></p>
-      </div>
+        <div class="input-group">
+          <label for="confirmarPassword">Confirmar contraseña</label>
+          <input
+            type="password"
+            id="confirmarPassword"
+            name="confirmarPassword"
+            placeholder="Repite tu contraseña"
+            maxlength="64"
+            autocomplete="new-password"
+            required
+          />
+          <p class="error-text" data-for="confirmarPassword"></p>
+        </div>
 
-      <div class="input-group">
-        <label for="confirmarPassword">Confirmar contraseña</label>
-        <input
-          type="password"
-          id="confirmarPassword"
-          name="confirmarPassword"
-          placeholder="Repite tu contraseña"
-          maxlength="64"
-          autocomplete="new-password"
-          required
-        >
-        <p class="error-text" data-for="confirmarPassword"></p>
-      </div>
+        <button type="submit">Registrarse</button>
+      </form>
 
-      <button type="submit">Registrarse</button>
+      <p id="estado"></p>
 
-    </form>
+      <p class="register-link">
+        ¿Ya tienes una cuenta?
+        <a href="index_login.html">Inicia sesión</a>
+      </p>
+    </div>
 
-    <p id="estado"></p>
-
-    <p class="register-link">
-      ¿Ya tienes una cuenta?
-      <a href="index_login.html">Inicia sesión</a>
-    </p>
-
-  </div>
-
-  <script src="../../js/script_registro.js"></script>
-
-</body>
+    <script src="../../js/script_registro.js"></script>
+  </body>
 </html>

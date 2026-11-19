@@ -11,7 +11,7 @@ body {
     width: calc(100% - 80px);
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px 0 60px;
+    padding: 85px 0 60px;
     font-family: 'DM Sans', sans-serif;
     color: var(--text);
 }
@@ -35,7 +35,6 @@ body {
 .stock-header h1 {
     color: var(--darkgreen);
     font-size: 2.2rem;
-    font-weight: 700;
     margin-bottom: 8px;
 }
 
@@ -150,7 +149,6 @@ body {
 
 .tabla-vacia a {
     color: var(--darkgreen);
-    font-weight: 600;
 }
 
 /* =====================================

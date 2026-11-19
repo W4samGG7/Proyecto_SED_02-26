@@ -60,7 +60,10 @@ body:not(.header-loaded) main {
     background-color: var(--lightgreen);
     color: var(--darkgreen);
     font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
 }
 
 
@@ -79,9 +82,10 @@ body:not(.header-loaded) main {
 .sell-title h1 {
 font-size: 25px;
     margin: 0 0 5px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: bold;
+    font-family: 'DM Serif Display',serif;font-family: 'DM Serif Display',serif;
+    font-weight: 500;
     color: var(--darkred);
+    letter-spacing: 1.2px;
 }
 
 .sell-title p {
@@ -172,7 +176,7 @@ font-size: 25px;
     height: 10px;
     border: none;
     border-radius: 50%;
-    background-color: var(--lightred);
+    background-color: var(--lightgreen);
     cursor: pointer;
 }
 
@@ -202,17 +206,21 @@ font-size: 25px;
 
 .sell-button{
     display: inline-block;
-    padding: 10px 14px;
+    padding: 14px 14px;
     color: var(--lightgreen);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     text-align: center;
     transition: background-color 0.3s ease;
     background-color: var(--darkgreen);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.3px;
 }
 
 .sell-button:hover {
     background-color: var(--darkred);
+    color: var(--lightred);
 }
 
 
@@ -225,7 +233,10 @@ font-size: 25px;
 .section-title {
     font-size: 20px;
     margin-bottom: 10px;
-    color: var(--darkred);
+    margin-top: 30px;
+    color: var(--darkgreen);
+    font-family: 'DM Sans',sans-serif;
+    font-weight: 600;
 }
 
 .timeline-container {
@@ -233,10 +244,10 @@ font-size: 25px;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     position: relative;
-    border: 1px solid var(--mediumred);
+    border: 1px solid var(--darkred);
     border-radius: 12px;
     padding: 30px 20px;
-    background-color: #faf9f5;
+    background-color: var(--white);
 }
 
 .timeline-step {
@@ -250,8 +261,8 @@ font-size: 25px;
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background-color: var(--darkgreen);
-    color: var(--lightgreen);
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -263,7 +274,7 @@ font-size: 25px;
 .timeline-step h3 {
     font-size: 18px;
     margin: 0 0 6px;
-    color: var(--darkred);
+    color: var(--darkgreen);
 }
 
 .timeline-step p {
@@ -285,10 +296,10 @@ font-size: 25px;
 }
 
 .info-card {
-    border: 1px solid var(--mediumred);
+    border: 1px solid var(--darkred);
     border-radius: 8px;
     padding: 24px;
-    background-color: #ffffff;
+    background-color: var(--white);
     box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     display: flex;
     flex-direction: column;
@@ -297,7 +308,9 @@ font-size: 25px;
 .info-card h2 {
     font-size: 20px;
     margin: 0 0 12px;
-    color: var(--darkred);
+    color: var(--darkgreen);
+    font-family: 'DM Sans',sans-serif;
+    font-weight: 700;
 }
 
 .info-card p {
