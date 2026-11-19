@@ -177,3 +177,26 @@ body,h3, p, a .toggle-btn, .announcement-item, .nav-logo a{
     font-weight: 800;
     letter-spacing: -1px;
 }
+
+.nav-logo .logo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-logo .logo-img {
+    display: block;
+    width: 48px;
+    height: 48px;
+}
+
+.nav-logo .logo-text {
+    letter-spacing: 1px;
+}
+
+@media (max-width: 480px) {
+    .nav-logo .logo-img {
+        width: 40px;
+        height: 40px;
+    }
+}

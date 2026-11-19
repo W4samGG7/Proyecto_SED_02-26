@@ -103,6 +103,13 @@ document.addEventListener('DOMContentLoaded', () => {
             showStatus('La foto supera los 2MB.', true);
             return;
         }
+        
+        const ALLOWED_IMAGE_TYPES = ['image/png', 'image/jpeg'];
+
+        if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+            showStatus('La foto debe ser PNG o JPG.', true);
+            return;
+        }
 
         publishButton.disabled = true;
         showStatus('Publicando...',false)

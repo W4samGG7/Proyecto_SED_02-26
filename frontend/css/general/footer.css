@@ -53,14 +53,9 @@ html, body {
     font-family: 'DM Serif Display', serif;
 }
 
-.main-footer a {
+.footer-item {
     color: var(--text);
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.main-footer a:hover {
-    text-decoration: underline;
+    font-size:16px;
 }
 
 .footer-socials {
