@@ -22,22 +22,62 @@ function renderCategories() {
     .join("");
 }
 
-function createProductCardHTML(product) {
-  const inCart = isInCart(product.id);
-  const cartIcon = inCart
+function getCardState(product) {
+  const stock = product.stock == null ? Infinity : Number(product.stock);
+  const inCart = cartQuantities.get(String(product.id)) || 0;
+
+  if (stock <= 0) return { type: "soldout", inCart };
+  if (inCart >= stock) return { type: "full", inCart };
+  if (inCart > 0) return { type: "in-cart", inCart };
+  return { type: "default", inCart };
+}
+
+function createCartButtonHTML(product) {
+  const { type, inCart } = getCardState(product);
+
+  if (type === "soldout") {
+    return `<span class="sold-out-tag">Agotado</span>`;
+  }
+
+  const isFull = type === "full";
+  const icon = isFull
     ? "assets/icons/shoppingCart/cart-check.svg"
-    : "assets/icons/home/add-cart.svg";
+    : "assets/icons/shoppingCart/cart-plus.svg";
+  const label = isFull
+    ? "Ya tienes todas las unidades en tu carrito"
+    : inCart > 0
+      ? `Agregar otra unidad (tienes ${inCart})`
+      : "Agregar al carrito";
+  const badge = inCart > 0 && !isFull
+    ? `<span class="cart-qty-badge">${inCart}</span>`
+    : "";
+
+  return `
+    <button type="button" class="add-to-cart${isFull ? " is-full" : ""}"
+            title="${label}" aria-label="${label}" ${isFull ? 'aria-disabled="true"' : ""}>
+      <img src="${icon}" alt="" class="cart-icon">
+      ${badge}
+    </button>`;
+}
+
+function updateCardButton(card) {
+  const product = productsById.get(String(card.dataset.id));
+  if (!product) return;
+
+  const container = card.querySelector(".product-image-container");
+  const old = container.querySelector(".add-to-cart, .sold-out-tag");
+  if (old) old.remove();
+  container.insertAdjacentHTML("beforeend", createCartButtonHTML(product));
+}
+
+function createProductCardHTML(product) {
   const image = escapeHTML(product.images?.[0] || "");
 
   return `
     <article class="product-card" data-id="${escapeHTML(product.id)}">
       <div class="product-image-container">
         <img src="${image}" alt="${escapeHTML(product.brand)}" class="product-image" loading="lazy">
-
-        <button class="add-to-cart">
-          <img src="${cartIcon}" alt="${inCart ? "En el carrito" : "Agregar al carrito"}" class="cart-icon">
-        </button>
-
+        ${createCartButtonHTML(product)}
       </div>
       <div class="product-info">
         <span class="product-brand">${escapeHTML(product.brand)}</span>
@@ -49,17 +89,6 @@ function createProductCardHTML(product) {
       </div>
     </article>
   `;
-}
-
-function updateCardCartIcon(card) {
-  const inCart = isInCart(card.dataset.id);
-  const icon = card.querySelector(".cart-icon");
-  if (!icon) return;
-
-  icon.src = inCart
-    ? "assets/icons/shoppingCart/cart-check.svg"
-    : "assets/icons/home/add-cart.svg";
-  icon.alt = inCart ? "En el carrito" : "Agregar al carrito";
 }
 
 function renderProducts(containerId, products) {
@@ -82,25 +111,33 @@ function enableCardNavigation(containerId) {
   if (!container) return;
 
   container.addEventListener("click", async (e) => {
+    // 1. Botón del carrito
     const addBtn = e.target.closest(".add-to-cart");
     if (addBtn) {
+      // Ya tiene todas las unidades: avisar, no agregar, no navegar
+      if (addBtn.classList.contains("is-full")) {
+        showToast("Ya tienes todas las unidades en tu carrito");
+        return;
+      }
+
       const card = addBtn.closest(".product-card");
       const product = productsById.get(String(card.dataset.id));
 
-      addBtn.disabled = true; 
+      addBtn.disabled = true; // evita doble clic mientras responde el servidor
       const result = await addToCart(card.dataset.id, 1, product);
-      addBtn.disabled = false;
 
       if (result.ok) {
         await refreshCartQuantities();
-        updateCardCartIcon(card);
+        updateCardButton(card);   // reemplaza el botón (ya no está disabled)
         showCartPopup(result.product, result.added);
       } else {
+        addBtn.disabled = false;
         showToast(result.message);
       }
       return;
     }
 
+    // 2. Resto de la tarjeta: ir al detalle
     const card = e.target.closest(".product-card");
     if (!card) return;
 
