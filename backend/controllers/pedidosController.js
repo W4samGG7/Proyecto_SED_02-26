@@ -43,6 +43,16 @@ const crearPedido = async (req, res) => {
             return res.status(400).json({ message: 'Tu carrito esta vacio.' });
         }
 
+        const propios = items.filter((i) => i.vendedor_id === usuario_id);
+
+        if (propios.length > 0) {
+            await conexion.rollback();
+            return res.status(403).json({
+                message: `No puedes comprar tus propios articulos: ${propios.map((i) => i.nombre).join(', ')}. Quitalos del carrito para continuar.`,
+                articulos: propios.map((i) => ({ producto_id: i.producto_id, nombre: i.nombre }))
+            });
+        }
+
         const problemas = items.filter(
             (i) => !i.activo || i.stock < i.cantidad_pedida
         );

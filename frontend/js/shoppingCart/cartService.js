@@ -1,11 +1,28 @@
 let guestMode = false;
 let cartPromise = null;
+let currentUserPromise = null;
 
 const LOGIN_URL = "/modules/login/index_login.html";
 
 function goToLogin() {
   const redirect = encodeURIComponent(window.location.pathname + window.location.search);
   window.location.href = `${LOGIN_URL}?redirect=${redirect}`;
+}
+
+function getCurrentUserId() {
+  if (!currentUserPromise) {
+    currentUserPromise = fetch("/api/session")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => data?.usuario?.id ?? null)
+      .catch(() => null);
+  }
+  return currentUserPromise;
+}
+
+function isOwnProduct(product, userId) {
+  return userId != null
+    && product.seller?.id != null
+    && Number(product.seller.id) === Number(userId);
 }
 
 function normalizeProduct(p) {

@@ -18,10 +18,14 @@ async function renderProductDetail(product) {
     const available = await getAvailableStock(product);
     const soldOut = product.stock <= 0;
     const allInCart = !soldOut && available === 0;
+    const userId = await getCurrentUserId();
+    const isOwn = isOwnProduct(product, userId);
 
     let stockText;
-    if (soldOut) {
-        stockText = "Agotado";
+    if (isOwn) {
+      stockText = "Este artículo es tuyo, no puedes comprarlo.";
+    } else if (soldOut) {
+      stockText = "Agotado";
     } else if (allInCart) {
         stockText = `Tienes ${inCart === 1 ? "la única unidad" : `las ${inCart} unidades`} en tu carrito.`;
     } else {
@@ -29,7 +33,9 @@ async function renderProductDetail(product) {
     }
 
     let actionsHTML;
-    if (soldOut) {
+    if (isOwn) {
+      actionsHTML = `<button class="btn-add-cart" disabled>Es tu artículo</button>`;
+    } else if (soldOut) {
         actionsHTML = `<button class="btn-add-cart" disabled>No disponible</button>`;
     } else if (allInCart) {
         actionsHTML = `<a href="../shoppingCart/cart.html" class="btn-add-cart">Ver carrito</a>`;
