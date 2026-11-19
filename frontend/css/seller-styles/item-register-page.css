@@ -13,6 +13,20 @@ body {
    padding: 0 40px 0 60px;
 }
 
+/* Enlace para volver al panel del vendedor (igual que en gestion de stock) */
+.volver-panel {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.volver-panel:hover {
+    text-decoration: underline;
+}
+
 /* =========================================
    ENCABEZADO
 ========================================= */

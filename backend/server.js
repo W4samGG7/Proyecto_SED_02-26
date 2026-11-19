@@ -22,7 +22,7 @@ app.use(session({
     }
 }));
 
-const { requireLoginPage, requireAdmin, requireAdminPage } = require('./middleware/auth');
+const { requireLoginPage, requireCliente, requireAdmin, requireAdminPage } = require('./middleware/auth');
 
 app.use((req, res, next) => {
     let requested;
@@ -63,6 +63,10 @@ const carritoRoutes = require('./routes/carrito');
 app.use('/api/carrito', carritoRoutes);
 
 app.use('/api/pedidos', require('./routes/pedidos'));
+// Stock del vendedor: el admin no vende, por eso requireCliente
+const stockRoutes = require('./routes/stock');
+
+app.use('/api/vendedor', requireCliente, stockRoutes);
 
 //REGISTRO DE USUARIO
 app.post("/api/register", async (req, res) => {
