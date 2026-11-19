@@ -39,13 +39,12 @@ body {
 .item-page-header h1 {
     color: var(--darkgreen);
     font-size: 2.2rem;
-    font-weight: 700;
     margin-bottom: 7px;
 }
 
 .faq-link {
-    color: var(--darkred);
-    font-size: 12px;
+    color: var(--darkgreen);
+    font-size: 13px;
     text-decoration: underline;
 }
 
@@ -97,7 +96,7 @@ body {
     width: 100%;
     min-height: 43px;
     padding: 10px 12px;
-    border: 1px solid var(--lightred);
+    border: 1.5px solid var(--lightgreen);
     border-radius: 5px;
     background-color: var(--white);
     color: var(--text);
@@ -110,7 +109,7 @@ body {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: var(--darkred);
+    border: 1px solid var(--darkgreen);
     box-shadow: 0 0 0 2px var(--glow);
 }
 
@@ -164,7 +163,7 @@ body {
 }
 
 .image-upload-box:hover {
-    background-color: var(--lightred);
+    background-color: var(--gray-100);
 }
 
 .image-upload-placeholder {
@@ -199,18 +198,20 @@ body {
     margin-top: 9px;
     padding: 10px;
     text-align: center;
-    background-color: var(--darkgreen);
-    color: var(--lightgreen);
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
     border-radius: 5px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
 }
 
 .image-upload-button:hover {
-    background-color: var(--lightgreen);
-    color: var(--darkgreen);
+    background-color: var(--darkgreen);
+    color: var(--lightgreen);
 }
 
 .image-hint {
@@ -230,7 +231,7 @@ body {
 }
 
 .form-status-ok { color: var(--darkgreen); }
-.form-status-error { color: var(--danger); }
+.form-status-error { color: var(--darkred); }
 
 /* =========================================
    BOTÓN PUBLICAR
@@ -246,18 +247,20 @@ body {
     gap: 9px;
     border: none;
     border-radius: 6px;
-    background-color: var(--darkgreen);
-    color: var(--lightgreen);
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
     font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13x;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
 }
 
 .btn-publish-item:hover {
-    background-color: var(--lightgreen);
-    color: var(--darkgreen);
+    background-color: var(--darkgreen);
+    color: var(--lightgreen);
 }
 
 .btn-cancel-item {
@@ -270,19 +273,21 @@ body {
     gap: 9px;
     border: none;
     border-radius: 6px;
-    background-color: var(--darkred);
-    color: var(--lightgreen);
+    background-color: var(--lightred);
+    color: var(--darkred);
     font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.2s;
     text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
 }
 
 .btn-cancel-item:hover {
-    background-color: var(--lightred);
-    color: var(--darkred);
+    background-color: var(--darkred);
+    color: var(--lightred);
 }
 
 

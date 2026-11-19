@@ -78,3 +78,12 @@ body {
     color: var(--text);
 
 }
+
+body:has(#footer-container) {
+    display: flex;
+    flex-direction: column;
+}
+
+body:has(#footer-container) #footer-container {
+    margin-top: auto;
+}

@@ -150,10 +150,8 @@ app.post("/api/login", async (req, res) => {
 
         const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({
-                message: "Ingresa tu correo y contraseña."
-            });
+        if (typeof email !== 'string' || typeof password !== 'string' || !email || !password) {
+            return res.status(400).json({ message: "Ingresa tu correo y contraseña." });
         }
 
         const correo = email.trim().toLowerCase();

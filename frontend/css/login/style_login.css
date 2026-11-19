@@ -1,7 +1,6 @@
 /* Estilos generales de la pagina */
 body {
-    font-family: Arial, sans-serif;
-    background-color: var(--lightgreen);
+    background-color: var(--lightred);
     margin: 0;
     padding: 0;
     display: flex;
@@ -12,12 +11,14 @@ body {
 
 /* Contenedor principal del login */
 .login-container {
-    background-color: var(--lightred);
-    width: 320px;
+    background-color: var(--white);
+    width: 500px;
+    height: 500px;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
+    align-content: center;
 }
 
 /* Titulo */
@@ -25,6 +26,8 @@ body {
     color: var(--darkred);
     margin-bottom: 25px;
     font-size: 30px;
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: 1.5px;
 }
 
 /* Espacio entre los campos */
@@ -37,8 +40,9 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 7px;
-    font-size: 17px;
+    font-size: 16px;
     color: var(--text);
+    font-family: 'DM Sans', sans-serif;
 }
 
 /* Campos de texto */
@@ -46,39 +50,47 @@ body {
     width: 100%;
     padding: 11px;
     box-sizing: border-box;
-    border: 1px solid var(--mediumred);
+    border: 1.5px solid var(--lightgreen);
     border-radius: 5px;
-    font-size: 17px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
 }
 
 /* Cuando se selecciona un campo */
 .input-group input:focus {
     outline: none;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--darkgreen);
 }
 
 /* Boton de iniciar sesion */
 .login-container button {
     width: 100%;
     padding: 11px;
-    background-color: var(--darkgreen);
-    color: var(--lightgreen);
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
     border: none;
     border-radius: 5px;
-    font-size: 17px;
+    font-size: 15px;
     cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
+
 
 /* Efecto del boton */
 .login-container button:hover {
-    background-color: var(--lightgreen);
-    color: var(--darkgreen)
+    background-color: var(--darkgreen);
+    color: var(--lightgreen)
 }
 
 /* Mensaje de respuesta */
 #estado {
     margin-top: 15px;
-    font-weight: bold;
+    color: var(--danger-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
 }
 
 /* Texto para registrarse */
@@ -86,13 +98,14 @@ body {
     margin-top: 20px;
     font-size: 15px;
     color: var(--text);
+    font-family: 'DM Sans', sans-serif;
 }
 
 /* Enlace de registro */
 .register-link a {
-    color: var(--darkred);
-    font-weight: bold;
-    text-decoration: none;
+    color: var(--darkgreen);
+    text-decoration: underline;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .register-link a:hover {
@@ -125,7 +138,7 @@ body {
 
 /* Efecto al pasar el mouse */
 .close-login:hover {
-    color: var(--white) !important;
+    color: var(--darkred) !important;
 }
 
 /* Adaptacion para celulares */
@@ -144,6 +157,7 @@ body {
     margin: 5px 0 0;
     font-size: 13px;
     color: var(--danger-dark);
+    font-family: 'DM Sans', sans-serif;
 }
 
 /* Campo con error */
@@ -153,15 +167,20 @@ body {
 
 /* Mensaje cuando el registro sale bien */
 #estado.estado-ok {
-    color: var(--success);
+    color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
 }
 
 /* Contenedor del registro */
 .registro-container {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 380px;
-    margin: 24px 16px;
+    background-color: var(--white);
+    width: 500px;
+    height: 775px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    align-content: center;
 }
 
 /* Adaptacion del registro para celulares */
