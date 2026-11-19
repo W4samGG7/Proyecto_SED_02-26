@@ -1,30 +1,8 @@
 const { pool } = require('../config/database');
 
+const { leerId, validarCambiosProducto } = require('./validacionProducto');
+
 const ROLES = ['usuario', 'admin'];
-const STOCK_MAXIMO = 100000;
-const PRECIO_MAXIMO = 999999.99;          // DECIMAL(8,2) en la BD
-const REGEX_TALLA = /^[A-Za-z0-9 ./-]{1,10}$/; // VARCHAR(10) en la BD
-const NOMBRE_MAXIMO = 100;                 // VARCHAR(100) en la BD
-const DESCRIPCION_MAXIMA = 1000;
-const URL_MAXIMA = 255;                    // VARCHAR(255) en la BD
-
-// Solo enlaces http/https (evita javascript:, data:, etc.)
-function urlImagenValida(valor) {
-    if (valor.length > URL_MAXIMA) return false;
-    try {
-        const url = new URL(valor);
-        return url.protocol === 'http:' || url.protocol === 'https:';
-    } catch {
-        return false;
-    }
-}
-
-// Valida que el id de la URL sea un entero positivo
-function leerId(valor) {
-    if (!/^\d{1,10}$/.test(valor)) return null;
-    const id = Number(valor);
-    return id > 0 ? id : null;
-}
 
 // Listar usuarios con el resumen de su stock
 const listarUsuarios = async (req, res) => {
@@ -205,98 +183,10 @@ const actualizarProducto = async (req, res) => {
     const id = leerId(req.params.id);
     if (!id) return res.status(400).json({ message: 'Id de producto no valido.' });
 
-    const { nombre, descripcion, imagen_url, activo, cantidad, precio, talla } = req.body || {};
-    const cambios = [];
-    const valores = [];
+    const validacion = validarCambiosProducto(req.body);
+    if (validacion.error) return res.status(400).json({ message: validacion.error });
 
-    if (nombre !== undefined) {
-        const nombreLimpio = typeof nombre === 'string' ? nombre.trim() : '';
-        if (nombreLimpio.length < 2 || nombreLimpio.length > NOMBRE_MAXIMO) {
-            return res.status(400).json({
-                message: `El nombre debe tener entre 2 y ${NOMBRE_MAXIMO} caracteres.`
-            });
-        }
-        cambios.push('nombre = ?');
-        valores.push(nombreLimpio);
-    }
-
-    if (descripcion !== undefined) {
-        if (descripcion !== null && typeof descripcion !== 'string') {
-            return res.status(400).json({ message: 'Descripcion no valida.' });
-        }
-        const descripcionLimpia = (descripcion || '').trim();
-        if (descripcionLimpia.length > DESCRIPCION_MAXIMA) {
-            return res.status(400).json({
-                message: `La descripcion puede tener hasta ${DESCRIPCION_MAXIMA} caracteres.`
-            });
-        }
-        cambios.push('descripcion = ?');
-        valores.push(descripcionLimpia || null);
-    }
-
-    if (imagen_url !== undefined) {
-        if (imagen_url !== null && typeof imagen_url !== 'string') {
-            return res.status(400).json({ message: 'Enlace de imagen no valido.' });
-        }
-        const urlLimpia = (imagen_url || '').trim();
-        if (urlLimpia && !urlImagenValida(urlLimpia)) {
-            return res.status(400).json({
-                message: `La imagen debe ser un enlace http o https de hasta ${URL_MAXIMA} caracteres.`
-            });
-        }
-        cambios.push('imagen_url = ?');
-        valores.push(urlLimpia || null);
-    }
-
-    if (talla !== undefined) {
-        const tallaLimpia = typeof talla === 'string' ? talla.trim() : '';
-        if (!REGEX_TALLA.test(tallaLimpia)) {
-            return res.status(400).json({
-                message: 'La talla debe tener de 1 a 10 caracteres (letras, numeros, espacio, punto, / o -).'
-            });
-        }
-        cambios.push('talla = ?');
-        valores.push(tallaLimpia);
-    }
-
-    if (precio !== undefined) {
-        const centavos = Math.round(precio * 100);
-        const valido = typeof precio === 'number'
-            && Number.isFinite(precio)
-            && precio > 0
-            && precio <= PRECIO_MAXIMO
-            && Math.abs(centavos - precio * 100) < 1e-6;
-
-        if (!valido) {
-            return res.status(400).json({
-                message: `El precio debe ser mayor que 0, hasta ${PRECIO_MAXIMO} y con maximo 2 decimales.`
-            });
-        }
-        cambios.push('precio = ?');
-        valores.push((centavos / 100).toFixed(2));
-    }
-
-    if (activo !== undefined) {
-        if (typeof activo !== 'boolean') {
-            return res.status(400).json({ message: 'El estado debe ser verdadero o falso.' });
-        }
-        cambios.push('activo = ?');
-        valores.push(activo ? 1 : 0);
-    }
-
-    if (cantidad !== undefined) {
-        if (!Number.isInteger(cantidad) || cantidad < 0 || cantidad > STOCK_MAXIMO) {
-            return res.status(400).json({
-                message: `La cantidad debe ser un numero entero entre 0 y ${STOCK_MAXIMO}.`
-            });
-        }
-        cambios.push('cantidad = ?');
-        valores.push(cantidad);
-    }
-
-    if (cambios.length === 0) {
-        return res.status(400).json({ message: 'No hay cambios para guardar.' });
-    }
+    const { cambios, valores } = validacion;
 
     try {
         valores.push(id);
