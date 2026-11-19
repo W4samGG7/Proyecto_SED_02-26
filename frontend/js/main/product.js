@@ -12,9 +12,37 @@ function getProductIdFromUrl() {
     return params.get("id");
 }
 
-function renderProductDetail(product) {
+async function renderProductDetail(product) {
     const container = document.getElementById("product-detail");
-    const available = product.stock > 0;
+    const inCart = await getCartQuantity(product.id);
+    const available = await getAvailableStock(product);
+    const soldOut = product.stock <= 0;
+    const allInCart = !soldOut && available === 0;
+
+    let stockText;
+    if (soldOut) {
+        stockText = "Agotado";
+    } else if (allInCart) {
+        stockText = `Tienes ${inCart === 1 ? "la única unidad" : `las ${inCart} unidades`} en tu carrito.`;
+    } else {
+        stockText = `Disponibles: ${available}` + (inCart > 0 ? ` · ${inCart} en tu carrito.` : "");
+    }
+
+    let actionsHTML;
+    if (soldOut) {
+        actionsHTML = `<button class="btn-add-cart" disabled>No disponible</button>`;
+    } else if (allInCart) {
+        actionsHTML = `<a href="../shoppingCart/cart.html" class="btn-add-cart">Ver carrito</a>`;
+    } else {
+        actionsHTML = `
+        ${available > 1 ? `
+            <div class="quantity-controls">
+            <button type="button" id="qty-minus" aria-label="Disminuir cantidad">−</button>
+            <span id="qty-value">1</span>
+            <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
+            </div>` : ""}
+        <button class="btn-add-cart" id="add-cart-btn">Agregar al carrito</button>`;
+    }
 
     const name = escapeHTML(product.name);
     const brand = escapeHTML(product.brand);
@@ -37,23 +65,9 @@ function renderProductDetail(product) {
                 <p class="detail-meta">Talla ${size} · ${type} · ${category}</p>
                 <p class="detail-meta">Condición: ${condition}</p>
                 <p class="detail-price">$${product.price.toFixed(2)}</p>
-                <p class="detail-stock ${available ? "" : "out"}">
-                    ${available ? `Disponibles: ${product.stock}` : "Agotado"}
-                </p>
+                <p class="detail-stock ${soldOut ? "out" : ""}">${stockText}</p>
 
-            <div class="cart-actions">
-                ${available && product.stock > 1 ? `
-                    <div class="quantity-controls">
-                    <button type="button" id="qty-minus" aria-label="Disminuir cantidad">−</button>
-                    <span id="qty-value">1</span>
-                    <button type="button" id="qty-plus" aria-label="Aumentar cantidad">+</button>
-                    </div>
-                ` : ""}
-
-                <button class="btn-add-cart" id="add-cart-btn" ${available ? "" : "disabled"}>
-                    ${available ? "Agregar al carrito" : "No disponible"}
-                </button>
-            </div>
+            <div class="cart-actions">${actionsHTML}</div>
 
             <details class="accordion" open>
                 <summary>Detalles del artículo</summary>
@@ -71,12 +85,12 @@ function renderProductDetail(product) {
 
             <details class="accordion">
                 <summary>Envíos y devoluciones</summary>
-                <div class="accordion-body">
-                    <p>Información de envíos y devoluciones próximamente.</p>
-                </div>
+                    <div class="accordion-body">
+                        <p>Información de envíos y devoluciones próximamente.</p>
+                    </div>
             </details>
         </div>
-        `;
+    `;
 
         let quantity = 1;
 
@@ -85,10 +99,9 @@ function renderProductDetail(product) {
         const plusBtn = document.getElementById("qty-plus");
 
         function updateQuantity() {
-        if (!qtyValue) return;
         qtyValue.textContent = quantity;
         minusBtn.disabled = quantity <= 1;
-        plusBtn.disabled = quantity >= product.stock;
+        plusBtn.disabled = quantity >= available;
         }
 
         if (minusBtn && plusBtn) {
@@ -97,66 +110,74 @@ function renderProductDetail(product) {
             updateQuantity();
         });
         plusBtn.addEventListener("click", () => {
-            if (quantity < product.stock) quantity++;
+            if (quantity < available) quantity++;
             updateQuantity();
         });
         updateQuantity();
         }
 
         const addBtn = document.getElementById("add-cart-btn");
-        if (addBtn) {
-        addBtn.addEventListener("click", () => {
-            alert(`${quantity} × "${product.name}" agregado al carrito`);
-        });
-        }
+  if (addBtn) {
+    addBtn.addEventListener("click", async () => {
+      addBtn.disabled = true;
 
-        const gallery = container.querySelector(".gallery-main");
-        const img = gallery.querySelector("img");
+      const result = await addToCart(product.id, quantity, product);
 
-        gallery.addEventListener("mouseenter", () => gallery.classList.add("zoomed"));
-        gallery.addEventListener("mouseleave", () => gallery.classList.remove("zoomed"));
-        gallery.addEventListener("mousemove", (e) => {
-        const rect = gallery.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        img.style.transformOrigin = `${x}% ${y}%`;
-        });
+      if (result.ok) {
+        await showCartPopup(result.product, result.added);
+      } else {
+        showToast(result.message);
+      }
 
-        gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
+      await renderProductDetail(product); 
+    });
+  }
+
+  const gallery = container.querySelector(".gallery-main");
+  const img = gallery.querySelector("img");
+
+  gallery.addEventListener("mouseenter", () => gallery.classList.add("zoomed"));
+  gallery.addEventListener("mouseleave", () => gallery.classList.remove("zoomed"));
+  gallery.addEventListener("mousemove", (e) => {
+    const rect = gallery.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    img.style.transformOrigin = `${x}% ${y}%`;
+  });
+
+  gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
 }
 
 async function renderSellerItems(product) {
+  if (!product.seller) return;
 
-    if (!product.seller) return;
+  const section = document.getElementById("seller-section");
+  if (!section) return;
 
-    const section = document.getElementById("seller-section");
-    if (!section) return;
-
-    try {
+  try {
     const items = await fetchProducts({
       seller: product.seller.id,
       exclude: product.id,
       limit: 8,
     });
 
+    if (items.length === 0) return;
 
-        if(items.length === 0) return;
+    section.hidden = false;
+    document.querySelector("#seller-section h2").textContent =
+      `Más de ${product.seller.name}`;
 
-        section.hidden = false;
-        document.querySelector("h2").textContent =
-            `Más de ${product.seller.name}`;
-
-        document.getElementById("seller-items").innerHTML = items
-        .map(
-            (p) => `
-            <a class="seller-item" href="product.html?id=${p.id}" title="${escapeHTML(p.name)}">
-            <img src="${escapeHTML(p.images[0] || "")}" alt="${escapeHTML(p.name)}" loading="lazy" />
-            </a>`
-        )
-    .join("");
-    } catch {
-
-    }
+    document.getElementById("seller-items").innerHTML = items
+      .map(
+        (p) => `
+        <a class="seller-item" href="product.html?id=${encodeURIComponent(p.id)}" title="${escapeHTML(p.name)}">
+          <img src="${escapeHTML(p.images[0] || "")}" alt="${escapeHTML(p.name)}" loading="lazy" />
+        </a>`
+      )
+      .join("");
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function renderNotFound() {
@@ -186,18 +207,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try{
+    const product = await fetchProductById(id);
 
-  const product = await fetchProductById(id);
-
-  if (!product) {
-    renderNotFound();
-    return;
-  }
-
-  document.title = product.name;
-  renderProductDetail(product);
-  renderSellerItems(product);
-    } catch{
-        renderLoadError();
+    if (!product) {
+        renderNotFound();
+        return;
     }
+
+    document.title = product.name;
+    await renderProductDetail(product);
+    await renderSellerItems(product);
+    } catch (error) {
+    console.error(error);
+    renderLoadError();
+  }
 });

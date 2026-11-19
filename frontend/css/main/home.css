@@ -109,17 +109,6 @@ body:not(.header-loaded) main {
     color: var(--darkred);
 }
 
-.btn-hero-buy {
-    display: inline-block;
-    background-color: var(--darkred);
-    color: var(--lightred);
-    margin-top: 20px;
-    padding: 10px 22px;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-}
-
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -132,16 +121,6 @@ body:not(.header-loaded) main {
     font-weight: 500;
     color: var(--darkred);
     margin: 0;
-}
-
-.see-all {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--darkgreen);
-    text-decoration: none;      
-    letter-spacing: 1.5px;         
-    border-bottom: 2px solid var(--darkgeen);  
-    padding-bottom: 2px;
 }
 
 .add-to-cart {
@@ -291,11 +270,11 @@ body:not(.header-loaded) main {
 .btn-hero-sell {
     display: inline-block;
     background-color: var(--lightgreen);
-    color: var(--darkred);
+    color: var(--darkgreen);
     margin-top: 20px;
     padding: 10px 22px;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     text-decoration: none;
 }
 
@@ -326,4 +305,48 @@ body:not(.header-loaded) main {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+}
+
+.cart-qty-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: var(--darkred);
+  color: var(--lightred);
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-to-cart.is-full {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.add-to-cart.is-full:hover {
+  transform: none;
+  background-color: var(--lightred);
+}
+
+.sold-out-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  background: var(--darkred);
+  color: var(--lightred);
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 2;
 }

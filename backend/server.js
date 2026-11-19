@@ -59,6 +59,10 @@ const adminRoutes = require('./routes/admin');
 
 app.use('/api/admin', requireAdmin, adminRoutes);
 
+const carritoRoutes = require('./routes/carrito');
+app.use('/api/carrito', carritoRoutes);
+
+app.use('/api/pedidos', require('./routes/pedidos'));
 // Stock del vendedor: el admin no vende, por eso requireCliente
 const stockRoutes = require('./routes/stock');
 
