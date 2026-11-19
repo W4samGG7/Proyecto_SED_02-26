@@ -48,6 +48,17 @@ const agregarAlCarrito = async (req, res) => {
     const usuario_id = req.session?.userId || req.body.usuario_id;
     const producto_id = leerId(req.body.producto_id);
     const cantidadAgregada = Number(req.body.cantidad) || 1;
+    const [prodRows] = await pool.execute(
+    'SELECT cantidad AS stock, activo, vendedor_id FROM productos WHERE id = ?',
+    [producto_id]);
+
+    if (prodRows.length === 0 || prodRows[0].activo === 0) {
+        return res.status(404).json({ message: 'Producto no encontrado o no disponible.' });
+    }
+
+    if (prodRows[0].vendedor_id === Number(usuario_id)) {
+        return res.status(403).json({ message: 'No puedes comprar tus propios artículos.' });
+    }
 
     if (!usuario_id || !producto_id) {
         return res.status(400).json({ message: 'Datos incompletos o inválidos.' });

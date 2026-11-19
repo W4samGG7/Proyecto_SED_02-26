@@ -355,3 +355,18 @@ body:not(.header-loaded) main {
   text-transform: uppercase;
   z-index: 2;
 }
+
+.own-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 6px 10px;
+  background: var(--lightgreen);
+  color: var(--darkgreen);
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 2;
+}

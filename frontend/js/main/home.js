@@ -1,4 +1,5 @@
 let cartQuantities = new Map(); 
+let currentUserId = null;
 const productsById = new Map();
 
 async function refreshCartQuantities() {
@@ -7,6 +8,10 @@ async function refreshCartQuantities() {
   } catch {
     cartQuantities = new Map();
   }
+}
+
+async function refreshCurrentUser() {
+  currentUserId = await getCurrentUserId();
 }
 
 function isInCart(productId) {
@@ -23,6 +28,8 @@ function renderCategories() {
 }
 
 function getCardState(product) {
+  if (isOwnProduct(product, currentUserId)) return { type: "own", inCart: 0 };
+
   const stock = product.stock == null ? Infinity : Number(product.stock);
   const inCart = cartQuantities.get(String(product.id)) || 0;
 
@@ -34,6 +41,10 @@ function getCardState(product) {
 
 function createCartButtonHTML(product) {
   const { type, inCart } = getCardState(product);
+
+  if (type === "own") {
+  return `<span class="own-tag">Tu artículo</span>`;
+}
 
   if (type === "soldout") {
     return `<span class="sold-out-tag">Agotado</span>`;
@@ -51,6 +62,7 @@ function createCartButtonHTML(product) {
   const badge = inCart > 0 && !isFull
     ? `<span class="cart-qty-badge">${inCart}</span>`
     : "";
+    
 
   return `
     <button type="button" class="add-to-cart${isFull ? " is-full" : ""}"
@@ -65,7 +77,7 @@ function updateCardButton(card) {
   if (!product) return;
 
   const container = card.querySelector(".product-image-container");
-  const old = container.querySelector(".add-to-cart, .sold-out-tag");
+  const old = container.querySelector(".add-to-cart, .sold-out-tag, .own-tag");
   if (old) old.remove();
   container.insertAdjacentHTML("beforeend", createCartButtonHTML(product));
 }
@@ -146,6 +158,11 @@ function enableCardNavigation(containerId) {
 
 async function loadSection(containerId, category) {
   const container = document.getElementById(containerId);
+  const [products] = await Promise.all([
+    fetchProducts({ category, limit: 12 }),
+    refreshCartQuantities(),
+    refreshCurrentUser(),
+  ]);
   if (!container) return;
 
   container.innerHTML = '<p class="empty-message">Cargando prendas...</p>';
