@@ -1,0 +1,209 @@
+/* =====================================
+   GESTION DE STOCK DEL VENDEDOR
+   (la tabla, el visor y el editor estan en shared/productos.css)
+===================================== */
+
+body {
+    padding-top: 60px;
+}
+
+.stock-page {
+    width: calc(100% - 80px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 0 60px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+}
+
+.volver-panel {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--darkgreen);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.volver-panel:hover {
+    text-decoration: underline;
+}
+
+.stock-header {
+    margin-bottom: 28px;
+}
+
+.stock-header h1 {
+    color: var(--darkgreen);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.stock-header p {
+    line-height: 1.6;
+}
+
+/* =====================================
+   RESUMEN
+===================================== */
+
+.stock-resumen {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.resumen-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    background-color: var(--white);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+}
+
+.resumen-numero {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--darkred);
+}
+
+.resumen-texto {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* =====================================
+   MENSAJES
+===================================== */
+
+.mensaje-stock {
+    min-height: 1.4em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.mensaje-ok {
+    color: var(--success);
+}
+
+.mensaje-error {
+    color: var(--danger-dark);
+}
+
+/* =====================================
+   SECCION Y FILTROS
+===================================== */
+
+.stock-seccion {
+    background-color: var(--white);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+    padding: 22px 25px;
+}
+
+.seccion-titulo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.seccion-titulo h2 {
+    color: var(--darkred);
+    font-size: 1.5rem;
+}
+
+.stock-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.stock-filtros input,
+.stock-filtros select {
+    padding: 9px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background-color: var(--white);
+    color: var(--text);
+}
+
+.stock-filtros input {
+    width: 260px;
+}
+
+.stock-filtros input:focus,
+.stock-filtros select:focus {
+    outline: none;
+    border-color: var(--darkred);
+    box-shadow: 0 0 0 3px var(--glow);
+}
+
+.tabla-vacia a {
+    color: var(--darkgreen);
+    font-weight: 600;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media screen and (max-width: 900px) {
+
+    .stock-resumen {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    .stock-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media screen and (max-width: 760px) {
+
+    .stock-page {
+        width: calc(100% - 32px);
+        padding-top: 30px;
+    }
+
+    .stock-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .stock-seccion {
+        padding: 18px 16px;
+    }
+
+    .stock-filtros,
+    .stock-filtros input,
+    .stock-filtros select {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+
+    .stock-resumen {
+        gap: 10px;
+    }
+
+    .resumen-card {
+        padding: 14px;
+    }
+
+    .resumen-numero {
+        font-size: 1.5rem;
+    }
+}
