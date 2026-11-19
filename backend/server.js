@@ -281,6 +281,12 @@ app.post("/api/logout", (req, res) => {
 
 });
 
+//imagenes
+app.use('/uploads',express.static(path.join(__dirname, 'uploads'),{
+    index: false,
+    setHeaders: (res) => res.setHeader('X-Content-Type-Options', 'nosniff')
+}));
+
 //VERIFICAR ESTADO API
 app.get('/api/estado', (req, res) => {
     res.json({ mensaje: 'API funcionando correctamente' });
