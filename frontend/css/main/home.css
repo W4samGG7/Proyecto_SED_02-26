@@ -330,6 +330,7 @@ body:not(.header-loaded) main {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
 .add-to-cart.is-full:hover {
   transform: none;
   background-color: var(--lightred);
@@ -342,6 +343,7 @@ body:not(.header-loaded) main {
   padding: 6px 10px;
   background: var(--darkred);
   color: var(--lightred);
+  font-family: "DM Sans", sans-serif;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 1px;

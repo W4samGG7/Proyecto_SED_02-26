@@ -1,7 +1,7 @@
 let guestMode = false;
 let cartPromise = null;
 
-const LOGIN_URL = "/frontend/modules/login/index_login.html";
+const LOGIN_URL = "/modules/login/index_login.html";
 
 function goToLogin() {
   const redirect = encodeURIComponent(window.location.pathname + window.location.search);
@@ -47,7 +47,6 @@ function fetchCart() {
         .filter((i) => i.product);
     })();
 
-    // Si falla, no dejar el error guardado en la caché
     cartPromise.catch(() => { cartPromise = null; });
   }
 
@@ -107,12 +106,12 @@ async function addToCart(productId, cantidad = 1, product = null) {
 
     if (response.status === 401) {
       goToLogin();
-      return { ok: false, message: "Inicia sesión para continuar" };
+      return { ok: false, message: "Inicia sesión para continuar." };
     }
 
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
-      return { ok: false, message: result.message || "Error al agregar al carrito" };
+      return { ok: false, message: result.message || "Error al agregar al carrito." };
     }
 
     invalidateCart();
@@ -129,13 +128,13 @@ async function addToCart(productId, cantidad = 1, product = null) {
 
     return {
       ok: true,
-      message: "Producto agregado al carrito",
+      message: "Producto agregado al carrito.",
       product: info,
       added: cantidad,
     };
   } catch (error) {
     console.error(error);
-    return { ok: false, message: "Error de conexión con el servidor" };
+    return { ok: false, message: "Error de conexión con el servidor." };
   }
 }
 
@@ -158,8 +157,6 @@ async function setCartQuantity(productId, cantidad) {
     console.error("Error al actualizar cantidad", error);
   }
 }
-
-
 
 async function removeFromCart(productId) {
   try {
@@ -189,6 +186,32 @@ async function clearCart() {
   }
 }
 
+async function checkout(direccionEnvio) {
+  try {
+    const response = await fetch("/api/pedidos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ direccion_envio: direccionEnvio }),
+    });
+
+    if (response.status === 401) {
+      goToLogin();
+      return { ok: false, message: "Inicia sesión para continuar." };
+    }
+
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      return { ok: false, message: result.message || "No se pudo completar la compra." };
+    }
+
+    invalidateCart();
+    return { ok: true, orderId: result.pedido_id };
+  } catch (error) {
+    console.error(error);
+    return { ok: false, message: "Error de conexión con el servidor." };
+  }
+}
+
 async function updateCartBadge() {
   const badge = document.getElementById("cart-badge");
   if (!badge) return;
@@ -208,7 +231,7 @@ function showToast(message) {
   toast.textContent = message;
   toast.classList.add("show");
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => toast.classList.remove("show"), 2800);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
 function hideCartPopup() {
@@ -226,7 +249,7 @@ async function showCartPopup(product, cantidad) {
     popup.id = "cart-popup";
     popup.className = "cart-popup";
     popup.setAttribute("role", "dialog");
-    popup.setAttribute("aria-label", "Producto agregado al carrito");
+    popup.setAttribute("aria-label", "Producto agregado al carrito.");
     document.body.appendChild(popup);
 
     popup.addEventListener("click", (e) => {

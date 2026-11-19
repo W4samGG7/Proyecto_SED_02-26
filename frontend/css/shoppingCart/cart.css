@@ -84,12 +84,23 @@ body, p, a, h3, button {
   width: 100%;
 }
 
-.empty-cart {
+.cart-loading {
+  text-align: center;
+  color: var(--text);
+}
+
+.empty-cart,
+.cart-error {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 14px;
+}
+
+.cart-error p {
+  margin: 0;
+  color: var(--text);
 }
 
 .empty-cart-icon {
@@ -176,7 +187,7 @@ body, p, a, h3, button {
   gap: 4px;
   font-size: 14px;
   color: var(--text);
-  padding-right: 40px; /* espacio para el bote de basura */
+  padding-right: 40px; 
 }
 
 .cart-item-brand {
@@ -311,6 +322,24 @@ body, p, a, h3, button {
   color: var(--text);
 }
 
+.shipping-label {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.shipping-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  resize: vertical;
+}
+
 .btn-checkout {
   margin-top: 16px;
   padding: 16px;
@@ -325,8 +354,13 @@ body, p, a, h3, button {
   transition: opacity 0.2s ease;
 }
 
-.btn-checkout:hover {
+.btn-checkout:hover:not(:disabled) {
   opacity: 0.88;
+}
+
+.btn-checkout:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .continue-link {

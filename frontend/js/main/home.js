@@ -111,10 +111,10 @@ function enableCardNavigation(containerId) {
   if (!container) return;
 
   container.addEventListener("click", async (e) => {
-    // 1. Botón del carrito
+   
     const addBtn = e.target.closest(".add-to-cart");
     if (addBtn) {
-      // Ya tiene todas las unidades: avisar, no agregar, no navegar
+      
       if (addBtn.classList.contains("is-full")) {
         showToast("Ya tienes todas las unidades en tu carrito");
         return;
@@ -123,12 +123,12 @@ function enableCardNavigation(containerId) {
       const card = addBtn.closest(".product-card");
       const product = productsById.get(String(card.dataset.id));
 
-      addBtn.disabled = true; // evita doble clic mientras responde el servidor
+      addBtn.disabled = true; 
       const result = await addToCart(card.dataset.id, 1, product);
 
       if (result.ok) {
         await refreshCartQuantities();
-        updateCardButton(card);   // reemplaza el botón (ya no está disabled)
+        updateCardButton(card);  
         showCartPopup(result.product, result.added);
       } else {
         addBtn.disabled = false;
@@ -137,7 +137,6 @@ function enableCardNavigation(containerId) {
       return;
     }
 
-    // 2. Resto de la tarjeta: ir al detalle
     const card = e.target.closest(".product-card");
     if (!card) return;
 

@@ -89,7 +89,7 @@ async function renderProductDetail(product) {
                         <p>Información de envíos y devoluciones próximamente.</p>
                     </div>
             </details>
-            </div>
+        </div>
     `;
 
         let quantity = 1;
@@ -117,67 +117,67 @@ async function renderProductDetail(product) {
         }
 
         const addBtn = document.getElementById("add-cart-btn");
-        if (addBtn) {
-            addBtn.addEventListener("click", async () => {
-            const result = await addToCart(product.id, quantity, product);
+  if (addBtn) {
+    addBtn.addEventListener("click", async () => {
+      addBtn.disabled = true;
 
-            if (result.ok) {
-                await showCartPopup(result.product, result.added);
-            } else {
-                showToast(result.message);
-            }
+      const result = await addToCart(product.id, quantity, product);
 
-            await renderProductDetail(product); 
-            });
-        }
+      if (result.ok) {
+        await showCartPopup(result.product, result.added);
+      } else {
+        showToast(result.message);
+      }
 
-        const gallery = container.querySelector(".gallery-main");
-        const img = gallery.querySelector("img");
+      await renderProductDetail(product); 
+    });
+  }
 
-        gallery.addEventListener("mouseenter", () => gallery.classList.add("zoomed"));
-        gallery.addEventListener("mouseleave", () => gallery.classList.remove("zoomed"));
-        gallery.addEventListener("mousemove", (e) => {
-        const rect = gallery.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-        img.style.transformOrigin = `${x}% ${y}%`;
-        });
+  const gallery = container.querySelector(".gallery-main");
+  const img = gallery.querySelector("img");
 
-        gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
+  gallery.addEventListener("mouseenter", () => gallery.classList.add("zoomed"));
+  gallery.addEventListener("mouseleave", () => gallery.classList.remove("zoomed"));
+  gallery.addEventListener("mousemove", (e) => {
+    const rect = gallery.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    img.style.transformOrigin = `${x}% ${y}%`;
+  });
+
+  gallery.addEventListener("click", () => gallery.classList.toggle("zoomed"));
 }
 
 async function renderSellerItems(product) {
+  if (!product.seller) return;
 
-    if (!product.seller) return;
+  const section = document.getElementById("seller-section");
+  if (!section) return;
 
-    const section = document.getElementById("seller-section");
-    if (!section) return;
-
-    try {
+  try {
     const items = await fetchProducts({
       seller: product.seller.id,
       exclude: product.id,
       limit: 8,
     });
 
+    if (items.length === 0) return;
 
-        if(items.length === 0) return;
+    section.hidden = false;
+    document.querySelector("#seller-section h2").textContent =
+      `Más de ${product.seller.name}`;
 
-        section.hidden = false;
-        document.querySelector("#seller-section h2").textContent =
-            `Más de ${product.seller.name}`;
-
-        document.getElementById("seller-items").innerHTML = items
-        .map(
-            (p) => `
-            <a class="seller-item" href="product.html?id=${p.id}" title="${escapeHTML(p.name)}">
-            <img src="${escapeHTML(p.images[0] || "")}" alt="${escapeHTML(p.name)}" loading="lazy" />
-            </a>`
-        )
-    .join("");
-    } catch {
-
-    }
+    document.getElementById("seller-items").innerHTML = items
+      .map(
+        (p) => `
+        <a class="seller-item" href="product.html?id=${encodeURIComponent(p.id)}" title="${escapeHTML(p.name)}">
+          <img src="${escapeHTML(p.images[0] || "")}" alt="${escapeHTML(p.name)}" loading="lazy" />
+        </a>`
+      )
+      .join("");
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function renderNotFound() {
@@ -217,7 +217,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.title = product.name;
     await renderProductDetail(product);
     await renderSellerItems(product);
-    } catch{
-        renderLoadError();
-    }
+    } catch (error) {
+    console.error(error);
+    renderLoadError();
+  }
 });
