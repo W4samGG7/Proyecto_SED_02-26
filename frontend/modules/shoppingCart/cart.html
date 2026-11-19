@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+    <link rel="stylesheet" href="../../css/base/base.css" />
+    <link rel="stylesheet" href="../../css/general/footer.css" />
+    <link rel="stylesheet" href="../../css/general/header.css" />
+    <link rel="stylesheet" href="../../css/shoppingCart/cart.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <nav class="nav-bar">
+      <ul class="categories" id="categories-container"></ul>
+
+      <div class="header-icons">
+        <button class="icon-btn">
+          <img
+            src="../../assets/icons/navigation/search.svg"
+            alt="Buscar"
+            class="icon"
+          />
+        </button>
+
+        <a href="../shoppingCart/cart.html" class="icon-btn cart-link">
+          <img
+            src="../../assets/icons/navigation/cart.svg"
+            alt="Carrito"
+            class="icon"
+          />
+          <span class="cart-badge" id="cart-badge" hidden></span>
+        </a>
+
+        <div id="estadoSesion" class="estado-sesion">
+          <a href="../login/index_login.html" class="icon-btn">
+              <img
+                src="../../assets/icons/navigation/user.svg"
+                alt="Cuenta"
+                class="icon"
+              />
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="cart-page">
+
+      <section id="cart-content" class="cart-content"></section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script type="module" src="../../js/general/reuse.js"></script>
+    <script src="../../js/general/product-utils.js"></script>
+    <script src="../../js/shoppingCart/cartService.js"></script>
+    <script src="../../js/shoppingCart/cart.js"></script>
+    
+</body>
+</html>
