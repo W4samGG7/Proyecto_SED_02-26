@@ -14,9 +14,13 @@ function leerId(valor) {
     return id > 0 ? id : null;
 }
 
-// Solo enlaces http/https (evita javascript:, data:, etc.)
+// Imagen subida desde "Publicar articulo" (nombre aleatorio que genera el servidor)
+const REGEX_IMAGEN_SUBIDA = /^\/uploads\/[0-9a-f-]{36}\.(png|jpe?g)$/i;
+
+// Enlaces http/https o imagenes subidas al servidor (evita javascript:, data:, etc.)
 function urlImagenValida(valor) {
     if (valor.length > URL_MAXIMA) return false;
+    if (REGEX_IMAGEN_SUBIDA.test(valor)) return true;
     try {
         const url = new URL(valor);
         return url.protocol === 'http:' || url.protocol === 'https:';
@@ -59,7 +63,7 @@ function validarCambiosProducto(body) {
         }
         const urlLimpia = (imagen_url || '').trim();
         if (urlLimpia && !urlImagenValida(urlLimpia)) {
-            return { error: `La imagen debe ser un enlace http o https de hasta ${URL_MAXIMA} caracteres.` };
+            return { error: `La imagen debe ser un enlace http o https de hasta ${URL_MAXIMA} caracteres, o una imagen subida.` };
         }
         cambios.push('imagen_url = ?');
         valores.push(urlLimpia || null);

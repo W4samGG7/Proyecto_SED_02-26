@@ -46,9 +46,13 @@ export function etiqueta(texto, tipo) {
     return crear('span', `etiqueta etiqueta-${tipo}`, texto);
 }
 
-// Solo se aceptan enlaces http/https (evita javascript:, data:, etc.)
+// Imagen subida desde "Publicar articulo" (la guarda el servidor con nombre aleatorio)
+const REGEX_IMAGEN_SUBIDA = /^\/uploads\/[0-9a-f-]{36}\.(png|jpe?g)$/i;
+
+// Solo se aceptan enlaces http/https o imagenes subidas (evita javascript:, data:, etc.)
 export function urlSegura(valor) {
     if (!valor) return null;
+    if (REGEX_IMAGEN_SUBIDA.test(valor)) return valor;
     try {
         const enlace = new URL(valor);
         return (enlace.protocol === 'http:' || enlace.protocol === 'https:') ? enlace.href : null;
@@ -254,7 +258,7 @@ export function configurarEditor({ enviar }) {
 
         const imagen = form.imagen_url.value.trim();
         if (imagen && (!urlSegura(imagen) || imagen.length > 255)) {
-            errorCampo('imagen_url', 'Debe ser un enlace http o https (hasta 255 caracteres).');
+            errorCampo('imagen_url', 'Debe ser un enlace http o https (hasta 255 caracteres) o una imagen subida.');
             valido = false;
         } else if (imagen !== (p.imagen_url || '')) {
             cambios.imagen_url = imagen || null;
