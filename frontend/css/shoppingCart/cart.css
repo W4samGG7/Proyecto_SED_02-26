@@ -355,7 +355,8 @@ body, p, a, h3, button {
 }
 
 .btn-checkout:hover:not(:disabled) {
-  opacity: 0.88;
+  background: var(--darkgreen);
+  color: var(--lightgreen);
 }
 
 .btn-checkout:disabled {
