@@ -1,3 +1,18 @@
+let cartQuantities = new Map(); 
+const productsById = new Map();
+
+async function refreshCartQuantities() {
+  try {
+    cartQuantities = await getCartQuantities();
+  } catch {
+    cartQuantities = new Map();
+  }
+}
+
+function isInCart(productId) {
+  return (cartQuantities.get(String(productId)) || 0) > 0;
+}
+
 function renderCategories() {
   const container = document.getElementById("categories-container");
   if (!container) return;
@@ -8,14 +23,14 @@ function renderCategories() {
 }
 
 function createProductCardHTML(product) {
-  const inCart = getCartQuantity(product.id) > 0;
+  const inCart = isInCart(product.id);
   const cartIcon = inCart
     ? "assets/icons/shoppingCart/cart-check.svg"
     : "assets/icons/home/add-cart.svg";
-  const image = escapeHTML(product.images[0] || "" );
+  const image = escapeHTML(product.images?.[0] || "");
 
   return `
-    <article class="product-card" data-id="${product.id}">
+    <article class="product-card" data-id="${escapeHTML(product.id)}">
       <div class="product-image-container">
         <img src="${image}" alt="${escapeHTML(product.brand)}" class="product-image" loading="lazy">
 
@@ -29,7 +44,7 @@ function createProductCardHTML(product) {
         <span class="product-name">${escapeHTML(product.name)}</span>
         <span class="product-size"> Talla ${escapeHTML(product.size)}</span>
         <div class="product-pricing">
-          <span class="current-price">$${product.price.toFixed(2)}</span>
+          <span class="current-price">$${Number(product.price).toFixed(2)}</span>
         </div>
       </div>
     </article>
@@ -37,7 +52,7 @@ function createProductCardHTML(product) {
 }
 
 function updateCardCartIcon(card) {
-  const inCart = getCartQuantity(card.dataset.id) > 0;
+  const inCart = isInCart(card.dataset.id);
   const icon = card.querySelector(".cart-icon");
   if (!icon) return;
 
@@ -60,34 +75,36 @@ function renderProducts(containerId, products) {
   container.innerHTML = products
     .map((product) => createProductCardHTML(product))
     .join("");
-
 }
 
 function enableCardNavigation(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
 
-  container.addEventListener("click", (e) => {
+  container.addEventListener("click", async (e) => {
     const addBtn = e.target.closest(".add-to-cart");
     if (addBtn) {
       const card = addBtn.closest(".product-card");
-      const result = addToCart(card.dataset.id, 1);
+      const product = productsById.get(String(card.dataset.id));
+
+      addBtn.disabled = true; 
+      const result = await addToCart(card.dataset.id, 1, product);
+      addBtn.disabled = false;
 
       if (result.ok) {
-        showCartPopup(result.product, result.added);
+        await refreshCartQuantities();
         updateCardCartIcon(card);
+        showCartPopup(result.product, result.added);
       } else {
         showToast(result.message);
       }
       return;
     }
 
-    if (e.target.closest(".add-to-cart")) return;
-
     const card = e.target.closest(".product-card");
     if (!card) return;
 
-    window.location.href = `modules/productDetail/product.html?id=${card.dataset.id}`;
+    window.location.href = `modules/productDetail/product.html?id=${encodeURIComponent(card.dataset.id)}`;
   });
 }
 
@@ -98,7 +115,12 @@ async function loadSection(containerId, category) {
   container.innerHTML = '<p class="empty-message">Cargando prendas...</p>';
 
   try {
-    const products = await fetchProducts({ category, limit: 12 });
+    const [products] = await Promise.all([
+      fetchProducts({ category, limit: 12 }),
+      refreshCartQuantities(),
+    ]);
+
+    products.forEach((p) => productsById.set(String(p.id), p));
     renderProducts(containerId, products);
   } catch {
     container.innerHTML =
@@ -117,8 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
   loadSection("men-products", "hombre");
 });
 
-window.addEventListener("pageshow", (e) => {
+window.addEventListener("pageshow", async (e) => {
   if (e.persisted) {
+    invalidateCart();
+    await refreshCartQuantities();
     document.querySelectorAll(".product-card").forEach(updateCardCartIcon);
     updateCartBadge();
   }

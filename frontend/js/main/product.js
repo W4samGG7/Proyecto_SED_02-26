@@ -12,10 +12,10 @@ function getProductIdFromUrl() {
     return params.get("id");
 }
 
-function renderProductDetail(product) {
+async function renderProductDetail(product) {
     const container = document.getElementById("product-detail");
-    const inCart = getCartQuantity(product.id);
-    const available = getAvailableStock(product);
+    const inCart = await getCartQuantity(product.id);
+    const available = await getAvailableStock(product);
     const soldOut = product.stock <= 0;
     const allInCart = !soldOut && available === 0;
 
@@ -23,9 +23,9 @@ function renderProductDetail(product) {
     if (soldOut) {
         stockText = "Agotado";
     } else if (allInCart) {
-        stockText = `Tienes ${inCart === 1 ? "la única unidad" : `las ${inCart} unidades`} en tu carrito`;
+        stockText = `Tienes ${inCart === 1 ? "la única unidad" : `las ${inCart} unidades`} en tu carrito.`;
     } else {
-        stockText = `Disponibles: ${available}` + (inCart > 0 ? ` · ${inCart} en tu carrito` : "");
+        stockText = `Disponibles: ${available}` + (inCart > 0 ? ` · ${inCart} en tu carrito.` : "");
     }
 
     let actionsHTML;
@@ -118,16 +118,16 @@ function renderProductDetail(product) {
 
         const addBtn = document.getElementById("add-cart-btn");
         if (addBtn) {
-            addBtn.addEventListener("click", () => {
-            const result = addToCart(product.id, quantity);
+            addBtn.addEventListener("click", async () => {
+            const result = await addToCart(product.id, quantity, product);
 
             if (result.ok) {
-                showCartPopup(result.product, result.added);
+                await showCartPopup(result.product, result.added);
             } else {
                 showToast(result.message);
             }
 
-            renderProductDetail(product); // se redibuja con la disponibilidad actualizada
+            await renderProductDetail(product); 
             });
         }
 
@@ -164,7 +164,7 @@ async function renderSellerItems(product) {
         if(items.length === 0) return;
 
         section.hidden = false;
-        document.querySelector("h2").textContent =
+        document.querySelector("#seller-section h2").textContent =
             `Más de ${product.seller.name}`;
 
         document.getElementById("seller-items").innerHTML = items
@@ -207,17 +207,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try{
+    const product = await fetchProductById(id);
 
-  const product = await fetchProductById(id);
+    if (!product) {
+        renderNotFound();
+        return;
+    }
 
-  if (!product) {
-    renderNotFound();
-    return;
-  }
-
-  document.title = product.name;
-  renderProductDetail(product);
-  renderSellerItems(product);
+    document.title = product.name;
+    await renderProductDetail(product);
+    await renderSellerItems(product);
     } catch{
         renderLoadError();
     }

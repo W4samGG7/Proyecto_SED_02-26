@@ -100,5 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
   Promise.all(promises).then(() => {
     initHeaderButtons();
     initAnnouncements();
+
+    if (typeof updateCartBadge === 'function') {
+      updateCartBadge();
+    }
   });
 });
