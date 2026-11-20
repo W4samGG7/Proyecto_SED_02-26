@@ -29,7 +29,18 @@ async function api(url, opciones = {}) {
     return datos;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+
+    try {
+        const sesion = await api('/api/session');
+
+        if (sesion?.usuario?.rol === 'admin') {
+            window.location.replace('/');
+            return;
+        }
+    } catch {
+        return; 
+    }
 
     const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 
