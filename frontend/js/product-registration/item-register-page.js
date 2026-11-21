@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', () => {
+import { initSession } from './general/session.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+    await initSession();
 
     const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
 
