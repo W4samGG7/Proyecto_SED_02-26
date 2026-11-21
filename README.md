@@ -19,13 +19,11 @@ El sistema incluye los siguientes __roles:__
 ```mermaid
 flowchart LR
     subgraph Cliente["Frontend (HTML, CSS y JS)"]
-        L["Pagina web/ 
-        Interfaz de usuario"]
+        L["Pagina web/ Interfaz de usuario"]
     end
 
     subgraph Servidor["Backend (Express.js)"]
-        S["Recibe solicitudes HTTP/HTTPS de los 
-        clientes y las redirige a los servicios"]
+        S["Recibe solicitudes HTTP/HTTPS de los clientes y las redirige a los servicios"]
     end
 
     subgraph Docker["Docker Compose"]
