@@ -2,6 +2,7 @@ const fs = require ('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { pool } = require('../config/database');
+const { detectImageType } = require('./imagenProducto');
 
 const UPLOADS_DIR = path.join(__dirname, '../uploads');
 
@@ -22,14 +23,7 @@ const PRODUCT_SELECT = `
     LEFT JOIN usuarios u ON u.id = p.vendedor_id
 `;
 
-//Detectar si es png o jpg
-function detectImageType(buffer){
-    const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-
-    if (buffer.length >= 8 && buffer.subarray(0, 8).equals(png)) return 'png';
-    if (buffer.length >= 3 && buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) return 'jpg';
-    return null;
-}
+// detectImageType (png o jpg) esta en ./imagenProducto.js
 
 function isText(value, maxLength){
     return typeof value === 'string'

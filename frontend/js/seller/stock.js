@@ -172,12 +172,31 @@ async function ajustarCantidad(p, ajuste, controles) {
 
 // Formulario de edicion (el mismo que usa el admin)
 const abrirEditor = configurarEditor({
-    enviar: async (p, cambios) => {
-        const datos = await api(`/api/vendedor/productos/${p.id}`, {
-            method: 'PATCH',
-            body: JSON.stringify(cambios)
-        });
-        mostrarMensaje(datos.message);
+    enviar: async (p, cambios, foto) => {
+        let mensajeFinal = '';
+
+        // 1. Foto nueva: se sube como archivo (multipart), igual que en Publicar articulo
+        if (foto) {
+            const datosFoto = new FormData();
+            datosFoto.append('item_image', foto);
+            const datos = await api(`/api/vendedor/productos/${p.id}/imagen`, {
+                method: 'POST',
+                headers: {},
+                body: datosFoto
+            });
+            mensajeFinal = datos.message;
+        }
+
+        // 2. Los demas campos
+        if (Object.keys(cambios).length > 0) {
+            const datos = await api(`/api/vendedor/productos/${p.id}`, {
+                method: 'PATCH',
+                body: JSON.stringify(cambios)
+            });
+            mensajeFinal = foto ? 'Producto y foto actualizados correctamente.' : datos.message;
+        }
+
+        mostrarMensaje(mensajeFinal);
         await cargarProductos();
     }
 });

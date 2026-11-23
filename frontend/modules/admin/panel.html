@@ -148,6 +148,12 @@
                     <div class="editor-vista-previa" id="vistaPrevia">
                         <span class="producto-sin-imagen">Sin imagen</span>
                     </div>
+
+                    <!-- La foto se cambia subiendo un archivo (no con un enlace) -->
+                    <input type="file" id="editImagen" name="imagen" accept="image/png,image/jpeg" class="visualmente-oculto">
+                    <label for="editImagen" class="btn-admin btn-secundario editor-cambiar-foto">Cambiar foto</label>
+                    <p class="editor-ayuda" id="ayudaImagen">PNG o JPG, máximo 2 MB</p>
+                    <p class="editor-error" data-error="imagen"></p>
                 </div>
 
                 <div class="editor-campos">
@@ -156,12 +162,6 @@
                         <label for="editNombre">Nombre</label>
                         <input type="text" id="editNombre" name="nombre" maxlength="100" required>
                         <p class="editor-error" data-error="nombre"></p>
-                    </div>
-
-                    <div class="editor-campo editor-campo-completo">
-                        <label for="editImagen">Enlace de la imagen</label>
-                        <input type="url" id="editImagen" name="imagen_url" maxlength="255" placeholder="https://...">
-                        <p class="editor-error" data-error="imagen_url"></p>
                     </div>
 
                     <div class="editor-campo">
