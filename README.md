@@ -30,8 +30,8 @@ flowchart LR
         DB[("MySQL")]
     end
 
-    Cliente -->|"HTTP / JSON"| S
-    S  --> DB
+    Cliente <-->|"HTTP / JSON"| S
+    S  <--> DB
 ```
 
 
