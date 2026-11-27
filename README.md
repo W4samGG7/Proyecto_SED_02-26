@@ -401,3 +401,97 @@ cd /srv/loop/backend
 echo "SELECT correo, rol, activo FROM usuarios ORDER BY rol, correo;" | sudo docker compose exec -T mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
 ```
 
+# 6. Flujo de trabajo en GitHub (Git Flow)
+
+Para el desarrollo colaborativo del proyecto se utilizó **GitHub como plataforma de alojamiento y gestión del repositorio**, implementando una adaptación de la metodología **Git Flow** para organizar el trabajo del equipo, controlar los cambios y mantener una versión estable de la aplicación.
+
+El flujo de trabajo se estructuró mediante diferentes tipos de ramas, cada una con una responsabilidad específica.
+
+### Estructura de ramas
+
+Se definieron las siguientes ramas:
+
+| Rama | Descripción |
+|---|---|
+| `main` | Contiene la versión estable del proyecto. Los cambios que llegan a esta rama han pasado previamente por el proceso de integración y pruebas en `develop`. |
+| `develop` | Rama principal de integración. Recibe los cambios provenientes de las ramas secundarias mediante Pull Requests. También funciona como rama de pruebas antes de incorporar los cambios a `main`. |
+| `feature/*` | Ramas destinadas al desarrollo e implementación de nuevas funcionalidades del sistema. Se crean a partir de `develop`. |
+| `fix/*` | Ramas destinadas a corregir errores o bugs identificados durante las pruebas y el desarrollo del proyecto. |
+| `style/*` | Ramas destinadas a realizar modificaciones relacionadas con la presentación visual, estilos CSS, diseño y organización de los componentes de la interfaz. |
+
+### Creación y utilización de las ramas
+
+El trabajo se inició creando la rama `develop` a partir de `main`. Posteriormente, el desarrollo de nuevas funcionalidades y modificaciones se realizó mediante ramas secundarias creadas a partir de `develop`.
+
+Cada integrante del equipo trabajó en una rama independiente, según la tarea asignada.
+
+**Ejemplos de nombres de ramas:**
+
+- `feature/index`
+- `feature/previewForm`
+- `fix/imagenes-productos`
+- `style/general`
+
+
+### Integración de cambios mediante Pull Requests
+
+La integración de los cambios se realizó utilizando **Pull Requests (PR) de GitHub**, evitando incorporar directamente modificaciones a las ramas principales.
+
+El procedimiento establecido fue el siguiente:
+
+1. El integrante crea una rama secundaria (`feature/*`, `fix/*` o `style/*`) a partir de `develop`.
+2. Desarrolla la funcionalidad, corrección o modificación correspondiente.
+3. Realiza commits con los cambios implementados y los publica en GitHub.
+4. Crea un Pull Request estableciendo como rama de origen su rama de trabajo y como rama de destino `develop`.
+5. El equipo revisa los cambios y, si son correctos, aprueba e integra el Pull Request.
+6. Los cambios integrados en `develop` se someten a pruebas para verificar su funcionamiento y evitar que afecten otras funcionalidades del sistema.
+
+### Publicación de versiones estables
+
+Una vez que los cambios integrados en `develop` han sido revisados y las pruebas correspondientes han finalizado satisfactoriamente, se procede a incorporar las modificaciones a `main`.
+
+Para ello, se crea un Pull Request cuya rama de origen es `develop` y cuya rama de destino es `main`.
+
+Este procedimiento permite que `main` conserve únicamente versiones estables del proyecto, mientras que `develop` mantiene la versión de integración y pruebas del equipo.
+
+### Diagrama del flujo de trabajo
+
+El siguiente diagrama representa el proceso de creación de ramas, desarrollo de funcionalidades, integración y publicación de versiones estables:
+
+```mermaid
+flowchart TD
+    A["main<br/>Versión estable"] 
+    B["develop<br/>Integración y pruebas"]
+    
+    A -->|"Creación inicial"| B
+
+    B --> C["feature/*<br/>Nuevas funcionalidades"]
+    B --> D["fix/*<br/>Corrección de errores"]
+    B --> E["style/*<br/>Modificaciones visuales"]
+
+    C -->|"Pull Request"| F["develop<br/>Integración y pruebas"]
+    D -->|"Pull Request"| F
+    E -->|"Pull Request"| F
+
+    F -->|"Pull Request<br/>Después de las pruebas"| G["main<br/>Nueva versión estable"]
+
+    style A fill:#8E6BA8,color:#FFFFFF,stroke:#76528F
+    style B fill:#C4A7D7,color:#241B2B,stroke:#A987C3
+    style C fill:#F2D6E8,color:#352536,stroke:#D8AFCB
+    style D fill:#F7C9D9,color:#352536,stroke:#DDA6BC
+    style E fill:#E6D9F2,color:#352536,stroke:#C6B0D9
+    style F fill:#C4A7D7,color:#241B2B,stroke:#A987C3
+    style G fill:#8E6BA8,color:#FFFFFF,stroke:#76528F
+```
+
+**Nota:** Todas las ramas secundarias se crean a partir de `develop` y sus cambios se integran nuevamente mediante Pull Requests. La rama `main` recibe los cambios únicamente después de completar el proceso de integración y pruebas en `develop`.
+
+### Beneficios del flujo implementado
+
+La utilización de Git Flow y GitHub permitió:
+
+- **Organización del trabajo:** cada integrante pudo desarrollar funcionalidades o realizar correcciones de manera independiente.
+- **Separación de responsabilidades:** se diferenciaron los cambios funcionales, las correcciones de errores y las modificaciones visuales.
+- **Control de cambios:** los Pull Requests permitieron revisar las modificaciones antes de integrarlas al proyecto.
+- **Prevención de conflictos:** el trabajo mediante ramas independientes redujo las modificaciones simultáneas sobre los mismos archivos.
+- **Estabilidad del proyecto:** la rama `main` se mantuvo como referencia de la versión estable, mientras que `develop` permitió integrar y probar los cambios antes de su publicación.
