@@ -346,7 +346,7 @@ Si todo esto funciona, la instalación está completa.
 | Algún servicio no dice `active (running)` | Reiniciarlo: `sudo systemctl restart loop` (o `nginx` o `docker`) y volver a revisar con el comando del paso 6. |
 | `proyecto_SED` no aparece o no dice `Up` | Encender la base de datos: `sudo docker start proyecto_SED` y después `sudo systemctl restart loop`. |
 | La página abre pero no muestra productos o da error | Esperar un minuto (la base de datos tarda en arrancar) y recargar. Si sigue igual: `sudo systemctl restart loop`. |
-| Las cuentas de prueba no inician sesión | Crearlas de nuevo: `cd /srv/loop/backend && npm run usuarios-prueba` |
+| Las cuentas de la sección 4 no inician sesión | Revisar que el correo y la contraseña estén bien escritos (la contraseña distingue mayúsculas). Si sigue sin funcionar, crear las cuentas de prueba adicionales con `cd /srv/loop/backend && npm run usuarios-prueba` y usar esas. |
 | Ver los mensajes de error de la aplicación | `sudo journalctl -u loop -n 30 --no-pager` |
 
 ## Apagar la máquina
@@ -367,28 +367,37 @@ Esa cuenta tiene permisos de administrador (`sudo`), que se necesitan para los c
 
 ## Cuentas de la tienda
 
-Estas cuentas ya vienen creadas en la máquina virtual y sirven para probar cada rol desde el navegador (paso 8 de la guía). **Son solo para pruebas y para la revisión del proyecto**: en una tienda en producción se eliminarían.
+Estas cuentas ya vienen creadas en la máquina virtual y sirven para probar cada rol desde el navegador (paso 8 de la guía). **Son solo para pruebas y para la revisión del proyecto**: en una tienda en producción se eliminarían o se les cambiaría la contraseña.
 
 | Rol | Correo | Contraseña | Qué puede hacer |
 |---|---|---|---|
 | Usuario público | *(no necesita cuenta)* | — | Ver el catálogo y el detalle de los productos |
-| Usuario (vendedor) | `vendedor@loop.test` | `VendedorLoop2026` | Publicar artículos, administrar su stock, comprar |
-| Usuario (comprador) | `comprador@loop.test` | `CompradorLoop2026` | Agregar al carrito, comprar y ver su factura |
-| Administrador | `admin@loop.test` | `AdminLoop2026` | Gestionar usuarios (rol, activar/desactivar, eliminar) y los productos de todos los vendedores |
+| Usuario | `m.cruz@gmail.com` | `mariaGato15` | Comprar y vender: publicar artículos, administrar su stock, usar el carrito y ver sus facturas |
+| Usuario | `pblmrtnz@gmail.com` | `contra12345` | Comprar y vender |
+| Usuario | `C9LC@gmail.com` | `contra98765` | Comprar y vender |
+| Administrador | `loop.web@gmail.com` | `loop0965` | Gestionar usuarios (rol, activar/desactivar, eliminar) y los productos de todos los vendedores |
 | Administrador (**vulnerable**) | `admin@gmail.com` | `admin` | Lo mismo que el administrador. Su contraseña débil es una **vulnerabilidad implementada a propósito** (ver punto 5) |
 
-- **Vendedor y comprador** tienen el mismo rol en el sistema (`usuario`): cualquier usuario registrado puede vender y comprar. Se crean dos cuentas para poder probar una compra entre personas distintas.
-- **El vendedor de prueba** recibe los productos de ejemplo, así que ya tiene productos en **Gestión de stock**.
+- **Usuario** es el mismo rol para comprar y vender: cualquier usuario registrado puede hacer las dos cosas. Hay varias cuentas para poder probar una compra entre personas distintas.
 - **El administrador** no puede comprar ni vender: al iniciar sesión entra directo al **Panel de administración**.
 - **`admin@gmail.com` / `admin`** existe a propósito para demostrar el riesgo de las credenciales débiles o por defecto: es fácil de adivinar y da acceso total al panel de administración. Se explica en el punto **5. Vulnerabilidades implementadas**. En una tienda real esta cuenta no existiría.
 - **Las contraseñas** se guardan cifradas con bcrypt, igual que las de cualquier usuario registrado.
 - **Para crear otro administrador** se registra la cuenta en la página y se ejecuta `npm run crear-admin -- correo@ejemplo.com`.
-- **Las cuentas reales** del proyecto (por ejemplo, el administrador de la tienda) no se documentan aquí: sus contraseñas no deben quedar en un repositorio público.
 
-Si las cuentas no inician sesión, se pueden volver a crear dentro de la máquina con `cd /srv/loop/backend && npm run usuarios-prueba` (el script no duplica cuentas). Para ver cuáles existen:
+### Cuentas de prueba adicionales (opcional)
+
+El comando `npm run usuarios-prueba` (dentro de la máquina, en `/srv/loop/backend`) crea además estas cuentas. El script no duplica cuentas, así que se puede correr varias veces:
+
+| Rol | Correo | Contraseña |
+|---|---|---|
+| Usuario (vendedor, con los productos de ejemplo) | `vendedor@loop.test` | `VendedorLoop2026` |
+| Usuario (comprador) | `comprador@loop.test` | `CompradorLoop2026` |
+| Administrador | `admin@loop.test` | `AdminLoop2026` |
+
+Para ver qué cuentas existen en la base de datos (dentro de la máquina):
 
 ```bash
 cd /srv/loop/backend
-echo "SELECT correo, rol, activo FROM usuarios WHERE correo LIKE '%@loop.test';" | sudo docker compose exec -T mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
+echo "SELECT correo, rol, activo FROM usuarios ORDER BY rol, correo;" | sudo docker compose exec -T mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
 ```
 
