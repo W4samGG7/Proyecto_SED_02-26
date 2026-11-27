@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loop</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/images/logo/logo-loop.svg" />
+        <link rel="stylesheet" href="css/base/base.css">
+        <link rel="stylesheet" href="css/base/fonts.css" />
+    <link rel="stylesheet" href="css/general/footer.css" />
+    <link rel="stylesheet" href="css/general/header.css" />
+    <link rel="stylesheet" href="css/main/home.css" />
+
+  </head>
+  <body>
+    <div id="header-container"></div>
+    <nav class="nav-bar">
+      <ul class="categories" id="categories-container"></ul>
+
+      <div class="header-icons">
+
+        <a href="modules/shoppingCart/cart.html" class="icon-btn cart-link">
+          <img
+            src="assets/icons/navigation/cart.svg"
+            alt="Carrito"
+            class="icon"
+          />
+          <span class="cart-badge" id="cart-badge" hidden></span>
+        </a>
+
+        <div id="estadoSesion" class="estado-sesion">
+          <a href="modules/login/index_login.html" class="icon-btn">
+              <img
+                src="assets/icons/navigation/user.svg"
+                alt="Cuenta"
+                class="icon"
+              />
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero-section-buy">
+        <div class="hero-content-buy">
+          <h1 class="hero-title-buy">
+            Dale una segunda oportunidad a las prendas.
+          </h1>
+          <h3 class="hero-subtitle-buy">
+            Viste con estilo y cuida el planeta.
+          </h3>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <div class="section-header">
+          <h2>Destacados en ropa de mujer</h2>
+        </div>
+
+        <div class="product-grid" id="women-products"></div>
+      </section>
+
+      <section class="hero-section-sell">
+        <div class="hero-content-sell">
+          <h2 class="hero-title-sell">Tu ropa merece otra oportunidad.</h2>
+          <h3 class="hero-subtitle-sell">
+            Véndela y reduce el desperdicio textil.
+          </h3>
+          <a href="/modules/sell/sell.html" class="btn-hero-sell">Reciclar mi ropa</a>
+        </div>
+      </section>
+
+      <section class="products-section">
+        <div class="section-header">
+          <h2>Destacados en ropa de hombre</h2>
+        </div>
+
+        <div class="product-grid" id="men-products"></div>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+    <script type="module" src="js/general/reuse.js"></script>
+    <script src="js/general/product-utils.js"></script>
+    <script src="js/shoppingCart/cartService.js"></script>
+    <script src="js/main/home.js"></script>
+  </body>
+</html>

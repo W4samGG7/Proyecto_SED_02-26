@@ -1,0 +1,228 @@
+/* =====================================
+   PANEL DE ADMINISTRACION
+===================================== */
+
+body:not(.header-loaded) main {
+    opacity: 0;
+}
+
+/* El admin no compra ni vende: se ocultan esos botones del header
+   (visibility mantiene el espacio para que no se mueva el resto) */
+.pagina-admin .toggle-mode {
+    visibility: hidden;
+}
+
+.admin-navbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 10px 4%;
+}
+
+/* Sesion (igual que en las demas paginas) */
+
+.estado-sesion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.usuario-bienvenida {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-cerrar-sesion {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+}
+
+.admin-panel {
+    width: calc(100% - 80px);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 0 60px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* =====================================
+   ENCABEZADO
+===================================== */
+
+.panel-header {
+    margin-bottom: 35px;
+    text-align: center;
+}
+
+.panel-header h1 {
+    color: var(--darkgreen);
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+}
+
+.panel-header p {
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* =====================================
+   RESUMEN
+===================================== */
+
+.admin-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 25px;
+}
+
+.resumen-card {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    background-color: var(--white);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+}
+
+.resumen-numero {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--darkred);
+}
+
+.resumen-texto {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* =====================================
+   MENSAJES
+===================================== */
+
+.mensaje-admin {
+    min-height: 1.4em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.mensaje-ok {
+    color: var(--success);
+}
+
+.mensaje-error {
+    color: var(--danger-dark);
+}
+
+/* =====================================
+   SECCIONES Y FILTROS
+===================================== */
+
+.admin-seccion {
+    background-color: var(--white);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+    padding: 22px 25px;
+    margin-bottom: 25px;
+}
+
+.seccion-titulo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.seccion-titulo h2 {
+    color: var(--darkred);
+    font-size: 1.5rem;
+}
+
+.admin-filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.admin-filtros input,
+.admin-filtros select {
+    padding: 9px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background-color: var(--white);
+    color: var(--text);
+}
+
+.admin-filtros input {
+    width: 260px;
+}
+
+.admin-filtros input:focus,
+.admin-filtros select:focus {
+    outline: none;
+    border-color: var(--darkred);
+    box-shadow: 0 0 0 3px var(--glow);
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media screen and (max-width: 900px) {
+
+    .admin-resumen {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* En celular cada fila se muestra como tarjeta */
+@media screen and (max-width: 760px) {
+
+    .admin-panel {
+        width: calc(100% - 32px);
+        padding-top: 15px;
+    }
+
+    .panel-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .admin-seccion {
+        padding: 18px 16px;
+    }
+
+    .admin-filtros,
+    .admin-filtros input,
+    .admin-filtros select {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 420px) {
+
+    .admin-resumen {
+        gap: 10px;
+    }
+
+    .resumen-card {
+        padding: 14px;
+    }
+
+    .resumen-numero {
+        font-size: 1.5rem;
+    }
+}

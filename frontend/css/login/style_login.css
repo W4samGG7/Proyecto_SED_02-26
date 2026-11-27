@@ -1,0 +1,235 @@
+/* Estilos generales de la pagina */
+body {
+    background-color: var(--lightred);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Contenedor principal del login */
+.login-container {
+    background-color: var(--white);
+    width: 500px;
+    height: 500px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    align-content: center;
+}
+
+/* Titulo */
+.login-container h1 {
+    color: var(--darkred);
+    margin-bottom: 25px;
+    font-size: 30px;
+    font-family: 'DM Serif Display', serif;
+    letter-spacing: 1.5px;
+}
+
+/* Espacio entre los campos */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+/* Etiquetas */
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Campos de texto */
+.input-group input {
+    width: 100%;
+    padding: 11px;
+    box-sizing: border-box;
+    border: 1.5px solid var(--lightgreen);
+    border-radius: 5px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Cuando se selecciona un campo */
+.input-group input:focus {
+    outline: none;
+    border: 1px solid var(--darkgreen);
+}
+
+/* Boton de iniciar sesion */
+.login-container button {
+    width: 100%;
+    padding: 11px;
+    background-color: var(--lightgreen);
+    color: var(--darkgreen);
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+
+/* Efecto del boton */
+.login-container button:hover {
+    background-color: var(--darkgreen);
+    color: var(--lightgreen)
+}
+
+/* Mensaje de respuesta */
+#estado {
+    margin-top: 15px;
+    color: var(--danger-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+}
+
+/* Texto para registrarse */
+.register-link {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Enlace de registro */
+.register-link a {
+    color: var(--darkgreen);
+    text-decoration: underline;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* Contenedor para posicionar la X */
+.login-container {
+    position: relative;
+}
+
+/* Boton para cerrar el login */
+.close-login {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+
+    background: none !important;
+    border: none !important;
+
+    color: var(--text) !important;
+    font-size: 25px !important;
+
+    width: auto !important;
+    padding: 0 !important;
+
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Efecto al pasar el mouse */
+.close-login:hover {
+    color: var(--darkred) !important;
+}
+
+/* Adaptacion para celulares */
+@media screen and (max-width: 400px) {
+    .login-container {
+        width: 90%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+}
+
+/* Estilos del registro */
+
+/* Mensaje de error debajo de cada campo */
+.error-text {
+    margin: 5px 0 0;
+    font-size: 13px;
+    color: var(--danger-dark);
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Campo con error */
+.input-group input.input-invalid {
+    border: 1px solid var(--danger-dark);
+}
+
+/* Mensaje cuando el registro sale bien */
+#estado.estado-ok {
+    color: var(--darkgreen);
+    font-family: 'DM Sans', sans-serif;
+}
+
+/* Contenedor del registro */
+.registro-container {
+    background-color: var(--white);
+    width: 500px;
+    height: 775px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    align-content: center;
+}
+
+/* Adaptacion del registro para celulares */
+@media screen and (max-width: 480px) {
+
+    .registro-container {
+        width: 100%;
+        padding: 22px 20px;
+        margin: 16px;
+    }
+
+    .registro-container h1 {
+        font-size: 24px;
+        margin: 4px 0 18px;
+    }
+
+    .registro-container .input-group {
+        margin-bottom: 14px;
+    }
+
+    .registro-container .input-group label {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .registro-container .input-group input {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .registro-container button[type="submit"] {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .registro-container .register-link {
+        margin-top: 16px;
+    }
+}
+
+/* Celulares pequeños */
+@media screen and (max-width: 340px) {
+
+    .registro-container {
+        padding: 18px 14px;
+        margin: 10px;
+    }
+
+    .registro-container h1 {
+        font-size: 22px;
+    }
+}

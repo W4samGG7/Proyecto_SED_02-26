@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/svg+xml" href="/assets/images/logo/logo-loop.svg" />
+    <title>Gestion de stock</title>
+    <link rel="stylesheet" href="../../css/base/base.css">
+    <link rel="stylesheet" href="../../css/base/fonts.css" />
+    <link rel="stylesheet" href="../../css/shared/components.css">
+    <link rel="stylesheet" href="../../css/general/footer.css">
+    <link rel="stylesheet" href="../../css/shared/productos.css">
+    <link rel="stylesheet" href="../../css/seller-styles/stock.css">
+    
+</head>
+<body>
+    <!-- Navbar -->
+    <div id="navbar-container"></div>
+
+    <main class="stock-page">
+
+        <a href="panel.html" class="volver-panel">&larr; Volver al panel</a>
+
+        <section class="stock-header">
+            <h1>Gestion de stock</h1>
+            <p>Controla las existencias de tus productos y administra las cantidades disponibles.</p>
+        </section>
+
+        <!-- Resumen -->
+        <section class="stock-resumen" aria-label="Resumen">
+            <article class="resumen-card">
+                <span class="resumen-numero" id="totalProductos">0</span>
+                <span class="resumen-texto">Productos</span>
+            </article>
+            <article class="resumen-card">
+                <span class="resumen-numero" id="totalPublicados">0</span>
+                <span class="resumen-texto">Publicados</span>
+            </article>
+            <article class="resumen-card">
+                <span class="resumen-numero" id="totalStock">0</span>
+                <span class="resumen-texto">Prendas en stock</span>
+            </article>
+            <article class="resumen-card">
+                <span class="resumen-numero" id="totalStockBajo">0</span>
+                <span class="resumen-texto">Stock bajo (2 o menos)</span>
+            </article>
+            <article class="resumen-card">
+                <span class="resumen-numero" id="totalSinStock">0</span>
+                <span class="resumen-texto">Sin stock</span>
+            </article>
+        </section>
+
+        <p id="mensajeStock" class="mensaje-stock" role="status" aria-live="polite"></p>
+
+        <section class="stock-seccion">
+
+            <div class="seccion-titulo">
+                <h2>Mis productos</h2>
+
+                <div class="stock-filtros">
+                    <input
+                        type="search"
+                        id="buscarProducto"
+                        placeholder="Buscar por nombre o marca"
+                        aria-label="Buscar producto"
+                        maxlength="100"
+                    >
+
+                    <select id="filtroProductos" aria-label="Filtrar productos">
+                        <option value="todos">Todos</option>
+                        <option value="publicados">Publicados</option>
+                        <option value="ocultos">Ocultos</option>
+                        <option value="stock-bajo">Stock bajo</option>
+                        <option value="sin-stock">Sin stock</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="tabla-contenedor">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th aria-sort="none">
+                                <button type="button" class="th-ordenar" data-orden="nombre">Producto <span class="th-flecha" aria-hidden="true"></span></button>
+                            </th>
+                            <th>Talla</th>
+                            <th aria-sort="none">
+                                <button type="button" class="th-ordenar" data-orden="precio">Precio <span class="th-flecha" aria-hidden="true"></span></button>
+                            </th>
+                            <th aria-sort="none">
+                                <button type="button" class="th-ordenar" data-orden="cantidad">Cantidad <span class="th-flecha" aria-hidden="true"></span></button>
+                            </th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaStock"></tbody>
+                </table>
+            </div>
+
+            <p id="sinProductos" class="tabla-vacia" hidden>No hay productos que coincidan.</p>
+            <p id="sinPublicaciones" class="tabla-vacia" hidden>
+                Todavia no publicaste productos.
+                <a href="item-register-form.html">Publicar un articulo</a>
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Visor de imagen del producto -->
+    <dialog id="visorImagen" class="visor-imagen" aria-label="Imagen del producto">
+        <button type="button" class="visor-cerrar" id="cerrarVisor" aria-label="Cerrar imagen">&times;</button>
+        <img id="visorImg" alt="">
+        <p id="visorTitulo" class="visor-titulo"></p>
+    </dialog>
+
+    <!-- Formulario para editar un producto -->
+    <dialog id="editorProducto" class="editor-producto" aria-labelledby="editorTitulo">
+        <form id="formProducto" method="dialog" novalidate>
+
+            <div class="editor-encabezado">
+                <h2 id="editorTitulo">Editar producto</h2>
+                <button type="button" class="visor-cerrar editor-cerrar" id="cerrarEditor" aria-label="Cerrar">&times;</button>
+            </div>
+
+            <div class="editor-cuerpo">
+
+                <div class="editor-imagen">
+                    <div class="editor-vista-previa" id="vistaPrevia">
+                        <span class="producto-sin-imagen">Sin imagen</span>
+                    </div>
+
+                    <!-- La foto se cambia subiendo un archivo (no con un enlace) -->
+                    <input type="file" id="editImagen" name="imagen" accept="image/png,image/jpeg" class="visualmente-oculto">
+                    <label for="editImagen" class="btn-admin btn-secundario editor-cambiar-foto">Cambiar foto</label>
+                    <p class="editor-ayuda" id="ayudaImagen">PNG o JPG, máximo 2 MB</p>
+                    <p class="editor-error" data-error="imagen"></p>
+                </div>
+
+                <div class="editor-campos">
+
+                    <div class="editor-campo editor-campo-completo">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" id="editNombre" name="nombre" maxlength="100" required>
+                        <p class="editor-error" data-error="nombre"></p>
+                    </div>
+
+                    <div class="editor-campo">
+                        <label for="editTalla">Talla</label>
+                        <input type="text" id="editTalla" name="talla" maxlength="10" required>
+                        <p class="editor-error" data-error="talla"></p>
+                    </div>
+
+                    <div class="editor-campo">
+                        <label for="editPrecio">Precio ($)</label>
+                        <input type="number" id="editPrecio" name="precio" min="0.01" max="999999.99" step="0.01" required>
+                        <p class="editor-error" data-error="precio"></p>
+                    </div>
+
+                    <div class="editor-campo">
+                        <label for="editCantidad">Cantidad</label>
+                        <input type="number" id="editCantidad" name="cantidad" min="0" max="100000" step="1" required>
+                        <p class="editor-error" data-error="cantidad"></p>
+                    </div>
+
+                    <div class="editor-campo">
+                        <label for="editEstado">Estado</label>
+                        <select id="editEstado" name="activo">
+                            <option value="1">Publicado</option>
+                            <option value="0">Oculto</option>
+                        </select>
+                    </div>
+
+                    <div class="editor-campo editor-campo-completo">
+                        <label for="editDescripcion">Descripcion</label>
+                        <textarea id="editDescripcion" name="descripcion" rows="4" maxlength="1000"></textarea>
+                        <p class="editor-contador" id="contadorDescripcion">0 / 1000</p>
+                        <p class="editor-error" data-error="descripcion"></p>
+                    </div>
+
+                </div>
+            </div>
+
+            <p class="editor-error editor-error-general" id="errorEditor" role="alert"></p>
+
+            <div class="editor-botones">
+                <button type="button" class="btn-admin btn-secundario" id="cancelarEditor">Cancelar</button>
+                <button type="submit" class="btn-admin btn-exito" id="guardarEditor">Guardar cambios</button>
+            </div>
+
+        </form>
+    </dialog>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <script src="../../js/frontend-common/components.js"></script>
+    <script type="module" src="../../js/seller/stock.js"></script>
+</body>
+</html>
