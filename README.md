@@ -234,7 +234,7 @@ flowchart LR
 | Memoria RAM de tu computadora | 8 GB (la máquina virtual usa 4 GB) |
 | Espacio libre en disco | 25 GB |
 | Programa de virtualización | **VMware Workstation Pro** (gratuito) |
-| El archivo de la máquina virtual | `Proyecto-SED.ova` (lo entrega el equipo) |
+| Los archivos de la máquina virtual | Una carpeta con `Proyecto-SED.ovf` y `Proyecto-SED-disk1.vmdk` (la entrega el equipo) |
 
 > También funciona con **VirtualBox**; los pasos son parecidos y están indicados donde cambian.
 
@@ -246,23 +246,25 @@ flowchart LR
 ## Paso 2: Importar la máquina virtual
 
 1. Abrir VMware Workstation.
-2. Ir a **File → Open…** (Archivo → Abrir) y elegir el archivo **`Proyecto-SED.ova`**.
-   Si la máquina viene en un `.zip`, primero descomprimirlo (clic derecho → **Extraer todo**) y elegir el archivo que termina en **`.ovf`**.
+2. Ir a **File → Open…** (Archivo → Abrir) y elegir el archivo **`Proyecto-SED.ovf`**.
+   El `.ovf` solo describe la máquina; el disco es el `.vmdk`, así que **los dos tienen que estar en la misma carpeta**. Si la carpeta viene en un `.zip`, primero descomprimirla (clic derecho → **Extraer todo**).
 3. Escribir un nombre (por ejemplo `Proyecto SED`) y elegir la carpeta donde se va a guardar.
 4. Hacer clic en **Import** y esperar a que termine (puede tardar unos minutos).
 5. Si aparece un aviso de que el archivo no cumple con la especificación OVF, hacer clic en **Retry** (Reintentar): es normal y la importación continúa.
 
-> **Con VirtualBox:** **Archivo → Importar servicio virtualizado**, elegir el `.ova`, dejar los valores por defecto y hacer clic en **Importar**.
+> **Con VirtualBox:** **Archivo → Importar servicio virtualizado**, elegir el `.ovf`, dejar los valores por defecto y hacer clic en **Importar**.
 
 ## Paso 3: Revisar la red
 
-La máquina tiene que estar en una red que tu computadora pueda ver:
+La máquina ya viene con el adaptador de red en **Bridged (puente), automático**: se conecta a la misma red que tu computadora (wifi o cable) y toma una IP de esa red, como si fuera otra computadora más. Solo hay que comprobarlo:
 
 1. Seleccionar la máquina y abrir **Edit virtual machine settings** (Configuración).
-2. En **Network Adapter** (Adaptador de red), elegir **NAT**.
+2. En **Network Adapter** (Adaptador de red) tiene que estar marcado **Bridged: Connected directly to the physical network**.
 3. Guardar con **OK**.
 
-> **Con VirtualBox:** en **Configuración → Red** elegir **Adaptador puente** (*Bridged*) y la tarjeta de red que usa tu computadora (wifi o cable).
+> En algunas redes (por ejemplo, el wifi de una universidad o de un lugar público) el modo Bridged no recibe IP. En ese caso, cambiarlo a **NAT**: la tienda solo se va a poder abrir desde tu computadora, pero funciona igual.
+
+> **Con VirtualBox:** en **Configuración → Red** revisar que diga **Adaptador puente** (*Bridged*) y elegir la tarjeta de red que usa tu computadora (wifi o cable).
 
 ## Paso 4: Encender la máquina e iniciar sesión
 
@@ -280,7 +282,7 @@ La IP es la "dirección" con la que tu navegador encuentra la tienda. Dentro de 
 hostname -I
 ```
 
-Aparecen varias direcciones separadas por espacios. La que sirve es la de la red de tu computadora, que normalmente empieza con **`192.168.`**, por ejemplo `192.168.0.26`. Anotarla.
+Aparecen varias direcciones separadas por espacios. La que sirve es la de la red de tu computadora, que normalmente empieza con **`192.168.`** o **`10.`**, por ejemplo `192.168.0.26`. Anotarla.
 
 > No sirven las que empiezan con `172.` (son internas de Docker) ni con `100.` (son de Tailscale, la red privada del equipo).
 
@@ -340,6 +342,7 @@ Si todo esto funciona, la instalación está completa.
 | Problema | Qué hacer |
 |---|---|
 | El navegador dice "no se puede acceder al sitio" | Revisar que la máquina esté encendida y que la IP sea la del paso 5. Si cambiaste la red, apagar y encender la máquina y volver a buscar la IP. |
+| `hostname -I` no muestra ninguna IP que empiece con `192.168.` o `10.` | La red no le dio IP en modo Bridged. Apagar la máquina, cambiar el adaptador a **NAT** (paso 3), encenderla y volver al paso 5. |
 | Algún servicio no dice `active (running)` | Reiniciarlo: `sudo systemctl restart loop` (o `nginx` o `docker`) y volver a revisar con el comando del paso 6. |
 | `proyecto_SED` no aparece o no dice `Up` | Encender la base de datos: `sudo docker start proyecto_SED` y después `sudo systemctl restart loop`. |
 | La página abre pero no muestra productos o da error | Esperar un minuto (la base de datos tarda en arrancar) y recargar. Si sigue igual: `sudo systemctl restart loop`. |
@@ -372,10 +375,12 @@ Estas cuentas ya vienen creadas en la máquina virtual y sirven para probar cada
 | Usuario (vendedor) | `vendedor@loop.test` | `VendedorLoop2026` | Publicar artículos, administrar su stock, comprar |
 | Usuario (comprador) | `comprador@loop.test` | `CompradorLoop2026` | Agregar al carrito, comprar y ver su factura |
 | Administrador | `admin@loop.test` | `AdminLoop2026` | Gestionar usuarios (rol, activar/desactivar, eliminar) y los productos de todos los vendedores |
+| Administrador (**vulnerable**) | `admin@gmail.com` | `admin` | Lo mismo que el administrador. Su contraseña débil es una **vulnerabilidad implementada a propósito** (ver punto 5) |
 
 - **Vendedor y comprador** tienen el mismo rol en el sistema (`usuario`): cualquier usuario registrado puede vender y comprar. Se crean dos cuentas para poder probar una compra entre personas distintas.
 - **El vendedor de prueba** recibe los productos de ejemplo, así que ya tiene productos en **Gestión de stock**.
 - **El administrador** no puede comprar ni vender: al iniciar sesión entra directo al **Panel de administración**.
+- **`admin@gmail.com` / `admin`** existe a propósito para demostrar el riesgo de las credenciales débiles o por defecto: es fácil de adivinar y da acceso total al panel de administración. Se explica en el punto **5. Vulnerabilidades implementadas**. En una tienda real esta cuenta no existiría.
 - **Las contraseñas** se guardan cifradas con bcrypt, igual que las de cualquier usuario registrado.
 - **Para crear otro administrador** se registra la cuenta en la página y se ejecuta `npm run crear-admin -- correo@ejemplo.com`.
 - **Las cuentas reales** del proyecto (por ejemplo, el administrador de la tienda) no se documentan aquí: sus contraseñas no deben quedar en un repositorio público.
