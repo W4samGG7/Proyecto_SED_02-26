@@ -470,7 +470,6 @@ app.post("/api/login", async (req, res) => {
 
 Puede observarse que no existe ningún middleware ni lógica adicional que limite la cantidad de intentos por usuario o por dirección IP, esto permite automatizar el envío de credenciales al endpoint hasta dar con la combinación correcta.
 
-
 **Pasos para explotarla:**
 
 ## Paso 1.
@@ -480,12 +479,94 @@ Ingresa a la página web usando la IP de la máquina virtual.
 Haz clic en el icono de cuenta que se encuentra en el navbar.
 
 ## Paso 3. 
-Si no se conocen las credenciales, es posible intentar un ataque de fuerza bruta contra el inicio de sesión, ya que no se implementa ningún límite de intentos ni bloqueo temporal. Las credenciales del administrador vulnerable son: [correo: admin@gmail.com y contraseña: admin].
+Si no se conocen las credenciales, es posible intentar un ataque de fuerza bruta contra el inicio de sesión, ya que no se implementa ningún límite de intentos ni bloqueo temporal. Las credenciales del administrador vulnerable son: **correo:** `admin@gmail.com` y **contraseña:** `admin`.
 
 ## Paso 4. 
 Si obtienes un inicio de sesión exitoso serás redirigido al panel de administrador, en el cual puedes gestionar tanto usuarios como productos.
 
+## 5.2 Puerto SSH (22) expuesto con usuario y contraseña débiles
 
+A nivel de servidor, el puerto **22 (SSH)** se dejó abierto y accesible desde la misma red, protegido por un usuario cuyas credenciales también son intencionamiente débiles:
+- **Usuario:** `admin`
+- **Contraseña:** `admin`
+
+Algo importante de recalcar, es que los intentos de inicio de sesión en SSH están limitados a 6 en una misma sesión, con un tiempo límite de 120 segundos y un máximo de 10 intentos simultáneos.
+
+```bash
+logingracetime 120
+maxauthtries 6
+maxsessions 10
+permitrootlogin no
+passwordauthetication yes
+```
+
+Este usuario cuenta con permisos completos sobre el servidor. Esto permite que, una vez dentro de él, el atacante pueda:
+
+1. Acceder al contenedor de Docker donde corre la base de datos MySQL.
+
+2. Consultar las tablas de la base de datos directamente.
+
+3. Consultar la tabla `usuarios` y obtener el correo del administrador vulnerable de la aplicación, lo que constituye una **ruta alterna** para comprometer la cuenta de administrador en caso de que la vulnerabilidad 5.1 no pudiera explotarse por fuerza bruta directa en el formulario de login.
+
+De esta forma, ambas vulnerabilidades están conectadas: si no se logra acceder como administrador desde la página web, es posible llegar al mismo resultado comprometiendo primero el servidor.
+
+**Pasos para explotarla:**
+
+## Paso 1:
+Abrir Termius y crear un nuevo host usando la dirección IP de la máquina virtual, colocar el puerto 22 de SSH, si no se conocen las credenciales vulnerables es posible intentar un ataque de fuerza bruta, teniendo en cuenta que se debe reiniciar la sesión del host al agotar los intentos de inicio de sesión. Las credenciales del administrador vulnerable son: **Usuario:** `admin` y **Contraseña:** `admin`. Posteriormente, se da click en conectar y esperar que se establezca la conexión con la máquina virtual.
+
+## Paso 2:
+Desplazarse a la carpeta de backend de loop dentro del servidor.
+
+```bash
+cd /srv
+
+ls
+
+cd /srv/loop
+
+ls
+
+cd /srv/loop/backend
+```
+o directamente
+
+```bash
+cd /srv/loop/backend
+```
+
+## Paso 3:
+Verificar que dentro de backend se encuentra el contenedor de docker, el cual contiene de la base de datos.
+
+```bash
+ls -la /srv/loop/backend
+```
+
+## Paso 4: 
+Obtener el sistema de gestión de base de datos que se está usando en el contenedor.
+
+```bash
+sudo docker compose ps
+```
+
+## Paso 5:
+Obtener las tablas que se han creado en la base de datos.
+
+```bash
+sudo docker compose exec mysql sh -c 'mysql -u"$MYSQL_USER -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" -e "SHOW TABLES;"'
+```
+
+## Paso 6:
+En base al nombre de las tablas obtenidas, inicia una sesión interactiva con el cliente de MySQL dentro del contenedor y haz una consulta para obtener la información dentro de la tabla de usuarios.
+
+```bash
+sudo docker compose exec mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
+
+SELECT * FROM usuarios;
+```
+
+## Paso 7:
+Ahora que se tiene el correo del administrador vulnerable, es posible intentar un ataque de fuerza bruta en la página web para acceder con rol de administrador y así tener acceso al panel que permite gestión de usuarios y productos.
 
 # 6. Flujo de trabajo en GitHub (Git Flow)
 
