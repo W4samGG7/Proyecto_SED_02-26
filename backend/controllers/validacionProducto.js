@@ -5,28 +5,12 @@ const PRECIO_MAXIMO = 999999.99;               // DECIMAL(8,2) en la BD
 const REGEX_TALLA = /^[A-Za-z0-9 ./-]{1,10}$/; // VARCHAR(10) en la BD
 const NOMBRE_MAXIMO = 100;                     // VARCHAR(100) en la BD
 const DESCRIPCION_MAXIMA = 1000;
-const URL_MAXIMA = 255;                        // VARCHAR(255) en la BD
 
 // Valida que el id de la URL sea un entero positivo
 function leerId(valor) {
     if (!/^\d{1,10}$/.test(valor)) return null;
     const id = Number(valor);
     return id > 0 ? id : null;
-}
-
-// Imagen subida desde "Publicar articulo" (nombre aleatorio que genera el servidor)
-const REGEX_IMAGEN_SUBIDA = /^\/uploads\/[0-9a-f-]{36}\.(png|jpe?g)$/i;
-
-// Enlaces http/https o imagenes subidas al servidor (evita javascript:, data:, etc.)
-function urlImagenValida(valor) {
-    if (valor.length > URL_MAXIMA) return false;
-    if (REGEX_IMAGEN_SUBIDA.test(valor)) return true;
-    try {
-        const url = new URL(valor);
-        return url.protocol === 'http:' || url.protocol === 'https:';
-    } catch {
-        return false;
-    }
 }
 
 // Revisa los campos enviados y arma el UPDATE.
@@ -57,16 +41,9 @@ function validarCambiosProducto(body) {
         valores.push(descripcionLimpia || null);
     }
 
+    // La foto no se cambia con un enlace: se sube un archivo (ruta /imagen)
     if (imagen_url !== undefined) {
-        if (imagen_url !== null && typeof imagen_url !== 'string') {
-            return { error: 'Enlace de imagen no valido.' };
-        }
-        const urlLimpia = (imagen_url || '').trim();
-        if (urlLimpia && !urlImagenValida(urlLimpia)) {
-            return { error: `La imagen debe ser un enlace http o https de hasta ${URL_MAXIMA} caracteres, o una imagen subida.` };
-        }
-        cambios.push('imagen_url = ?');
-        valores.push(urlLimpia || null);
+        return { error: 'La foto se cambia subiendo un archivo, no con un enlace.' };
     }
 
     if (talla !== undefined) {

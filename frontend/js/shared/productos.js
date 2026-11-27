@@ -46,19 +46,19 @@ export function etiqueta(texto, tipo) {
     return crear('span', `etiqueta etiqueta-${tipo}`, texto);
 }
 
-// Imagen subida desde "Publicar articulo" (la guarda el servidor con nombre aleatorio)
-const REGEX_IMAGEN_SUBIDA = /^\/uploads\/[0-9a-f-]{36}\.(png|jpe?g)$/i;
+// Fotos guardadas en el propio sitio. No se aceptan enlaces externos.
+// - Subidas por los vendedores: /uploads/<uuid>.png|jpg (nombre que genera el servidor)
+// - Productos de ejemplo:      /assets/images/productos/<nombre>.jpg|png
+const REGEX_IMAGEN_SUBIDA = /^\/uploads\/[0-9a-f-]{36}\.(png|jpg)$/;
+const REGEX_IMAGEN_EJEMPLO = /^\/assets\/images\/productos\/[a-z0-9-]+\.(png|jpg)$/;
 
-// Solo se aceptan enlaces http/https o imagenes subidas (evita javascript:, data:, etc.)
+// Reglas para subir una foto (las mismas que revisa el servidor)
+const TIPOS_FOTO = ['image/png', 'image/jpeg'];
+const FOTO_MAXIMA = 2 * 1024 * 1024; // 2 MB
+
 export function urlSegura(valor) {
     if (!valor) return null;
-    if (REGEX_IMAGEN_SUBIDA.test(valor)) return valor;
-    try {
-        const enlace = new URL(valor);
-        return (enlace.protocol === 'http:' || enlace.protocol === 'https:') ? enlace.href : null;
-    } catch {
-        return null;
-    }
+    return (REGEX_IMAGEN_SUBIDA.test(valor) || REGEX_IMAGEN_EJEMPLO.test(valor)) ? valor : null;
 }
 
 
@@ -192,21 +192,33 @@ function abrirVisor(url, nombre) {
 // ===== Editor de producto =====
 
 // Prepara el formulario de edicion.
-// enviar(producto, cambios) guarda los cambios y devuelve el mensaje del servidor
-// (si falla debe lanzar un Error con el mensaje para mostrarlo en el formulario).
+// enviar(producto, cambios, foto) guarda los cambios: sube la foto nueva si hay
+// (foto es un File o null) y luego los demas campos.
+// Si falla debe lanzar un Error con el mensaje para mostrarlo en el formulario.
 // Devuelve la funcion para abrir el editor con un producto.
 export function configurarEditor({ enviar }) {
     const editor = document.getElementById('editorProducto');
     const form = document.getElementById('formProducto');
     const vistaPrevia = document.getElementById('vistaPrevia');
+    const inputFoto = document.getElementById('editImagen');
     const errorEditor = document.getElementById('errorEditor');
     const btnGuardar = document.getElementById('guardarEditor');
     const contador = document.getElementById('contadorDescripcion');
 
     let productoEditando = null;
+    let fotoNueva = null;
+    let urlTemporal = null;
+
+    function liberarVistaTemporal() {
+        if (urlTemporal) URL.revokeObjectURL(urlTemporal);
+        urlTemporal = null;
+    }
 
     function cerrar() {
         productoEditando = null;
+        fotoNueva = null;
+        inputFoto.value = '';
+        liberarVistaTemporal();
         editor.close();
     }
 
@@ -224,9 +236,9 @@ export function configurarEditor({ enviar }) {
         contador.textContent = `${form.descripcion.value.length} / 1000`;
     }
 
-    // Muestra la imagen del enlace escrito (solo http/https)
+    // Muestra la foto nueva elegida o, si no hay, la actual del producto
     function actualizarVistaPrevia() {
-        const url = urlSegura(form.imagen_url.value.trim());
+        const url = urlTemporal || urlSegura(productoEditando && productoEditando.imagen_url);
         const sinImagen = () => vistaPrevia.replaceChildren(crear('span', 'producto-sin-imagen', 'Sin imagen'));
 
         if (!url) {
@@ -235,11 +247,34 @@ export function configurarEditor({ enviar }) {
         }
 
         const img = document.createElement('img');
-        img.referrerPolicy = 'no-referrer';
-        img.alt = 'Vista previa';
+        img.alt = fotoNueva ? 'Foto nueva' : 'Foto actual';
         img.addEventListener('error', sinImagen);
         img.src = url;
         vistaPrevia.replaceChildren(img);
+    }
+
+    // Al elegir un archivo: se revisa tipo y tamano antes de mostrarlo
+    function elegirFoto() {
+        const archivo = inputFoto.files[0];
+        const error = form.querySelector('[data-error="imagen"]');
+        error.textContent = '';
+        liberarVistaTemporal();
+        fotoNueva = null;
+
+        if (archivo) {
+            if (!TIPOS_FOTO.includes(archivo.type)) {
+                error.textContent = 'La foto debe ser PNG o JPG.';
+                inputFoto.value = '';
+            } else if (archivo.size > FOTO_MAXIMA) {
+                error.textContent = 'La foto supera los 2 MB.';
+                inputFoto.value = '';
+            } else {
+                fotoNueva = archivo;
+                urlTemporal = URL.createObjectURL(archivo);
+            }
+        }
+
+        actualizarVistaPrevia();
     }
 
     // Valida el formulario y devuelve solo los campos que cambiaron (o null si hay errores)
@@ -254,14 +289,6 @@ export function configurarEditor({ enviar }) {
             valido = false;
         } else if (nombre !== p.nombre) {
             cambios.nombre = nombre;
-        }
-
-        const imagen = form.imagen_url.value.trim();
-        if (imagen && (!urlSegura(imagen) || imagen.length > 255)) {
-            errorCampo('imagen_url', 'Debe ser un enlace http o https (hasta 255 caracteres) o una imagen subida.');
-            valido = false;
-        } else if (imagen !== (p.imagen_url || '')) {
-            cambios.imagen_url = imagen || null;
         }
 
         const talla = form.talla.value.trim();
@@ -315,7 +342,7 @@ export function configurarEditor({ enviar }) {
             return;
         }
 
-        if (Object.keys(cambios).length === 0) {
+        if (Object.keys(cambios).length === 0 && !fotoNueva) {
             cerrar();
             return;
         }
@@ -324,7 +351,7 @@ export function configurarEditor({ enviar }) {
         btnGuardar.textContent = 'Guardando...';
 
         try {
-            await enviar(productoEditando, cambios);
+            await enviar(productoEditando, cambios, fotoNueva);
             cerrar();
         } catch (error) {
             errorEditor.textContent = error.message;
@@ -336,7 +363,7 @@ export function configurarEditor({ enviar }) {
 
     form.addEventListener('submit', guardar);
     form.descripcion.addEventListener('input', actualizarContador);
-    form.imagen_url.addEventListener('input', actualizarVistaPrevia);
+    inputFoto.addEventListener('change', elegirFoto);
     document.getElementById('cerrarEditor').addEventListener('click', cerrar);
     document.getElementById('cancelarEditor').addEventListener('click', cerrar);
 
@@ -350,10 +377,12 @@ export function configurarEditor({ enviar }) {
 
     return function abrirEditor(p) {
         productoEditando = p;
+        fotoNueva = null;
+        inputFoto.value = '';
+        liberarVistaTemporal();
         limpiarErrores();
 
         form.nombre.value = p.nombre;
-        form.imagen_url.value = p.imagen_url || '';
         form.talla.value = p.talla;
         form.precio.value = p.precio.toFixed(2);
         form.cantidad.value = p.cantidad;

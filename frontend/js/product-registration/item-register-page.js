@@ -1,4 +1,4 @@
-import { initSession } from './general/session.js';
+import { initSession } from '../general/session.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
 

@@ -147,19 +147,19 @@ INSERT INTO categorias (nombre, slug) VALUES
 
 INSERT INTO productos (nombre, marca, tipo, condicion, talla, precio, cantidad, seccion, imagen_url) VALUES
   ('Jeans clásico claro', 'Levi''s', 'jeans', 'usado-buen-estado', '12', 16.00, 1, 'mujer',
-   'https://i.pinimg.com/1200x/98/8e/fd/988efddbfefb91849049be49a4d4af01.jpg'),
+   '/assets/images/productos/jeans-clasico-claro.jpg'),
   ('Vestido a cuadros de manga corta celeste', 'Zara', 'vestidos', 'usado-buen-estado', 'S', 5.50, 1, 'mujer',
-   'https://i.pinimg.com/736x/3d/34/3c/3d343ccc1890602f7234f75a51f05604.jpg'),
+   '/assets/images/productos/vestido-cuadros-celeste.jpg'),
   ('Blusa de botones formal marrón', 'Mango', 'blusas', 'usado-como-nuevo', 'L', 4.00, 1, 'mujer',
-   'https://i.pinimg.com/1200x/0c/e0/06/0ce00642532b40cddf4ac7de6c026327.jpg'),
+   '/assets/images/productos/blusa-botones-marron.jpg'),
   ('Jeans negro recto', 'H&M', 'jeans', 'usado-buen-estado', '18', 10.00, 1, 'mujer',
-   'https://i.pinimg.com/1200x/93/aa/21/93aa214ee6b311feb8a4cbf0c88973e6.jpg'),
+   '/assets/images/productos/jeans-negro-recto.jpg'),
   ('Sudadera oversize gris y azul', 'Tommy Hilfiger', 'sudaderas', 'usado-buen-estado', 'L', 18.00, 1, 'hombre',
-   'https://i.pinimg.com/736x/6d/55/98/6d5598358bba26f5a90d1b61c8b3d6d4.jpg'),
+   '/assets/images/productos/sudadera-gris-azul.jpg'),
   ('Sudadera oversize gris', 'Nike', 'sudaderas', 'usado-como-nuevo', 'XL', 12.00, 1, 'hombre',
-   'https://i.pinimg.com/736x/62/8e/74/628e744e704e2c90039ce0cfeb862e45.jpg'),
+   '/assets/images/productos/sudadera-gris.jpg'),
   ('Pantalón chino beige', 'Dockers', 'pantalones', 'usado-buen-estado', '32', 14.00, 1, 'hombre',
-   'https://i.pinimg.com/736x/ed/f4/50/edf45090b6f35ed1e1462cc6247b5dc2.jpg'),
+   '/assets/images/productos/pantalon-chino-beige.jpg'),
   ('Pants oversize gris oscuro', 'Adidas', 'pantalones', 'usado-buen-estado', 'M', 10.00, 1, 'hombre',
-   'https://i.pinimg.com/1200x/cb/43/c4/cb43c4548e33ef987c7e7a2699dd64a1.jpg');
+   '/assets/images/productos/pants-gris-oscuro.jpg');
    

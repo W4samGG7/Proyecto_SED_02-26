@@ -445,6 +445,42 @@
     object-fit: cover;
 }
 
+/* Cambiar foto: el input de archivo se oculta y se usa el label como boton */
+.editor-imagen {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.visualmente-oculto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.editor-cambiar-foto {
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Foco del teclado en el input oculto: se marca el boton */
+.visualmente-oculto:focus-visible + .editor-cambiar-foto {
+    outline: 2px solid var(--darkred);
+    outline-offset: 2px;
+}
+
+.editor-ayuda {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
 .editor-campos {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -615,6 +651,14 @@
         width: 140px;
         height: 170px;
         margin: 0 auto;
+    }
+
+    .editor-imagen {
+        align-items: center;
+    }
+
+    .editor-cambiar-foto {
+        width: 140px;
     }
 
     .editor-campos {
