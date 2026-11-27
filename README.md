@@ -1,6 +1,6 @@
 # Proyecto_SED_02-26
 
-# Descripcion: 
+# 1. Descripcion: 
 La página web desarrollada consiste en una plataforma de comercio electrónico enfocada en la compra y venta de ropa de segunda mano, cuyo principal objetivo es la reducción del desperdicio textil mediante la reutilización de prendas en buen estado que ya no son utilizadas por sus propietarios.
 
 La plataforma permite que los usuarios participen tanto como vendedores y compradores, ofreciendo un espacio digital accesible en el que puedan publicar, consultar y adquirir diferentes prendas de vestir.
@@ -15,7 +15,7 @@ El sistema incluye los siguientes __roles:__
 2. *Vendedor:* tiene acceso a funcionalidades de compra y venta; puede publicar ropa a partir de un formulario donde proporciona especificaciones del producto, agregar al carrito de compras y realizar pedidos.
 3. *Admin:* tiene acceso a funcionalidades adminsitrativas que le permite supervisar y gestionar su funcionamiento. Se encarga de administrar usuarios, gestión de productos y control de la inforamción almacenada en el sistema.
 
-# Arquitectura:
+# 2. Arquitectura:
 ```mermaid
 flowchart LR
     subgraph Cliente["Frontend (HTML, CSS y JS)"]
@@ -35,12 +35,12 @@ flowchart LR
 ```
 
 
-1. __Tecnologias:__ 
+2.1 __Tecnologias:__ 
 Express.js, Node.js, Docker, Javascript
 
-2. __Base de datos:__ MySQL
+2.2 __Base de datos:__ MySQL
 
-3. __Estructura carpetas:__
+2.3 __Estructura carpetas:__
 ```text
 proyecto
 ├── 📁 backend/
@@ -208,7 +208,7 @@ proyecto
 
 Esta guía explica cómo poner a funcionar la tienda **a partir de la máquina virtual del proyecto**, que ya trae todo instalado y configurado. No hace falta instalar nada dentro de ella: solo importarla, encenderla y comprobar que funciona.
 
-## Qué trae la máquina virtual
+## 3.1 Qué trae la máquina virtual
 
 | Componente | Qué es | Para qué sirve |
 |---|---|---|
@@ -227,7 +227,7 @@ flowchart LR
     A --> D[("Base de datos<br/>MySQL")]
 ```
 
-## Qué necesitás
+## 3.2 Qué necesitás
 
 | Requisito | Mínimo |
 |---|---|
@@ -359,13 +359,13 @@ sudo shutdown now
 
 # 4. Usuarios y credenciales de prueba
 
-## Acceso a la máquina virtual
+## 4.1 Acceso a la máquina virtual
 
 El usuario y la contraseña para iniciar sesión dentro de la máquina (paso 4 de la guía) **no se publican en este repositorio**: el equipo los entrega por separado, junto con el archivo de la máquina virtual.
 
 Esa cuenta tiene permisos de administrador (`sudo`), que se necesitan para los comandos de comprobación del paso 6.
 
-## Cuentas de la tienda
+## 4.2 Cuentas de la tienda
 
 Estas cuentas ya vienen creadas en la máquina virtual y sirven para probar cada rol desde el navegador (paso 8 de la guía). **Son solo para pruebas y para la revisión del proyecto**: en una tienda en producción se eliminarían o se les cambiaría la contraseña.
 
@@ -384,7 +384,7 @@ Estas cuentas ya vienen creadas en la máquina virtual y sirven para probar cada
 - **Las contraseñas** se guardan cifradas con bcrypt, igual que las de cualquier usuario registrado.
 - **Para crear otro administrador** se registra la cuenta en la página y se ejecuta `npm run crear-admin -- correo@ejemplo.com`.
 
-### Cuentas de prueba adicionales (opcional)
+### 4.3 Cuentas de prueba adicionales (opcional)
 
 El comando `npm run usuarios-prueba` (dentro de la máquina, en `/srv/loop/backend`) crea además estas cuentas. El script no duplica cuentas, así que se puede correr varias veces:
 
@@ -401,13 +401,99 @@ cd /srv/loop/backend
 echo "SELECT correo, rol, activo FROM usuarios ORDER BY rol, correo;" | sudo docker compose exec -T mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
 ```
 
+# 5. Vulnerabilidades implementadas:
+
+Loop incorpora dos vulnerabilidades de seguridad intencionales, pensadas para ser identificadas y explotadas.
+
+## 5.1. Credenciales de administrador débiles y predecibles (página web)
+
+A nivel de aplicación, se creó un usuario con rol de administrador cuyas credenciales son simples:
+- **Correo:** `admin@gmail.com`
+- **Contraseña:** `admin`
+
+Este usuario cuenta con permisos administrativos dentro de la plataforma (gestión de usuarios y productos), por lo que representa un punto de entrada directo mediante fuerza bruta, ya que tanto el correo como la contraseña siguen patrones comunes y fácilmente predecibles.
+
+Esta vulnerabilidad es agravada por la ausencia de un límite de intentos de inicio de sesión. El endpoint `/api/login` no implementa ninguna limitación de tasa (*rate limiting*), bloqueo temporal de cuenta ni verificación adicional tras varios intentos fallidos, permitiendo enviar solicitudes de inicio de sesión de forma repetida y sin restricciones:
+```js
+// INICIO DE SESIÓN
+app.post("/api/login", async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Ingresa tu correo y contraseña."
+            });
+        }
+
+        const correo = email.trim().toLowerCase();
+
+        // Buscar usuario por correo
+        const [usuarios] = await pool.execute(
+            "SELECT * FROM usuarios WHERE correo = ?",
+            [correo]
+        );
+
+        if (usuarios.length === 0) {
+            return res.status(401).json({
+                message: "El correo o la contraseña son incorrectos."
+            });
+        }
+
+        const usuario = usuarios[0];
+
+        // Comparar contraseña con el hash almacenado
+        const passwordCorrecta = await bcrypt.compare(
+            password,
+            usuario.contrasena_hash
+        );
+
+        if (!passwordCorrecta) {
+            return res.status(401).json({
+                message: "El correo o la contraseña son incorrectos."
+            });
+        }
+
+        // ...resto del login (verificación de cuenta activa, creación de sesión, etc.)
+
+    } catch (error) {
+        console.error("Error en login:", error);
+        return res.status(500).json({
+            message: "Error interno al iniciar sesión."
+        });
+    }
+
+});
+```
+
+Puede observarse que no existe ningún middleware ni lógica adicional que limite la cantidad de intentos por usuario o por dirección IP, esto permite automatizar el envío de credenciales al endpoint hasta dar con la combinación correcta.
+
+
+**Pasos para explotarla:**
+
+## Paso 1.
+Ingresa a la página web usando la IP de la máquina virtual.
+
+## Paso 2. 
+Haz clic en el icono de cuenta que se encuentra en el navbar.
+
+## Paso 3. 
+Si no se conocen las credenciales, es posible intentar un ataque de fuerza bruta contra el inicio de sesión, ya que no se implementa ningún límite de intentos ni bloqueo temporal. Las credenciales del administrador vulnerable son: [correo: admin@gmail.com y contraseña: admin].
+
+## Paso 4. 
+Si obtienes un inicio de sesión exitoso serás redirigido al panel de administrador, en el cual puedes gestionar tanto usuarios como productos.
+
+
+
 # 6. Flujo de trabajo en GitHub (Git Flow)
 
 Para el desarrollo colaborativo del proyecto se utilizó **GitHub como plataforma de alojamiento y gestión del repositorio**, implementando una adaptación de la metodología **Git Flow** para organizar el trabajo del equipo, controlar los cambios y mantener una versión estable de la aplicación.
 
 El flujo de trabajo se estructuró mediante diferentes tipos de ramas, cada una con una responsabilidad específica.
 
-### Estructura de ramas
+### 6.1 Estructura de ramas
 
 Se definieron las siguientes ramas:
 
@@ -419,7 +505,7 @@ Se definieron las siguientes ramas:
 | `fix/*` | Ramas destinadas a corregir errores o bugs identificados durante las pruebas y el desarrollo del proyecto. |
 | `style/*` | Ramas destinadas a realizar modificaciones relacionadas con la presentación visual, estilos CSS, diseño y organización de los componentes de la interfaz. |
 
-### Creación y utilización de las ramas
+### 6.2 Creación y utilización de las ramas
 
 El trabajo se inició creando la rama `develop` a partir de `main`. Posteriormente, el desarrollo de nuevas funcionalidades y modificaciones se realizó mediante ramas secundarias creadas a partir de `develop`.
 
@@ -433,7 +519,7 @@ Cada integrante del equipo trabajó en una rama independiente, según la tarea a
 - `style/general`
 
 
-### Integración de cambios mediante Pull Requests
+### 6.3 Integración de cambios mediante Pull Requests
 
 La integración de los cambios se realizó utilizando **Pull Requests (PR) de GitHub**, evitando incorporar directamente modificaciones a las ramas principales.
 
@@ -446,7 +532,7 @@ El procedimiento establecido fue el siguiente:
 5. El equipo revisa los cambios y, si son correctos, aprueba e integra el Pull Request.
 6. Los cambios integrados en `develop` se someten a pruebas para verificar su funcionamiento y evitar que afecten otras funcionalidades del sistema.
 
-### Publicación de versiones estables
+### 6.4 Publicación de versiones estables
 
 Una vez que los cambios integrados en `develop` han sido revisados y las pruebas correspondientes han finalizado satisfactoriamente, se procede a incorporar las modificaciones a `main`.
 
@@ -454,7 +540,7 @@ Para ello, se crea un Pull Request cuya rama de origen es `develop` y cuya rama 
 
 Este procedimiento permite que `main` conserve únicamente versiones estables del proyecto, mientras que `develop` mantiene la versión de integración y pruebas del equipo.
 
-### Diagrama del flujo de trabajo
+### 6.5 Diagrama del flujo de trabajo
 
 El siguiente diagrama representa el proceso de creación de ramas, desarrollo de funcionalidades, integración y publicación de versiones estables:
 
@@ -486,7 +572,7 @@ flowchart TD
 
 **Nota:** Todas las ramas secundarias se crean a partir de `develop` y sus cambios se integran nuevamente mediante Pull Requests. La rama `main` recibe los cambios únicamente después de completar el proceso de integración y pruebas en `develop`.
 
-### Beneficios del flujo implementado
+### 6.6 Beneficios del flujo implementado
 
 La utilización de Git Flow y GitHub permitió:
 
