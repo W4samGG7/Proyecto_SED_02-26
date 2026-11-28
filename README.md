@@ -465,7 +465,7 @@ Automáticamente verás cómo se conecta, extrae las tablas de la base de datos 
 
 Finalmente, la consola se detendrá y te mostrará el prompt remoto: admin@ryuk-server:~$.
 
-¿Cómo usarlo? Ya estás dentro del servidor. Podés usar ese correo de administrador que apareció en la tabla `(admin@gmail.com)` para ir a la página web e intentar loguearte en el panel. Para salir de la consola remota, escribí exit y presioná Enter.
+¿Cómo usarlo? Ya estás dentro del servidor. Podés usar ese correo de administrador que apareció en la tabla `(admin@gmail.com)` con su contraseña descifrada de ese usuario para ir a la página web e intentar loguearte en el panel. Para salir de la consola remota, escribí exit y presioná Enter.
 
 🍎 Pasos para Mac / 🐧 Linux
 1. Abrir la terminal:
@@ -502,7 +502,7 @@ Luego, te imprimirá las tablas y los datos de la base de datos MySQL.
 
 Al final, te dejará en el prompt de la máquina virtual: admin@ryuk-server:~$.
 
-**¿Cómo usarlo?** Ya tenés control total del servidor. Podés copiar el correo  del admin que se mostró en los resultados, la contraseña de admin y usarlo para el ataque web. Para salir de la sesión SSH y volver a tu Mac/Linux, escribí exit.
+**¿Cómo usarlo?** Ya tenés control total del servidor. Podés copiar el correo  del admin que se mostró en los resultados junto con su contraseña descifrada y usarlo para el ataque web. Para salir de la sesión SSH y volver a tu Mac/Linux, escribí exit.
 
 ## 5.2 Credenciales de administrador débiles y predecibles (página web)
 
@@ -569,7 +569,7 @@ app.post("/api/login", async (req, res) => {
 
 Puede observarse que no existe ningún middleware ni lógica adicional que limite la cantidad de intentos por usuario o por dirección IP, esto permite automatizar el envío de credenciales al endpoint hasta dar con la combinación correcta.
 
-**¿Qué debes hacer para explotarla?** Entra a la página correspondiente de iniciar sesión, coloca en **Correo electrónico** el correo que obtuviste al explotar la vulnerabilidad del servidor `(admin@gmail.com)`, en base a ello puedes intentar un ataque de fuerza bruta manual para conseguir la contraseña, puedes guiarte por el nombre del correo, es decir, la contraseña para ingresar es: `admin`. 
+**¿Qué debes hacer para explotarla?** Entra a la página correspondiente de iniciar sesión, coloca en **Correo electrónico** el correo que obtuviste al explotar la vulnerabilidad del servidor `(admin@gmail.com)` y en **Contraseña** la contraseña que también obtuviste `(admin)`, ahora podrás acceder al panel de administrador, teniendo control total en la gestión de los usuarios y productos que se encuentran en la página.
 
 ### 6.1 Estructura de ramas
 
