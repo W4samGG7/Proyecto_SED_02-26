@@ -236,6 +236,9 @@ flowchart LR
 | Programa de virtualización | **VMware Workstation Pro** (gratuito) |
 | Los archivos de la máquina virtual | Una carpeta con `Proyecto-SED.ovf` y `Proyecto-SED-disk1.vmdk` (la entrega el equipo) |
 
+**Ejemplo de cómo se ve la carpeta de la máquina virtual:**
+<img width="1108" height="181" alt="image" src="https://github.com/user-attachments/assets/bbc92a18-4573-47e7-9bcf-19845c5331ee" />
+
 > También funciona con **VirtualBox**; los pasos son parecidos y están indicados donde cambian.
 
 ## Paso 1: Instalar VMware Workstation Pro
@@ -251,6 +254,9 @@ flowchart LR
 3. Escribir un nombre (por ejemplo `Proyecto SED`) y elegir la carpeta donde se va a guardar.
 4. Hacer clic en **Import** y esperar a que termine (puede tardar unos minutos).
 5. Si aparece un aviso de que el archivo no cumple con la especificación OVF, hacer clic en **Retry** (Reintentar): es normal y la importación continúa.
+
+**Ejemplo del archivo .ovf que se debe elegir**
+<img width="1108" height="181" alt="image" src="https://github.com/user-attachments/assets/10377f9f-8d1b-4f06-8db4-c2c66b535ae5" />
 
 > **Con VirtualBox:** **Archivo → Importar servicio virtualizado**, elegir el `.ovf`, dejar los valores por defecto y hacer clic en **Importar**.
 
@@ -285,6 +291,9 @@ hostname -I
 Aparecen varias direcciones separadas por espacios. La que sirve es la de la red de tu computadora, que normalmente empieza con **`192.168.`** o **`10.`**, por ejemplo `192.168.0.26`. Anotarla.
 
 > No sirven las que empiezan con `172.` (son internas de Docker) ni con `100.` (son de Tailscale, la red privada del equipo).
+
+**Ejemplo de la dirección IP que debe utilizarse**
+<img width="811" height="58" alt="image" src="https://github.com/user-attachments/assets/3c3f3d06-de30-4843-8531-b6c8d729ab18" />
 
 ## Paso 6: Comprobar que todo está funcionando
 
@@ -328,12 +337,12 @@ La primera línea tiene que decir **`HTTP/1.1 200 OK`**.
 
 Con las cuentas de la sección **4. Usuarios y credenciales de prueba**:
 
-| Rol | Qué probar | Qué tiene que pasar |
+| Rol |Qué probar| Qué tiene que pasar |
 |---|---|---|
-| Usuario público | Entrar sin iniciar sesión y abrir un producto | Se ve el catálogo y el detalle del producto |
-| Vendedor | Iniciar sesión → **Vender** → **Publicar artículo** con una foto | El artículo aparece en **Gestión de stock** |
-| Comprador | Iniciar sesión → agregar productos al carrito → comprar | Se muestra la factura del pedido |
-| Administrador | Iniciar sesión | Entra directo al **Panel de administración** y ve a todos los usuarios |
+| Usuario público | Entrar sin iniciar sesión y abrir un producto<img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/d956c3c0-218e-42ad-bfcf-7fdffffb7b42" />| Se ve el catálogo y el detalle del producto <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/66b61e38-3979-43d6-9a21-0c760bf6a709" />|
+| Vendedor | Iniciar sesión→**Vender** →**Publicar artículo** con una foto<img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/5adc1e71-7dd4-41ab-97c6-518671b7d40a" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/7656044d-b3a1-4cb5-9a71-0ee9de9c4275" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/c8cc48ca-4376-4cff-b771-fcf3195e9542" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/4c0b7309-b62a-4072-94b4-1f4a6921c12b" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/c2d602ba-d1b2-4ac4-a966-a21836dbdbc9" />| El artículo aparece en **Gestión de stock** <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/838ac953-41de-4541-bedd-f7bce6d9a587" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/4f828776-8e1f-4f0a-84a8-781ecf5f8a7e" />|
+| Comprador | Iniciar sesión→agregar productos al carrito→comprar<img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/ca45388e-6bba-417f-8411-dca3d4e7bb11" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/8ab4b6b8-ee0c-4466-aa73-e7985a2f086b" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/159a5f4f-965e-43e6-a8c9-f99c608e162b" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/172fc24d-4baa-4d77-9901-ad7521dc28a6" />| Se muestra la factura del pedido <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/914b5e2e-28c3-487d-b380-1536737e15b6" /> <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/8dcb2ea6-8272-478e-a8d1-4d5e1bf7c996" />|
+| Administrador | Iniciar sesión con las credenciales de administrador<img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/9a512a75-a738-4e0b-bfac-7d17c48c6b6a" />| Entra directo al **Panel de administración** y ve a todos los usuarios <img width="357.23" height="213.26" alt="image" src="https://github.com/user-attachments/assets/ce0ec1e2-fa38-49f0-9b9f-9b2484281ecf" />|
 
 Si todo esto funciona, la instalación está completa.
 
@@ -405,7 +414,97 @@ echo "SELECT correo, rol, activo FROM usuarios ORDER BY rol, correo;" | sudo doc
 
 Loop incorpora dos vulnerabilidades de seguridad intencionales, pensadas para ser identificadas y explotadas.
 
-## 5.1. Credenciales de administrador débiles y predecibles (página web)
+## 5.1 Puerto SSH (22) expuesto con usuario y contraseña débiles
+
+A nivel de servidor, el puerto **22 (SSH)** se dejó abierto y accesible desde la misma red, protegido por un usuario cuyas credenciales también son intencionamiente débiles:
+- **Usuario:** `admin`
+- **Contraseña:** `admin`
+
+Algo importante de recalcar, es que los intentos de inicio de sesión en SSH están limitados a 6 en una misma sesión, con un tiempo límite de 120 segundos y un máximo de 10 intentos simultáneos.
+
+```bash
+logingracetime 120
+maxauthtries 6
+maxsessions 10
+permitrootlogin no
+passwordauthetication yes
+```
+
+Este usuario cuenta con permisos completos sobre el servidor. Esto permite que, una vez dentro de él, el atacante pueda:
+
+1. Acceder al contenedor de Docker donde corre la base de datos MySQL.
+
+2. Consultar las tablas de la base de datos directamente.
+
+3. Consultar la tabla `usuarios` y obtener el correo del administrador vulnerable de la aplicación, lo que constituye una **ruta alterna** para comprometer la cuenta de administrador en caso de que la vulnerabilidad 5.1 no pudiera explotarse por fuerza bruta directa en el formulario de login.
+
+**Pasos de ejecución: Carpeta ssh-probe**
+
+¿Qué hace este entorno?
+La carpeta contiene un conjunto de scripts que automatizan la explotación de la vulnerabilidad SSH (5.1). Al ejecutarlos, el script probará contraseñas, entrará al servidor, buscará la base de datos en Docker, y te mostrará la tabla de usuarios en pantalla antes de dejarte en la consola remota.
+
+🪟 Pasos para Windows
+1. Requisito previo (Python):
+Asegurate de tener Python instalado en Windows. (Si es la primera vez que lo usás, recordá haber marcado la casilla "Add Python to PATH" durante la instalación).
+
+2. Abrir la carpeta:
+Entrá a la carpeta ssh-probe desde el Explorador de Archivos (debes descargar la carpeta completa de este repositorio previamente).
+
+3. Ejecutar el script:
+Hacé doble clic en el archivo probe.bat.
+
+¿Qué pasa internamente? El .bat verifica que tengas la librería paramiko instalada, y luego ejecuta el archivo probe.py apuntando a la IP de la máquina virtual.
+
+No cierres la ventana negra que se abre. El script va a empezar a probar combinaciones de usuarios y contraseñas de los archivos .txt.
+
+4. Leer el resultado y usarlo:
+
+Cuando encuentre la credencial válida, verás el mensaje [+] VÁLIDO: admin:admin.
+
+Automáticamente verás cómo se conecta, extrae las tablas de la base de datos y te imprime los datos de los usuarios (incluyendo los hashes).
+
+Finalmente, la consola se detendrá y te mostrará el prompt remoto: admin@ryuk-server:~$.
+
+¿Cómo usarlo? Ya estás dentro del servidor. Podés usar ese correo de administrador que apareció en la tabla `(admin@gmail.com)` para ir a la página web e intentar loguearte en el panel. Para salir de la consola remota, escribí exit y presioná Enter.
+
+🍎 Pasos para Mac / 🐧 Linux
+1. Abrir la terminal:
+Abrí la aplicación Terminal en tu Mac o Linux.
+
+2. Ingresar a la carpeta:
+Usá el comando cd para moverte hasta la carpeta ssh-probe:
+
+```bash
+cd ruta/donde/esta/ssh-probe
+(Ejemplo: cd ~/Descargas/ssh-probe)
+```
+
+3. Dar permisos de ejecución (solo la primera vez):
+Como es un script de Linux/Mac, el sistema necesita saber que tenés permiso para ejecutarlo. Ejecutá este comando:
+
+```bash
+chmod +x probe.sh probe-linux.py
+```
+
+4. Ejecutar el script:
+Lanzá el script con el siguiente comando:
+
+```bash
+./probe.sh
+```
+¿Qué pasa internamente? El .sh se encarga de verificar las dependencias y ejecuta probe-linux.py con la IP correspondiente.
+
+5. Leer el resultado y usarlo:
+
+Al igual que en Windows, la terminal mostrará cómo avanza la fuerza bruta hasta encontrar admin:admin.
+
+Luego, te imprimirá las tablas y los datos de la base de datos MySQL.
+
+Al final, te dejará en el prompt de la máquina virtual: admin@ryuk-server:~$.
+
+**¿Cómo usarlo?** Ya tenés control total del servidor. Podés copiar el correo  del admin que se mostró en los resultados, la contraseña de admin y usarlo para el ataque web. Para salir de la sesión SSH y volver a tu Mac/Linux, escribí exit.
+
+## 5.2 Credenciales de administrador débiles y predecibles (página web)
 
 A nivel de aplicación, se creó un usuario con rol de administrador cuyas credenciales son simples:
 - **Correo:** `admin@gmail.com`
@@ -470,109 +569,7 @@ app.post("/api/login", async (req, res) => {
 
 Puede observarse que no existe ningún middleware ni lógica adicional que limite la cantidad de intentos por usuario o por dirección IP, esto permite automatizar el envío de credenciales al endpoint hasta dar con la combinación correcta.
 
-**Pasos para explotarla:**
-
-## Paso 1.
-Ingresa a la página web usando la IP de la máquina virtual.
-
-## Paso 2. 
-Haz clic en el icono de cuenta que se encuentra en el navbar.
-
-## Paso 3. 
-Si no se conocen las credenciales, es posible intentar un ataque de fuerza bruta contra el inicio de sesión, ya que no se implementa ningún límite de intentos ni bloqueo temporal. Las credenciales del administrador vulnerable son: **correo:** `admin@gmail.com` y **contraseña:** `admin`.
-
-## Paso 4. 
-Si obtienes un inicio de sesión exitoso serás redirigido al panel de administrador, en el cual puedes gestionar tanto usuarios como productos.
-
-## 5.2 Puerto SSH (22) expuesto con usuario y contraseña débiles
-
-A nivel de servidor, el puerto **22 (SSH)** se dejó abierto y accesible desde la misma red, protegido por un usuario cuyas credenciales también son intencionamiente débiles:
-- **Usuario:** `admin`
-- **Contraseña:** `admin`
-
-Algo importante de recalcar, es que los intentos de inicio de sesión en SSH están limitados a 6 en una misma sesión, con un tiempo límite de 120 segundos y un máximo de 10 intentos simultáneos.
-
-```bash
-logingracetime 120
-maxauthtries 6
-maxsessions 10
-permitrootlogin no
-passwordauthetication yes
-```
-
-Este usuario cuenta con permisos completos sobre el servidor. Esto permite que, una vez dentro de él, el atacante pueda:
-
-1. Acceder al contenedor de Docker donde corre la base de datos MySQL.
-
-2. Consultar las tablas de la base de datos directamente.
-
-3. Consultar la tabla `usuarios` y obtener el correo del administrador vulnerable de la aplicación, lo que constituye una **ruta alterna** para comprometer la cuenta de administrador en caso de que la vulnerabilidad 5.1 no pudiera explotarse por fuerza bruta directa en el formulario de login.
-
-De esta forma, ambas vulnerabilidades están conectadas: si no se logra acceder como administrador desde la página web, es posible llegar al mismo resultado comprometiendo primero el servidor.
-
-**Pasos para explotarla:**
-
-## Paso 1:
-Abrir Termius y crear un nuevo host usando la dirección IP de la máquina virtual, colocar el puerto 22 de SSH, si no se conocen las credenciales vulnerables es posible intentar un ataque de fuerza bruta, teniendo en cuenta que se debe reiniciar la sesión del host al agotar los intentos de inicio de sesión. Las credenciales del administrador vulnerable son: **Usuario:** `admin` y **Contraseña:** `admin`. Posteriormente, se da click en conectar y esperar que se establezca la conexión con la máquina virtual.
-
-## Paso 2:
-Desplazarse a la carpeta de backend de loop dentro del servidor.
-
-```bash
-cd /srv
-
-ls
-
-cd /srv/loop
-
-ls
-
-cd /srv/loop/backend
-```
-o directamente
-
-```bash
-cd /srv/loop/backend
-```
-
-## Paso 3:
-Verificar que dentro de backend se encuentra el contenedor de docker, el cual contiene de la base de datos.
-
-```bash
-ls -la /srv/loop/backend
-```
-
-## Paso 4: 
-Obtener el sistema de gestión de base de datos que se está usando en el contenedor.
-
-```bash
-sudo docker compose ps
-```
-
-## Paso 5:
-Obtener las tablas que se han creado en la base de datos.
-
-```bash
-sudo docker compose exec mysql sh -c 'mysql -u"$MYSQL_USER -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" -e "SHOW TABLES;"'
-```
-
-## Paso 6:
-En base al nombre de las tablas obtenidas, inicia una sesión interactiva con el cliente de MySQL dentro del contenedor y haz una consulta para obtener la información dentro de la tabla de usuarios.
-
-```bash
-sudo docker compose exec mysql sh -c 'mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"'
-
-SELECT * FROM usuarios;
-```
-
-## Paso 7:
-Ahora que se tiene el correo del administrador vulnerable, es posible intentar un ataque de fuerza bruta en la página web para acceder con rol de administrador y así tener acceso al panel que permite gestión de usuarios y productos.
-
-# 6. Flujo de trabajo en GitHub (Git Flow)
-
-Para el desarrollo colaborativo del proyecto se utilizó **GitHub como plataforma de alojamiento y gestión del repositorio**, implementando una adaptación de la metodología **Git Flow** para organizar el trabajo del equipo, controlar los cambios y mantener una versión estable de la aplicación.
-
-El flujo de trabajo se estructuró mediante diferentes tipos de ramas, cada una con una responsabilidad específica.
+**¿Qué debes hacer para explotarla?** Entra a la página correspondiente de iniciar sesión, coloca en **Correo electrónico** el correo que obtuviste al explotar la vulnerabilidad del servidor `(admin@gmail.com)`, en base a ello puedes intentar un ataque de fuerza bruta manual para conseguir la contraseña, puedes guiarte por el nombre del correo, es decir, la contraseña para ingresar es: `admin`. 
 
 ### 6.1 Estructura de ramas
 
